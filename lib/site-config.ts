@@ -18,6 +18,8 @@ export const siteConfig = {
     hours: "[[TBC: working hours]]",
   },
   social: {} as Partial<Record<"linkedin" | "facebook" | "instagram" | "x", string>>,
+  /** Verified numbers only, supplied by the client. Shown when `features.metrics` is true. */
+  metrics: [] as { value: string; label: string }[],
   features: {
     metrics: false,
     industries: false,

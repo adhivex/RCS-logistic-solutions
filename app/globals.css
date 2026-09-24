@@ -141,6 +141,25 @@
   }
 }
 
+/*
+ * Hero entrance — the page's one orchestrated motion moment (≤ 800ms total).
+ * Stagger with `animation-delay`. Reduced motion collapses it via the base-layer rule.
+ */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility animate-rise {
+  animation: rise 500ms var(--ease-out-quart) both;
+}
+
 @utility container-site {
   width: 100%;
   max-width: var(--container-site);
