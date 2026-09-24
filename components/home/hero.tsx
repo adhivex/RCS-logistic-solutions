@@ -15,19 +15,19 @@ export function Hero() {
       <div className="container-site flex flex-col justify-center py-14 sm:py-20 lg:mx-0 lg:max-w-none lg:py-24 lg:pr-16 lg:pl-0">
         <h1
           id="hero-heading"
-          className="font-display animate-rise text-[2.5rem] sm:text-6xl lg:text-[4.5rem] lg:leading-[1.02]"
+          className="font-display text-[2.5rem] sm:text-6xl lg:text-[4.5rem] lg:leading-[1.02]"
         >
           {hero.headline}
         </h1>
         <p
           className="animate-rise mt-6 max-w-xl text-lg text-muted-foreground lg:text-xl"
-          style={{ animationDelay: "120ms" }}
+          style={{ animationDelay: "60ms" }}
         >
           {hero.supporting}
         </p>
         <div
           className="animate-rise mt-10 flex flex-col gap-3 sm:flex-row"
-          style={{ animationDelay: "280ms" }}
+          style={{ animationDelay: "220ms" }}
         >
           <Button asChild size="lg">
             <Link href="/get-a-quote">Get a quote</Link>
@@ -36,7 +36,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="animate-rise relative" style={{ animationDelay: "180ms" }}>
+      <div className="animate-rise relative" style={{ animationDelay: "140ms" }}>
         <MediaFrame
           item={media.hero}
           preload

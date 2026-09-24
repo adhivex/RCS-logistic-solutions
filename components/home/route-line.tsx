@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { LazyMotion, domAnimation, m, useReducedMotion, type Variants } from "motion/react";
 
 const draw: Variants = {
   hidden: { clipPath: "inset(0 100% 100% 0)" },
@@ -14,24 +14,27 @@ const draw: Variants = {
  * (clip-path reveal works for both orientations); fully drawn with reduced motion.
  *
  * The in-view trigger sits on the unclipped wrapper: a fully clipped element
- * never reports as intersecting.
+ * never reports as intersecting. LazyMotion + `m` keeps the bundle to the small
+ * domAnimation feature set.
  */
 export function RouteLine() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <motion.div
-      aria-hidden="true"
-      className="absolute top-0 bottom-0 left-[5px] w-[14px] lg:top-[5px] lg:right-0 lg:bottom-auto lg:left-0 lg:h-[14px] lg:w-auto"
-      initial={reduceMotion ? false : "hidden"}
-      whileInView="shown"
-      viewport={{ once: true, amount: 0.5 }}
-    >
-      <motion.div variants={draw} className="flex size-full justify-between lg:flex-col">
-        <span className="w-px bg-white/20 lg:h-px lg:w-full" />
-        <span className="w-0.5 bg-brand-orange lg:h-0.5 lg:w-full" />
-        <span className="w-px bg-white/20 lg:h-px lg:w-full" />
-      </motion.div>
-    </motion.div>
+    <LazyMotion features={domAnimation} strict>
+      <m.div
+        aria-hidden="true"
+        className="absolute top-0 bottom-0 left-[5px] w-[14px] lg:top-[5px] lg:right-0 lg:bottom-auto lg:left-0 lg:h-[14px] lg:w-auto"
+        initial={reduceMotion ? false : "hidden"}
+        whileInView="shown"
+        viewport={{ once: true, amount: 0.5 }}
+      >
+        <m.div variants={draw} className="flex size-full justify-between lg:flex-col">
+          <span className="w-px bg-white/20 lg:h-px lg:w-full" />
+          <span className="w-0.5 bg-brand-orange lg:h-0.5 lg:w-full" />
+          <span className="w-px bg-white/20 lg:h-px lg:w-full" />
+        </m.div>
+      </m.div>
+    </LazyMotion>
   );
 }

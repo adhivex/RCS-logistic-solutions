@@ -108,3 +108,9 @@ The initial migration SQL (`prisma/migrations/20260925000000_init`) was generate
 - The privacy draft names the actual processors: Vercel (hosting and cookie-free Analytics), Neon, Resend and Cloudflare Turnstile.
 - The OG image is generated from the unaltered logo on white, with an orange baseline rule. `apple-icon` is the R mark on a white tile.
 - JSON-LD: `Organization` is sitewide and each service page has `Service`; both drop `[[TBC]]` values. There's no `LocalBusiness` until an address is verified.
+
+### Decision 030 — Performance adjustments from the first Lighthouse pass
+- The route line uses `LazyMotion` + `m` with `domAnimation` instead of the full `motion` component, which removed a ~119 KB chunk.
+- The hero H1 renders immediately, with no opacity animation, so it is visible on the first frame and counts as the LCP element. The supporting line, image and CTAs still rise in sequence.
+- Local mobile Lighthouse (headless Edge on the dev machine, `next start`): Accessibility 100, SEO 100 (with `NEXT_PUBLIC_SITE_URL` set), Best Practices 96 (the only failure is the Vercel Analytics script 404ing outside Vercel), Performance 64–69.
+- On this machine, observed first paint was ~2.3s even for a fully loaded page, while a bare HTML baseline painted in 0.27s. The cause wasn't isolated. **Re-measure Performance on the Vercel preview (PageSpeed Insights) before tuning further**; the ≥ 90 target is not yet verified.
