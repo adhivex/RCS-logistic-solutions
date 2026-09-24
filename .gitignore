@@ -1,0 +1,25 @@
+# dependencies
+node_modules
+
+# build output
+.next
+out
+dist
+build
+*.tsbuildinfo
+next-env.d.ts
+
+# environment — ignore every .env file except the example
+.env*
+!.env.example
+
+# tooling
+coverage
+.vercel
+.turbo
+
+# OS / logs
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
