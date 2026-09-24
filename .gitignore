@@ -23,3 +23,6 @@ coverage
 Thumbs.db
 *.log
 npm-debug.log*
+
+# generated Prisma client (npm install runs prisma generate)
+lib/generated

@@ -46,6 +46,20 @@ export function shouldDisplay(value: string | null | undefined): value is string
   return process.env.NODE_ENV !== "production" && typeof value === "string" && value !== "";
 }
 
+export type ContactRow = { label: string; value: string; href?: string };
+
+/** Contact details to display, with `href` only for confirmed phone/email values. */
+export function getContactRows(): ContactRow[] {
+  const { phone, email, address, hours } = siteConfig.contact;
+  const rows: ContactRow[] = [
+    { label: "Phone", value: phone, href: isConfirmed(phone) ? `tel:${phone.replace(/\s/g, "")}` : undefined },
+    { label: "Email", value: email, href: isConfirmed(email) ? `mailto:${email}` : undefined },
+    { label: "Address", value: address },
+    { label: "Working hours", value: hours },
+  ];
+  return rows.filter((row) => shouldDisplay(row.value));
+}
+
 const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/\D/g, "") ?? "";
 
 const whatsappMessage = `Hello ${siteConfig.name}, I'd like to discuss a logistics requirement.`;

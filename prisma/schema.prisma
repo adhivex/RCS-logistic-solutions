@@ -1,0 +1,82 @@
+// Quote and contact submissions. See docs/architecture.md.
+// Runtime connects through the Neon driver adapter (lib/db.ts) using the pooled DATABASE_URL;
+// migrations use DIRECT_URL via prisma.config.ts.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ServiceType {
+  FTL
+  PTL
+  WAREHOUSING
+  SUPPLY_CHAIN
+  OTHER
+}
+
+enum VehicleType {
+  NOT_SURE
+  SMALL_COMMERCIAL
+  LCV
+  ICV
+  HCV
+  TRAILER
+  CONTAINER
+}
+
+enum SubmissionStatus {
+  NEW
+  CONTACTED
+  QUOTED
+  CLOSED
+  SPAM
+}
+
+enum EmailStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+model QuoteRequest {
+  id               String           @id @default(cuid())
+  createdAt        DateTime         @default(now())
+  name             String
+  company          String
+  email            String
+  phone            String // normalised +91XXXXXXXXXX
+  pickupLocation   String
+  deliveryLocation String
+  serviceType      ServiceType
+  approxLoad       String?
+  vehicleType      VehicleType      @default(NOT_SURE)
+  pickupDate       DateTime?        @db.Date
+  message          String?
+  consentAt        DateTime
+  ipHash           String
+  sourcePage       String?
+  status           SubmissionStatus @default(NEW)
+  emailStatus      EmailStatus      @default(PENDING)
+
+  @@index([createdAt])
+  @@index([ipHash, createdAt])
+}
+
+model ContactMessage {
+  id          String      @id @default(cuid())
+  createdAt   DateTime    @default(now())
+  name        String
+  email       String?
+  phone       String?
+  message     String
+  consentAt   DateTime
+  ipHash      String
+  emailStatus EmailStatus @default(PENDING)
+
+  @@index([ipHash, createdAt])
+}

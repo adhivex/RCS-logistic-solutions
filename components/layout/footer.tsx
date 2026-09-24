@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { footerCompanyLinks, footerDescription, legalLinks } from "@/content/navigation";
 import { services } from "@/content/services";
-import { isConfirmed, shouldDisplay, siteConfig, whatsappUrl } from "@/lib/site-config";
+import { getContactRows, shouldDisplay, siteConfig, whatsappUrl } from "@/lib/site-config";
 import { MarkLockup } from "./logo";
 
 const socialLabels = {
@@ -19,19 +19,14 @@ function FooterHeading({ children }: { children: React.ReactNode }) {
 }
 
 export function Footer() {
-  const { contact, social } = siteConfig;
+  const { social } = siteConfig;
   const year = new Date().getFullYear();
   const socialEntries = Object.entries(social).filter(([, url]) => shouldDisplay(url)) as [
     keyof typeof socialLabels,
     string,
   ][];
 
-  const contactRows = [
-    { label: "Phone", value: contact.phone, href: `tel:${contact.phone.replace(/\s/g, "")}` },
-    { label: "Email", value: contact.email, href: `mailto:${contact.email}` },
-    { label: "Address", value: contact.address },
-    { label: "Hours", value: contact.hours },
-  ].filter((row) => shouldDisplay(row.value));
+  const contactRows = getContactRows();
 
   return (
     <footer className="bg-navy text-white">
@@ -80,7 +75,7 @@ export function Footer() {
               <div key={row.label}>
                 <dt className="text-sm text-muted-on-dark">{row.label}</dt>
                 <dd className="text-white">
-                  {row.href && isConfirmed(row.value) ? (
+                  {row.href ? (
                     <a href={row.href} className="transition-colors hover:text-brand-orange">
                       {row.value}
                     </a>
