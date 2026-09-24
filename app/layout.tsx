@@ -1,8 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
+import { JsonLd } from "@/components/shared/json-ld";
+import { hero } from "@/content/home";
+import { organizationJsonLd, siteUrl } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
@@ -14,17 +18,20 @@ const archivo = Archivo({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-
 export const metadata: Metadata = {
   metadataBase: siteUrl ? new URL(siteUrl) : undefined,
   title: {
     default: `${siteConfig.name} — B2B logistics from Odisha`,
     template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "RCS Logistic Solutions helps businesses move goods with dependable, efficient logistics support — from full truck loads to warehousing.",
+  description: hero.supporting,
   applicationName: siteConfig.name,
+  alternates: siteUrl ? { canonical: "/" } : undefined,
+  openGraph: {
+    siteName: siteConfig.name,
+    locale: "en_IN",
+    type: "website",
+  },
 };
 
 export const viewport: Viewport = {
@@ -41,12 +48,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        <JsonLd data={organizationJsonLd()} />
         <Navbar />
         <main id="main" tabIndex={-1} className="flex-1 outline-none">
           {children}
         </main>
         <Footer />
         <WhatsAppButton />
+        <Analytics />
       </body>
     </html>
   );

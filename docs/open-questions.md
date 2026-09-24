@@ -33,3 +33,10 @@ Every item here blocks a `[[TBC]]` placeholder or a feature flag. Tick off and u
 - [ ] Specific differentiators they can stand behind (GPS tracking, insurance, response-time commitment, coverage regions)
 - [ ] Do they want shipment tracking on the site, and do they use a TMS/tracking system?
 - [ ] Any language besides English (Odia / Hindi)?
+
+## Added during build (2026-09-25)
+- [ ] Photography source for the 3 homepage slots (hero, FTL, PTL): real RCS photos, or licensed stock we select? (`content/media.ts`)
+- [ ] Privacy Policy: data retention period, grievance officer (name, email, phone), response period for requests
+- [ ] Terms: city whose courts have jurisdiction
+- [ ] Approval of new draft copy: services intro, "Who it's for" and steps on each service page (`content/services.ts`), About intro, quote CTA heading
+- [ ] Neon database, Resend account and sending domain, Turnstile site — create and add keys to Vercel env

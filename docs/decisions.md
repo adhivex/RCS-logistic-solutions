@@ -73,3 +73,38 @@ The footer lockup pairs `rcs-mark.png` with the brand name in live text; the mar
 
 ### Decision 022 — Favicon
 `app/icon.png` is a copy of `public/brand/rcs-mark.png` (transparent). No `apple-icon` yet — iOS renders transparency as black; generate one on a white background alongside the OG image in the SEO phase.
+
+## 2026-09-25 (Phase 2+)
+
+### Decision 023 — Photography placeholders
+The design plan was approved without a photo source being chosen. All photos are fed from `content/media.ts`. While `src` is `null`, a neutral hatched frame renders; in development it also shows the photo brief. Adding a real or licensed image is a one-line change per slot. No stock images were downloaded or hot-linked.
+
+### Decision 024 — Hero entrance uses CSS, route line uses Motion
+The hero sequence is a CSS keyframe (`animate-rise`, staggered delays, ≤ 800ms), so it needs no client JS and doesn't delay LCP. The "How it works" route line is the only Motion component. It uses a `clip-path` reveal so one animation works both horizontally (desktop) and vertically (mobile). The in-view trigger sits on an unclipped wrapper, because a fully clipped element never reports as intersecting. Reduced motion renders the line fully drawn.
+
+### Decision 025 — Service pages
+The four routes are explicit folders, per architecture.md, each rendering the shared `components/services/service-page.tsx` template. Page copy (intro, "Who it's for", steps) lives in `content/services.ts`. It describes the service type only, with no capacity, coverage, transit-time or vehicle claims. Quote links use `?service=ftl|ptl|warehousing|supply-chain`, which pre-selects the form.
+
+### Decision 026 — Prisma 7 + Neon adapter
+Prisma **7.10.0** was pinned (npm `latest` currently points at an 8.0 release candidate). Setup uses:
+- the new `prisma-client` generator with output at `lib/generated/prisma` (gitignored; `postinstall` runs `prisma generate`);
+- `prisma.config.ts` for the CLI datasource: `DIRECT_URL`, falling back to `DATABASE_URL`. It loads `.env.local` and `.env` because the Prisma CLI does not;
+- at runtime, `@prisma/adapter-neon` over the pooled `DATABASE_URL`. Node 24 has a global WebSocket, so there's no `ws` dependency.
+
+The initial migration SQL (`prisma/migrations/20260925000000_init`) was generated offline with `prisma migrate diff`. Apply it with `npm run db:deploy`.
+
+### Decision 027 — Environment validation
+`lib/env.ts` (server-only, Zod) validates lazily on first use and lists every missing variable at once. `instrumentation.ts` checks at server start. It **throws** on Vercel production or when `REQUIRE_SERVER_ENV=true`, and otherwise warns, so the marketing pages stay usable in development and previews while the forms return a clear error.
+
+### Decision 028 — Form behaviour
+- Server actions take the typed object (not `FormData`) and re-validate it with the same Zod schema.
+- RHF's built-in error focus was replaced with `focusFirstInvalid()`, which walks `form.elements` in DOM order: RHF focused the consent checkbox before earlier fields.
+- If a Turnstile site key is configured but there's no token yet, the client blocks the submit with a message. The server always requires a valid token.
+- For local development, `.env.local` (gitignored) holds Cloudflare's public always-pass test keys. They are documented in `.env.example`.
+- The notification email sets `replyTo` to the enquirer, so the team can answer directly. Submitter data only goes to `QUOTE_NOTIFICATION_EMAIL`.
+
+### Decision 029 — Legal drafts and SEO
+- `/privacy-policy` and `/terms` render `[[TBC]]` values verbatim, so gaps are obvious. They carry the draft notice, are `noindex`, and are left out of the sitemap until approved.
+- The privacy draft names the actual processors: Vercel (hosting and cookie-free Analytics), Neon, Resend and Cloudflare Turnstile.
+- The OG image is generated from the unaltered logo on white, with an orange baseline rule. `apple-icon` is the R mark on a white tile.
+- JSON-LD: `Organization` is sitewide and each service page has `Service`; both drop `[[TBC]]` values. There's no `LocalBusiness` until an address is verified.
