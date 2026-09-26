@@ -1,0 +1,7 @@
+# Never upload local env files or build artifacts to Vercel
+.env*
+!.env.example
+node_modules
+.next
+lib/generated
+.claude
