@@ -85,10 +85,10 @@ export function ServicesSection() {
           <CompactCard service={supplyChain} icon={Network} />
         </div>
 
-        <p className="mt-10">
+        <p className="mt-8">
           <Link
             href="/services"
-            className="font-semibold text-action-orange underline underline-offset-4 hover:text-action-orange-hover"
+            className="inline-flex min-h-11 items-center font-semibold text-action-orange underline underline-offset-4 hover:text-action-orange-hover"
           >
             Compare all services
           </Link>
