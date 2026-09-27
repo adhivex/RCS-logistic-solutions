@@ -117,3 +117,6 @@ The initial migration SQL (`prisma/migrations/20260925000000_init`) was generate
 
 ### Decision 031 — Placeholders confirmed
 2026-09-25: confirmed to keep the neutral placeholder frames for now; photos will be supplied later. No stock imagery until then.
+
+### Decision 032 — Startup env check is opt-in (supersedes part of 027)
+2026-09-28: The first Vercel deploy went to production (a new project's first deploy). Throwing in `instrumentation.ts` on Vercel production made every server-rendered route (`/get-a-quote`) return 500 while backend accounts don't exist yet. The server now fails fast only when `REQUIRE_SERVER_ENV=true`, and otherwise warns. **Set `REQUIRE_SERVER_ENV=true` in Vercel production once Neon, Resend and Turnstile are configured.** `lib/env.ts` still validates on first use, so the forms return a clear error meanwhile.

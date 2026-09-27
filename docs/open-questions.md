@@ -39,4 +39,4 @@ Every item here blocks a `[[TBC]]` placeholder or a feature flag. Tick off and u
 - [ ] Privacy Policy: data retention period, grievance officer (name, email, phone), response period for requests
 - [ ] Terms: city whose courts have jurisdiction
 - [ ] Approval of new draft copy: services intro, "Who it's for" and steps on each service page (`content/services.ts`), About intro, quote CTA heading
-- [ ] Neon database, Resend account and sending domain, Turnstile site — create and add keys to Vercel env
+- [ ] Neon database, Resend account and sending domain, Turnstile site — create and add keys to Vercel env; then set REQUIRE_SERVER_ENV=true in Vercel production
