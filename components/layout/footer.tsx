@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { footerCompanyLinks, footerDescription, legalLinks } from "@/content/navigation";
+import { footerCompanyLinks, footerDescription, legalLinks, siteCredit } from "@/content/navigation";
 import { services } from "@/content/services";
 import { getContactRows, shouldDisplay, siteConfig, whatsappUrl } from "@/lib/site-config";
 import { MarkLockup } from "./logo";
@@ -118,11 +118,25 @@ export function Footer() {
 
       <div className="border-t border-white/10">
         <div className="container-site flex flex-col gap-3 py-6 text-sm text-muted-on-dark sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {year}
-            {shouldDisplay(siteConfig.legalName) ? ` ${siteConfig.legalName}` : ` ${siteConfig.name}`}. All rights
-            reserved.
-          </p>
+          <div className="grid gap-1">
+            <p>
+              © {year}
+              {shouldDisplay(siteConfig.legalName) ? ` ${siteConfig.legalName}` : ` ${siteConfig.name}`}. All rights
+              reserved.
+            </p>
+            <p>
+              {siteCredit.prefix}{" "}
+              <a
+                href={siteCredit.href}
+                target="_blank"
+                rel="noopener"
+                className="font-semibold text-white underline underline-offset-4 transition-colors hover:text-brand-orange"
+              >
+                {siteCredit.name}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </p>
+          </div>
           <ul className="flex gap-6">
             {legalLinks.map((item) => (
               <li key={item.href}>

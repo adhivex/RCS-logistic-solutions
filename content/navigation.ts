@@ -23,3 +23,10 @@ export const legalLinks: NavLink[] = [
 ];
 
 export const footerDescription = "B2B logistics and supply-chain partner, based in Odisha.";
+
+/** Website credit shown in the footer's bottom row. */
+export const siteCredit = {
+  prefix: "Designed & Developed by",
+  name: "OrangeKite",
+  href: "https://orangekite.in/",
+} as const;
