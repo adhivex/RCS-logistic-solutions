@@ -26,3 +26,6 @@ npm-debug.log*
 
 # generated Prisma client (npm install runs prisma generate)
 lib/generated
+
+# Vercel project link (vercel link)
+.vercel
