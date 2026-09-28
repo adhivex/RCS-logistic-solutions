@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Phone, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { QuoteButton } from "@/components/quote/quote-button";
 import { Eyebrow } from "@/components/ui/eyebrow";
-import { fleetIntro, hero, trust } from "@/content";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { Todo } from "@/components/ui/todo";
+import { fleet, fleetIntro, hero, networkIntro, trust } from "@/content";
 
 export const metadata: Metadata = {
   title: "Styleguide",
@@ -176,6 +179,44 @@ export default function StyleguidePage() {
             <p className="text-xs text-white/70">Hero variant: bar after text</p>
           </div>
         </div>
+      </Block>
+      <Block title="Section heading">
+        <SectionHeading
+          eyebrow={fleetIntro.eyebrow}
+          heading={fleetIntro.heading}
+          description={fleetIntro.description}
+          link={fleetIntro.link}
+        />
+        <div className="rounded-card bg-brand-ink p-8">
+          <SectionHeading
+            eyebrow={networkIntro.eyebrow}
+            heading={networkIntro.heading}
+            tone="dark"
+            className="mb-0"
+          />
+        </div>
+      </Block>
+
+      <Block title="Quote triggers">
+        <p className="mb-4 max-w-2xl">
+          Each opens the same dialog; the second pre-selects Part Truck Load. Without JavaScript they link to
+          /contact#quote.
+        </p>
+        <div className="flex flex-wrap gap-4">
+          <QuoteButton />
+          <QuoteButton service="PART_TRUCK_LOAD" variant="outline">
+            Quote for Part Truck Load
+          </QuoteButton>
+        </div>
+      </Block>
+
+      <Block title="Placeholders (TODO(client))">
+        <p className="mb-4 max-w-2xl">
+          Unconfirmed values show like this in development and are omitted in production.
+        </p>
+        <p>
+          Capacity: <Todo value={fleet[0].capacity} />
+        </p>
       </Block>
     </div>
   );

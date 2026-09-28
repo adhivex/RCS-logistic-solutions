@@ -38,6 +38,9 @@
   --shadow-dialog: 0 30px 80px rgb(0 0 0 / 0.35);
 
   --container-site: 1200px;
+
+  /* Header switches to the mobile drawer below 860px (reference preview) */
+  --breakpoint-nav: 53.75rem;
 }
 
 @layer base {
@@ -73,6 +76,15 @@
     outline: 3px solid var(--color-brand-orange);
     outline-offset: 3px;
     border-radius: 4px;
+  }
+
+  /* Native <dialog> (QuoteDialog) */
+  dialog::backdrop {
+    background: rgb(16 17 20 / 0.6);
+  }
+
+  html:has(dialog[open]) {
+    overflow: hidden;
   }
 
   ::selection {
