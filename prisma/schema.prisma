@@ -1,10 +1,10 @@
-// Quote and contact submissions. See docs/architecture.md.
-// Runtime connects through the Neon driver adapter (lib/db.ts) using the pooled DATABASE_URL;
-// migrations use DIRECT_URL via prisma.config.ts.
+// Quote requests — see docs/05-data-and-api.md.
+// Prisma 7 syntax: connection URLs live in prisma.config.ts (CLI, DIRECT_URL) and in
+// src/lib/db.ts (runtime, pooled DATABASE_URL via the Neon adapter), not here.
 
 generator client {
   provider = "prisma-client"
-  output   = "../lib/generated/prisma"
+  output   = "../src/lib/generated/prisma"
 }
 
 datasource db {
@@ -12,71 +12,53 @@ datasource db {
 }
 
 enum ServiceType {
-  FTL
-  PTL
+  FULL_TRUCK_LOAD
+  PART_TRUCK_LOAD
   WAREHOUSING
   SUPPLY_CHAIN
-  OTHER
-}
-
-enum VehicleType {
   NOT_SURE
-  SMALL_COMMERCIAL
-  LCV
-  ICV
-  HCV
-  TRAILER
-  CONTAINER
 }
 
-enum SubmissionStatus {
+enum LeadStatus {
   NEW
   CONTACTED
   QUOTED
-  CLOSED
-  SPAM
-}
-
-enum EmailStatus {
-  PENDING
-  SENT
-  FAILED
+  WON
+  LOST
 }
 
 model QuoteRequest {
-  id               String           @id @default(cuid())
-  createdAt        DateTime         @default(now())
-  name             String
-  company          String
-  email            String
-  phone            String // normalised +91XXXXXXXXXX
-  pickupLocation   String
-  deliveryLocation String
-  serviceType      ServiceType
-  approxLoad       String?
-  vehicleType      VehicleType      @default(NOT_SURE)
-  pickupDate       DateTime?        @db.Date
-  message          String?
-  consentAt        DateTime
-  ipHash           String
-  sourcePage       String?
-  status           SubmissionStatus @default(NEW)
-  emailStatus      EmailStatus      @default(PENDING)
-
-  @@index([createdAt])
-  @@index([ipHash, createdAt])
-}
-
-model ContactMessage {
   id          String      @id @default(cuid())
   createdAt   DateTime    @default(now())
   name        String
+  company     String?
+  phone       String // normalised +91XXXXXXXXXX
   email       String?
-  phone       String?
-  message     String
-  consentAt   DateTime
-  ipHash      String
-  emailStatus EmailStatus @default(PENDING)
+  service     ServiceType
+  fromCity    String
+  toCity      String
+  cargoType   String?
+  weightTons  Decimal?    @db.Decimal(8, 2)
+  pickupDate  DateTime?   @db.Date
+  details     String?
+  sourcePage  String? // page the form was submitted from
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  status      LeadStatus  @default(NEW)
+  emailSent   Boolean     @default(false)
+
+  @@index([createdAt])
+  @@index([status])
+}
+
+// Postgres-backed rate limit (05-data-and-api.md: max 5 submissions / IP / 10 min).
+// Stores only a salted SHA-256 of the IP, never the raw address. Rows older than
+// the window are safe to delete.
+model RateLimitHit {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  ipHash    String
 
   @@index([ipHash, createdAt])
 }

@@ -9,11 +9,12 @@ export const company = {
   shortName: "RCS Logistic",
   tagline: "Right Cargo, Right Stop",
   founder: "Satya Sankar Swain",
-  phone: "+91 99388 74147",            // TODO(client): confirm — taken from an older RCS site
-  whatsapp: "919938874147",            // TODO(client): confirm
-  email: "TODO(client)",
-  address: "Kapaleswar, Choudwar, Cuttack, Odisha", // TODO(client): confirm full address + PIN
-  hours: "Mon–Sat, 10:00 am – 7:30 pm", // TODO(client): confirm
+  founderRole: "Founder",               // TODO(client): "Founder" or "CEO & Founder" (old site said "CEO - Founder")
+  phone: "+91 99388 74147",            // confirmed by client 2026-09-29 (also on old site rcslogistic.com)
+  whatsapp: "919938874147",            // confirmed by client 2026-09-29
+  email: "info@rcsls.in",              // confirmed by client 2026-09-29 — also receives quote requests (QUOTE_NOTIFY_TO)
+  address: "Kapaleswar, Choudwar, Cuttack, Odisha 754071", // PIN confirmed by client 2026-09-29; Kapaleswar from old site
+  hours: "Mon–Sat, 10:00 am – 7:30 pm", // from old site — TODO(client): confirm
   gstin: "TODO(client)",               // optional, footer
   social: { linkedin: "TODO(client)", facebook: "TODO(client)", instagram: "TODO(client)" },
 };
@@ -66,6 +67,11 @@ Steel & Metals · Mining & Minerals · Cement & Construction · FMCG & Retail Di
 - Deliver every load safely and on time, with clear updates at every step.
 - Build long-term partnerships with the businesses we serve.
 - Grow a modern logistics network from Odisha that serves all of India.
+
+## Client answers (2026-09-29)
+- Phone/WhatsApp +91 99388 74147 confirmed. Quote requests and public email: info@rcsls.in. PIN 754071.
+- Company name: **RCS Logistic Solutions**. Not related to "R C C Logistics Solution" (IndiaMART).
+- Founder photo, logo SVG, fleet details, cities served and verified numbers: will be supplied later — build with visible placeholders.
 
 ## Old site
 Anything useful found on the current rcsls.in during the Phase 0 audit (services, testimonials, client logos, certifications, contact details) should be moved into these files, marked `(from old site)`.

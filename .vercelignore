@@ -3,5 +3,5 @@
 !.env.example
 node_modules
 .next
-lib/generated
+src/lib/generated
 .claude
