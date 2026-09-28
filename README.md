@@ -19,6 +19,7 @@ npm run dev                  # /styleguide shows the design tokens
 npm run lint
 npm run build
 npm run format:check
+npm test               # Vitest: quote schema, phone normalisation, email templates
 ```
 
 ## Database
@@ -33,3 +34,5 @@ npm run db:studio   # inspect quote requests
 - Copy and company facts: `src/content/*.ts` (`TODO(client)` marks anything unconfirmed)
 - Photos: `src/content/media.ts` and `src/content/fleet.ts` (`src: null` = placeholder)
 - Design tokens: `src/app/globals.css`, preview at `/styleguide`
+- Quote flow: `src/lib/validation/quote.ts` (shared schema), `src/app/actions/quote.ts` (server action), `src/emails/`
+- Launch status and what is still needed: `docs/10-launch-checklist.md`

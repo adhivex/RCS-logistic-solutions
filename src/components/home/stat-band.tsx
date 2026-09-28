@@ -17,7 +17,7 @@ type StatBandProps = {
 
 /**
  * docs/02-design-system.md → StatBand: dark band, stats separated by 2px orange left
- * borders. Unverified stats (TODO(client)) show as placeholders in development and
+ * borders. Unverified stats (client placeholders) show in development and
  * are dropped in production — numbers are never estimated.
  */
 export function StatBand({

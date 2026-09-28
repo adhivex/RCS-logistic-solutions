@@ -209,7 +209,7 @@ export default function StyleguidePage() {
         </div>
       </Block>
 
-      <Block title="Placeholders (TODO(client))">
+      <Block title="Client placeholders">
         <p className="mb-4 max-w-2xl">
           Unconfirmed values show like this in development and are omitted in production.
         </p>
