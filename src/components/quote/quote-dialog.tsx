@@ -65,7 +65,12 @@ export function QuoteDialog() {
         </button>
       </div>
       <div className="relative px-6 pt-5 pb-6">
-        <QuoteForm key={openCount} idPrefix="dialog" defaultService={service} />
+        <QuoteForm
+          key={openCount}
+          idPrefix="dialog"
+          defaultService={service}
+          onSuccess={() => dialogRef.current?.close()}
+        />
       </div>
     </dialog>
   );

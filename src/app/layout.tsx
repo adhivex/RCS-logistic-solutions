@@ -4,6 +4,7 @@ import { FloatingContact } from "@/components/layout/floating-contact";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { QuoteDialog } from "@/components/quote/quote-dialog";
+import { UtmCapture } from "@/components/quote/utm-capture";
 import { company } from "@/content";
 import { fontVariables } from "./fonts";
 import "./globals.css";
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Footer />
         <FloatingContact />
         <QuoteDialog />
+        <UtmCapture />
         <Analytics />
       </body>
     </html>

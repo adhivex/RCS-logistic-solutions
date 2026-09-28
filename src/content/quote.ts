@@ -23,4 +23,12 @@ export const quoteCopy = {
   submit: "Request Quote",
   submitting: "Sending…",
   privacyNote: "We use these details only to respond to your quote request.",
+  errors: {
+    rateLimited:
+      "We've received several requests from your connection in the last few minutes. Please wait a little, or call or WhatsApp us on +91 99388 74147.",
+    unavailable:
+      "We couldn't send your request just now. Please try again, or call or WhatsApp us on +91 99388 74147 — your details are still here.",
+    network:
+      "We couldn't reach our server. Check your connection and try again — your details are still here.",
+  },
 } as const;
