@@ -45,3 +45,36 @@ Unconfirmed content starts with `TODO(client)` (`src/content/todo.ts`: `isTodo()
 - The address is Kapaleswar, Choudwar, Cuttack, Odisha **754071**.
 - The company name is RCS Logistic Solutions.
 - The designation isn't answered yet, so "Founder" is shown with a `TODO(client)` note.
+
+## 2026-09-29 — Phases 3–6
+
+### D-10 — Heading highlight colour on light backgrounds
+Lighthouse measured the brand orange `#F2611D` highlight phrase at **2.96:1** on the mist background, which fails 3:1 even for large text. A `highlight` token **#EA5B19** is used for H2 highlight phrases on white/mist: 3.49:1 on white, 3.20:1 on mist. It's visually almost identical. Dark sections (hero, stat band) keep `#F2611D` at 5.50:1 on ink.
+
+### D-11 — Placeholders and TODO(client) in production
+- The photo slots show neutral frames. The dev-only label with the photo brief is hidden in production.
+- Unverified stats, capacities, routes, cities, FAQ answers and the retention period are **omitted in production** and shown as dashed placeholders in development.
+- The StatBand hides itself when it would only repeat a heading.
+
+### D-12 — Quote form loads on demand
+`QuoteDialog` loads the form (React Hook Form + Zod, about 45 KB gzipped) with `next/dynamic` on first open. Client components import specific `@/content/*` files rather than the barrel.
+- Homepage initial JS went from about 299 KB to **about 198 KB gzipped**. That includes a 38.7 KB `noModule` polyfill that modern browsers skip, so **about 159 KB** is actually loaded.
+- The React + Next.js 16 runtime alone is about 115 KB, so the kit's **< 120 KB budget isn't reachable with this stack**. The site's own code is about 44 KB.
+
+### D-13 — Network map data
+The `/network` map is an inline SVG built from **Natural Earth** (public domain):
+- `ne_10m_admin_0_countries_ind` provides India's outline **from India's official point of view**. Maps published in India must show the official boundaries.
+- `ne_50m_admin_1_states_provinces` provides Odisha.
+
+The paths are simplified to about 10 KB (`src/components/network/india-map-data.ts`). City markers use `projectPoint(lon, lat)`, so each city in `src/content/network.ts` needs coordinates.
+
+### D-14 — Quote submission details
+- The form sends raw strings, and the server re-validates with the same Zod schema (`src/lib/validation/quote.ts`).
+- On success the client redirects to `/thank-you`. `quote_submitted` is tracked server-side via `@vercel/analytics/server`.
+- When the backend isn't configured (no Neon/Resend yet), the visitor sees "call or WhatsApp us on +91 99388 74147", and their input is kept.
+- Dependencies added: `@react-email/components` and `@react-email/render` (the kit asks for React Email templates; Resend needs the renderer), `vitest` for the schema, phone and email-template tests, and `@types/node` bumped from 20 to 24 (Vitest peer requirement; the runtime is Node 24).
+
+### D-15 — Lighthouse (local production build, mobile, headless Edge)
+- **Accessibility 100 and SEO 100** on Home, `/services/warehousing` and `/contact`.
+- Best Practices 96: the only failure is the Vercel Analytics script 404, which only exists on Vercel.
+- **Performance 73–79**, with LCP about 3.8–4.2 s. On this dev machine even a blank page paints slowly (see v1 notes), so **Performance must be re-measured on the Vercel preview or production** with PageSpeed Insights.

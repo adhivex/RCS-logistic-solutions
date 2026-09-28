@@ -9,7 +9,8 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { PageHero } from "@/components/ui/page-hero";
 import { Todo } from "@/components/ui/todo";
 import { getService, industries, isTodo, serviceSteps, services } from "@/content";
-import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { faqJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 
 export const dynamicParams = false;
 
@@ -46,7 +47,10 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
 
   return (
     <>
+      <JsonLd data={serviceJsonLd(service)} />
+      <JsonLd data={faqJsonLd(service.faqs)} />
       <PageHero
+        path={`/services/${service.slug}`}
         title={service.name}
         intro={service.oneLiner}
         breadcrumbs={[
@@ -81,7 +85,7 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
           <div>
             <Eyebrow>Who it&apos;s for</Eyebrow>
             <h2 className="text-[clamp(26px,3vw,36px)] font-bold">
-              Built for <span className="text-brand-orange">these industries</span>
+              Built for <span className="text-highlight">these industries</span>
             </h2>
             <ul className="mt-7 flex flex-wrap gap-3">
               {whoFor.map((industry) => (
@@ -103,7 +107,7 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
         <div className="container-site">
           <Eyebrow>How it works</Eyebrow>
           <h2 id="steps-heading" className="mb-10 text-[clamp(26px,3vw,36px)] font-bold">
-            Four steps from <span className="text-brand-orange">request to delivery</span>
+            Four steps from <span className="text-highlight">request to delivery</span>
           </h2>
           <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {serviceSteps.map((step, index) => (
@@ -127,7 +131,7 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
           <div className="container-site max-w-3xl">
             <Eyebrow>FAQ</Eyebrow>
             <h2 id="faq-heading" className="mb-8 text-[clamp(26px,3vw,36px)] font-bold">
-              Common <span className="text-brand-orange">questions</span>
+              Common <span className="text-highlight">questions</span>
             </h2>
             <div className="border-t border-brand-line">
               {faqs.map((faq) => (

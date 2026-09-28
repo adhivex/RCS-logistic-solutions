@@ -115,7 +115,7 @@ export default function StyleguidePage() {
               Hero H1 · Poppins 800 · 52 → 96px · lh .95
             </p>
             <p className="font-display text-[52px] leading-[0.95] font-extrabold tracking-[-0.02em] text-brand-ink md:text-[96px]">
-              {hero.titleLines.join(" ")} <span className="text-brand-orange">{hero.titleHighlight}</span>
+              {hero.titleLines.join(" ")} <span className="text-highlight">{hero.titleHighlight}</span>
             </p>
           </div>
           <div>
@@ -123,8 +123,7 @@ export default function StyleguidePage() {
               Section H2 · Poppins 700 · 28 → 44px · lh 1.1
             </p>
             <p className="font-display text-[28px] leading-[1.1] font-bold text-brand-ink md:text-[44px]">
-              {fleetIntro.heading.lead}{" "}
-              <span className="text-brand-orange">{fleetIntro.heading.highlight}</span>
+              {fleetIntro.heading.lead} <span className="text-highlight">{fleetIntro.heading.highlight}</span>
             </p>
           </div>
           <div>

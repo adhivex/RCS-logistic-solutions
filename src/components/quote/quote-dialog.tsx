@@ -1,10 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { X } from "lucide-react";
-import { quoteCopy, SERVICE_TYPES, type ServiceTypeValue } from "@/content";
-import { QuoteForm } from "./quote-form";
+import { Loader2, X } from "lucide-react";
+import { quoteCopy, SERVICE_TYPES, type ServiceTypeValue } from "@/content/quote";
+
+// The form (React Hook Form + Zod) loads on first open, keeping it out of every page's initial JS.
+const QuoteForm = dynamic(() => import("./quote-form").then((module) => module.QuoteForm), {
+  ssr: false,
+  loading: () => (
+    <p className="flex min-h-40 items-center justify-center gap-2 text-sm">
+      <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+      Loading form…
+    </p>
+  ),
+});
 
 function asService(value: string | undefined): ServiceTypeValue | undefined {
   return SERVICE_TYPES.find((service) => service === value);
@@ -65,12 +76,14 @@ export function QuoteDialog() {
         </button>
       </div>
       <div className="relative px-6 pt-5 pb-6">
-        <QuoteForm
-          key={openCount}
-          idPrefix="dialog"
-          defaultService={service}
-          onSuccess={() => dialogRef.current?.close()}
-        />
+        {openCount > 0 && (
+          <QuoteForm
+            key={openCount}
+            idPrefix="dialog"
+            defaultService={service}
+            onSuccess={() => dialogRef.current?.close()}
+          />
+        )}
       </div>
     </dialog>
   );

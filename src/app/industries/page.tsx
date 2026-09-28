@@ -15,6 +15,7 @@ export default function IndustriesPage() {
   return (
     <>
       <PageHero
+        path="/industries"
         title={pages.industries.title}
         intro={pages.industries.intro}
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Industries" }]}

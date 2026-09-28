@@ -12,6 +12,8 @@ export type Service = {
   type: Exclude<ServiceTypeValue, "NOT_SURE">;
   name: string;
   oneLiner: string;
+  /** Meta description, 140–160 chars (docs/06-seo-launch.md). */
+  metaDescription: string;
   icon: "truck" | "boxes" | "warehouse" | "network";
   included: string[];
   whoFor: string[];
@@ -35,6 +37,8 @@ const quoteFaq: Faq = {
 export const services: Service[] = [
   {
     slug: "full-truck-load",
+    metaDescription:
+      "Full truck load transport from Cuttack, Odisha: a dedicated vehicle for your cargo, point to point, with no transfers. Serving businesses across India.",
     type: "FULL_TRUCK_LOAD",
     name: "Full Truck Load",
     oneLiner: "A dedicated vehicle for your cargo, point to point, with no transfers along the way.",
@@ -62,6 +66,8 @@ export const services: Service[] = [
   },
   {
     slug: "part-truck-load",
+    metaDescription:
+      "Part truck load (PTL) transport from Odisha: share space on scheduled routes and pay only for the capacity you use. B2B service across India.",
     type: "PART_TRUCK_LOAD",
     name: "Part Truck Load",
     oneLiner: "Share space on scheduled routes and pay only for the capacity you use.",
@@ -89,6 +95,8 @@ export const services: Service[] = [
   },
   {
     slug: "warehousing",
+    metaDescription:
+      "Warehousing and storage in Cuttack, Odisha from RCS Logistic: secure storage with inventory handling, ready to dispatch when your orders come in.",
     type: "WAREHOUSING",
     name: "Warehousing & Storage",
     oneLiner: "Secure storage with inventory handling, ready to dispatch when your orders come in.",
@@ -115,6 +123,8 @@ export const services: Service[] = [
   },
   {
     slug: "supply-chain",
+    metaDescription:
+      "Supply chain solutions from RCS Logistic in Cuttack, Odisha: route planning and coordination across vendors, plants and distributors in India.",
     type: "SUPPLY_CHAIN",
     name: "Supply Chain Solutions",
     oneLiner: "Route planning and coordination across vendors, plants and distributors.",

@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Photo } from "@/components/ui/photo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbJsonLd } from "@/lib/seo";
 import { media, type MediaItem } from "@/content";
 
 export type Crumb = { label: string; href?: string };
@@ -12,6 +14,8 @@ type PageHeroProps = {
   intro?: string;
   image?: MediaItem;
   breadcrumbs: Crumb[];
+  /** This page's path, for the BreadcrumbList JSON-LD. */
+  path: string;
   children?: ReactNode;
 };
 
@@ -22,6 +26,7 @@ export function PageHero({
   intro,
   image = media.aboutHero,
   breadcrumbs,
+  path,
   children,
 }: PageHeroProps) {
   return (
@@ -29,6 +34,7 @@ export function PageHero({
       aria-labelledby="page-heading"
       className="relative flex min-h-[40vh] items-end overflow-hidden bg-[#1c1a19] text-white"
     >
+      <JsonLd data={breadcrumbJsonLd(breadcrumbs, path)} />
       <Photo item={image} sizes="100vw" preload tone="dark" />
       <div
         aria-hidden="true"

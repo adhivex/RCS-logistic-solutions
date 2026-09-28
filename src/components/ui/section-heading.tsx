@@ -36,7 +36,8 @@ export function SectionHeading({
       <div>
         <Eyebrow tone={tone}>{eyebrow}</Eyebrow>
         <Tag id={id} className={cn("text-[1.75rem] font-bold md:text-[2.5rem]", dark && "text-white")}>
-          {heading.lead} <span className="text-brand-orange">{heading.highlight}</span>
+          {heading.lead}{" "}
+          <span className={dark ? "text-brand-orange" : "text-highlight"}>{heading.highlight}</span>
         </Tag>
       </div>
       {(description || link) && (

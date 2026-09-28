@@ -16,6 +16,7 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero
+        path="/services"
         title={pages.services.title}
         intro={pages.services.intro}
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Services" }]}

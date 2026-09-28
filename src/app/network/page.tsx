@@ -19,6 +19,7 @@ export default function NetworkPage() {
   return (
     <>
       <PageHero
+        path="/network"
         title={pages.network.title}
         intro={pages.network.intro}
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Network" }]}
@@ -33,7 +34,7 @@ export default function NetworkPage() {
             <Eyebrow>{pages.network.mapHeading}</Eyebrow>
             <h2 id="coverage-heading" className="text-[clamp(28px,3.4vw,40px)] font-bold">
               {networkIntro.heading.lead}{" "}
-              <span className="text-brand-orange">{networkIntro.heading.highlight}</span>
+              <span className="text-highlight">{networkIntro.heading.highlight}</span>
             </h2>
             <p className="mt-4 max-w-[520px]">
               Based in {homeBase.name}, {homeBase.state}, we move goods for businesses across India.
@@ -69,7 +70,7 @@ export default function NetworkPage() {
         <div className="container-site">
           <Eyebrow>{pages.network.routesHeading}</Eyebrow>
           <h2 id="routes-heading" className="mb-6 text-[clamp(26px,3vw,36px)] font-bold">
-            Where we <span className="text-brand-orange">regularly run</span>
+            Where we <span className="text-highlight">regularly run</span>
           </h2>
           {keyRoutes.length > 0 ? (
             <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

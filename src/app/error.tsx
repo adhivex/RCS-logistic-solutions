@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { company } from "@/content";
+import { company } from "@/content/company";
 
 export default function Error({ error, retry }: { error: Error & { digest?: string }; retry: () => void }) {
   useEffect(() => {

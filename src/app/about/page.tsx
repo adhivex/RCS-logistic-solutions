@@ -16,6 +16,7 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
+        path="/about"
         title={aboutPage.title}
         intro={aboutPage.intro}
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "About" }]}
@@ -29,7 +30,7 @@ export default function AboutPage() {
           <div>
             <Eyebrow>Our Founder</Eyebrow>
             <h2 id="story-heading" className="text-[clamp(28px,3.4vw,40px)] font-bold">
-              The story behind <span className="text-brand-orange">RCS Logistic</span>
+              The story behind <span className="text-highlight">RCS Logistic</span>
             </h2>
             {aboutPage.story.map((paragraph) => (
               <p key={paragraph} className="mt-5 max-w-[560px]">
@@ -54,7 +55,7 @@ export default function AboutPage() {
         <div className="container-site">
           <Eyebrow>What drives us</Eyebrow>
           <h2 id="mission-heading" className="mb-10 text-[clamp(28px,3.4vw,40px)] font-bold">
-            Mission, partnership and <span className="text-brand-orange">vision</span>
+            Mission, partnership and <span className="text-highlight">vision</span>
           </h2>
           <ul className="grid gap-6 md:grid-cols-3">
             {aboutPage.mission.map((item) => (
@@ -89,7 +90,7 @@ export default function AboutPage() {
         <div className="container-site">
           <Eyebrow>Why RCS</Eyebrow>
           <h2 id="why-heading" className="mb-10 text-[clamp(28px,3.4vw,40px)] font-bold">
-            Why businesses choose <span className="text-brand-orange">RCS</span>
+            Why businesses choose <span className="text-highlight">RCS</span>
           </h2>
           <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
             {aboutPage.whyChoose.map((item, index) => {

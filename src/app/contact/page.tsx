@@ -26,6 +26,7 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
+        path="/contact"
         title={pages.contact.title}
         intro={pages.contact.intro}
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Contact" }]}
@@ -36,33 +37,34 @@ export default function ContactPage() {
           <div>
             <Eyebrow>{pages.contact.detailsHeading}</Eyebrow>
             <h2 className="text-[clamp(26px,3vw,36px)] font-bold">
-              Call, WhatsApp or <span className="text-brand-orange">email us</span>
+              Call, WhatsApp or <span className="text-highlight">email us</span>
             </h2>
             <dl className="mt-8 grid gap-5">
               {rows.map(({ icon: Icon, label, value, href, external }) => (
-                <div key={label} className="flex gap-4">
-                  <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-button bg-brand-mist">
-                    <Icon className="size-5 text-action" aria-hidden="true" />
-                  </span>
-                  <div>
-                    <dt className="text-xs font-semibold tracking-[0.12em] text-brand-ink uppercase">
+                // dt/dd are direct children of each row; the icon sits inside the dt.
+                <div key={label} className="grid grid-cols-[44px_1fr] gap-x-4">
+                  <dt className="contents">
+                    <span className="row-span-2 inline-flex size-11 items-center justify-center rounded-button bg-brand-mist">
+                      <Icon className="size-5 text-action" aria-hidden="true" />
+                    </span>
+                    <span className="self-end text-xs font-semibold tracking-[0.12em] text-brand-ink uppercase">
                       {label}
-                    </dt>
-                    <dd className="mt-0.5 text-[1.0625rem]">
-                      {href ? (
-                        <a
-                          href={href}
-                          {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                          className="font-medium text-brand-ink underline-offset-4 hover:text-action hover:underline"
-                        >
-                          {value}
-                          {external && <span className="sr-only"> (opens WhatsApp in a new tab)</span>}
-                        </a>
-                      ) : (
-                        value
-                      )}
-                    </dd>
-                  </div>
+                    </span>
+                  </dt>
+                  <dd className="text-[1.0625rem]">
+                    {href ? (
+                      <a
+                        href={href}
+                        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                        className="font-medium text-brand-ink underline-offset-4 hover:text-action hover:underline"
+                      >
+                        {value}
+                        {external && <span className="sr-only"> (opens WhatsApp in a new tab)</span>}
+                      </a>
+                    ) : (
+                      value
+                    )}
+                  </dd>
                 </div>
               ))}
             </dl>

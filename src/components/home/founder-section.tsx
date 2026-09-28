@@ -40,7 +40,7 @@ export function FounderSection() {
           <Eyebrow>{founderIntro.eyebrow}</Eyebrow>
           <h2 id="founder-heading" className="text-[clamp(30px,3.6vw,44px)] font-bold">
             {founderIntro.heading.lead}{" "}
-            <span className="text-brand-orange">{founderIntro.heading.highlight}</span>
+            <span className="text-highlight">{founderIntro.heading.highlight}</span>
           </h2>
           <p className="mt-[22px] mb-[26px] max-w-[560px]">
             <BodyWithName text={founderIntro.body} name={company.founder} />

@@ -31,6 +31,7 @@ export default function FleetPage() {
   return (
     <>
       <PageHero
+        path="/fleet"
         title={pages.fleet.title}
         intro={pages.fleet.intro}
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Our Fleet" }]}

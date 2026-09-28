@@ -5,12 +5,16 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { QuoteDialog } from "@/components/quote/quote-dialog";
 import { UtmCapture } from "@/components/quote/utm-capture";
+import { JsonLd } from "@/components/seo/json-ld";
 import { company } from "@/content";
+import { canonicalOrigin, localBusinessJsonLd } from "@/lib/seo";
 import { fontVariables } from "./fonts";
 import "./globals.css";
 
-// Full SEO metadata (metadataBase, canonical, OG, JSON-LD) arrives in Phase 6.
 export const metadata: Metadata = {
+  metadataBase: new URL(canonicalOrigin),
+  applicationName: company.name,
+  openGraph: { siteName: company.name, locale: "en_IN", type: "website" },
   title: {
     default: "RCS Logistic | B2B Truck Transport from Odisha Across India",
     template: `%s | RCS Logistic — ${company.tagline}`,
@@ -34,6 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        <JsonLd data={localBusinessJsonLd()} />
         <Header />
         <main id="main" tabIndex={-1} className="flex-1 outline-none">
           {children}

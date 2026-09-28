@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { submitQuote } from "@/app/actions/quote";
-import { quoteCopy, serviceOptions, type ServiceTypeValue } from "@/content";
+import { quoteCopy, serviceOptions, type ServiceTypeValue } from "@/content/quote";
 import { cn } from "@/lib/utils";
 import {
   emptyQuoteValues,
