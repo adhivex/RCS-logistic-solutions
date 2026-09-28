@@ -110,7 +110,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/12">
-        <div className="container-site flex flex-col gap-3 pt-5 pb-40 nav:pb-5 text-[0.8125rem] sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+        <div className="container-site flex flex-col gap-3 pt-5 pb-40 text-[0.8125rem] sm:flex-row sm:flex-wrap sm:items-center sm:justify-between nav:pb-5">
           <p>
             © {year} {company.name}. All rights reserved.
             <Todo value={company.gstin} tone="dark">
