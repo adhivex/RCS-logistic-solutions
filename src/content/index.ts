@@ -6,6 +6,7 @@ export * from "./industries";
 export * from "./media";
 export * from "./navigation";
 export * from "./network";
+export * from "./pages";
 export * from "./quote";
 export * from "./services";
 export * from "./todo";

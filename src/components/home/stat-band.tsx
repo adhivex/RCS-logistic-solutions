@@ -28,6 +28,8 @@ export function StatBand({
   headingLevel: Tag = "h2",
 }: StatBandProps) {
   const visible = stats.filter((stat) => isFilled(stat.value) || (isDev && isTodo(stat.value)));
+  // Nothing to show beyond the heading (e.g. /network in production before stats arrive).
+  if (visible.length === 0 && !cta) return null;
 
   return (
     <section aria-labelledby="stat-band-heading" className="relative overflow-hidden bg-[#18191c] text-white">

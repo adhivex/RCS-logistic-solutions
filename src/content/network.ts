@@ -11,12 +11,12 @@ export const networkStats: Stat[] = [
   { value: "TODO(client): stat 3", label: "e.g. cities served" },
 ];
 
-/** Home base, always shown on the map. */
-export const homeBase = { name: "Cuttack (Choudwar)", region: "Odisha" } as const;
+export type City = { name: string; state: string; lon: number; lat: number };
 
-export type City = { name: string; state: string };
+/** Home base, always shown on the map (Choudwar, Cuttack district). */
+export const homeBase: City = { name: "Choudwar, Cuttack", state: "Odisha", lon: 85.93, lat: 20.52 };
 
-/** TODO(client): list of cities served. */
+/** TODO(client): list of cities served — add name, state and coordinates for each. */
 export const citiesServed: City[] = [];
 
 /** TODO(client): key routes / corridors, e.g. "Cuttack → Kolkata". */
