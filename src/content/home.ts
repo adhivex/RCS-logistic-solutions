@@ -10,7 +10,10 @@ export const hero = {
   titleHighlight: "Forward",
   tag: "Reliable. Efficient. Pan India.",
   lead: "RCS Logistic delivers dependable B2B transportation solutions across Odisha and India, keeping your business moving—every day, every mile.",
-  corner: { lines: ["From", "Odisha", "to a stronger", "India"], emphasis: ["Odisha", "India"] },
+  corner: {
+    lines: ["From", "Odisha", "to a stronger", "India"] as string[],
+    emphasis: ["Odisha", "India"] as string[],
+  },
   primaryCta: "Get a Quote",
   secondaryCta: { label: "Our Fleet", href: "/fleet" },
 } as const;
