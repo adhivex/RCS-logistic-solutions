@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { ConsentManager } from "@/components/consent/consent-manager";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { MobileQuickBar } from "@/components/layout/mobile-quick-bar";
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <MobileQuickBar />
         <QuoteDialog />
         <RevealObserver />
+        <ConsentManager />
       </body>
     </html>
   );

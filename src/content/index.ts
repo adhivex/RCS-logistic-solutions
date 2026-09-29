@@ -10,3 +10,4 @@ export * from "./pages";
 export * from "./quote";
 export * from "./services";
 export * from "./todo";
+export * from "./consent";

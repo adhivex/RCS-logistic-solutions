@@ -3,7 +3,11 @@
 import { useEffect } from "react";
 import { UTM_COOKIE, UTM_MAX_AGE, utmFromSearch } from "@/lib/utm";
 
-/** Stores first-visit UTM parameters in a cookie (first touch wins). Renders nothing. */
+/**
+ * Stores UTM parameters in a cookie (first touch wins). Rendered only with analytics
+ * consent (ConsentScripts), so nothing is stored before the visitor opts in.
+ * Renders nothing.
+ */
 export function UtmCapture() {
   useEffect(() => {
     if (document.cookie.split("; ").some((entry) => entry.startsWith(`${UTM_COOKIE}=`))) return;

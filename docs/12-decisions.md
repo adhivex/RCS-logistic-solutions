@@ -118,3 +118,12 @@ All kit colours were measured (the table is in `src/app/globals.css` and `/style
 - The header and drawer nav follow the preview (Home, Services, Fleet, About, Network, Contact). Industries is linked from the footer's Company column and from each service page, so it stays reachable.
 - Every inner page opens with a navy hero, and thank-you, 404 and error use a navy panel, so the transparent header works everywhere. `/styleguide` gets the solid header.
 - Phases 1–5 were rebuilt and committed together. The new tokens, fonts and content shapes replaced every kit-1 component at once, so intermediate commits wouldn't have built.
+
+### D-22 — Cookie consent implementation
+- The choice is stored in the first-party cookie `rcs-consent` (`SameSite=Lax`, `Secure` on https, 6 months), in the kit's format `{v, analytics, marketing, ts}`. No `localStorage` mirror.
+- The server reads it: the server-side `quote_submitted` event is sent only with analytics consent.
+- Instead of a context provider, a small external store (`src/lib/consent.ts`) with `useSyncExternalStore` (`useConsent()`) is used. Server rendering and hydration always see "no choice", so nothing optional renders before the browser reads the cookie.
+- **Analytics** covers Vercel Web Analytics and the `rcs_utm` campaign cookie. UTM capture moved behind analytics consent: it's attribution tracking, not essential. **Marketing** has no vendors installed yet. `ConsentScripts` is where pixels go, with Google Consent Mode v2 defaults set to denied.
+- Withdrawing consent stops optional scripts from the next page load; a script already running stays until navigation.
+- Consent decisions aren't logged to a `consent_log` table (optional in the kit). This can be added later if the client wants an audit trail.
+- The switches have `role="switch"`, visible labels and descriptions. The off track uses the `field` colour (D-18).
