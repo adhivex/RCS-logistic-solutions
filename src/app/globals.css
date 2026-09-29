@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+/*
+ * RCS design tokens — docs/02-design-system.md (source of truth:
+ * docs/reference/homepage-preview.html). Light theme only.
+ *
+ * Contrast (WCAG 2.1, measured — docs/12-decisions.md → D-18):
+ *   slate #4F5B6B body text: 6.91:1 on white, 6.32:1 on paper.
+ *   muted #667180 small labels: 4.95:1 on white, 4.54:1 on paper.
+ *   orange #EA5A24: 3.51:1 on white, 3.21:1 on paper → large headline accents,
+ *     icons and glows only (never small text).
+ *   orange-deep #C74916: white on it 4.78:1 → buttons and small orange text.
+ *   orange-light #F2763F on ink 5.28:1 → orange text on navy.
+ *   field #8A94A3: 3.07:1 on white → input underlines and the off switch track
+ *     (the kit's line colour, 1.28:1, is too faint for a control boundary).
+ */
+@theme {
+  --color-orange: #ea5a24;
+  --color-orange-deep: #c74916;
+  --color-orange-dark: #ab3d10;
+  --color-orange-light: #f2763f;
+  --color-orange-soft: #fdeee6;
+
+  --color-ink: #19283b;
+  --color-ink-2: #172333;
+  --color-steel: #243f5c;
+  --color-footer: #111d2c;
+
+  --color-slate: #4f5b6b;
+  --color-muted: #667180;
+  --color-paper: #f3f5f8;
+  --color-line: #dfe4eb;
+  --color-field: #8a94a3;
+  --color-danger: #b42318; /* error text: 6.57:1 on white */
+
+  --font-display: var(--font-manrope), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+
+  --ease-brand: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --shadow-soft: 0 18px 40px rgb(25 40 59 / 0.08);
+  --shadow-dialog: 0 40px 100px rgb(0 0 0 / 0.4);
+  --shadow-cookie: 0 24px 60px rgb(25 40 59 / 0.22);
+
+  --container-site: 1240px;
+
+  /* The preview's breakpoints: drawer below 880px, 2-col cards below 1080px */
+  --breakpoint-nav: 55rem; /* 880px */
+  --breakpoint-wide: 67.5rem; /* 1080px */
+  --breakpoint-desk: 64.0625rem; /* 1025px: the footer is 4 columns above 1024px */
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper font-body text-slate antialiased;
+    font-size: 1rem;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-bold text-ink;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-orange);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  dialog::backdrop {
+    background: rgb(16 28 44 / 0.72);
+    backdrop-filter: blur(4px);
+  }
+
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  ::selection {
+    background: rgb(234 90 36 / 0.22);
+    color: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+}
+
+/* Container: 1240px, 24px gutters (20px under 600px) */
+@utility container-site {
+  width: min(var(--container-site), 100% - 48px);
+  margin-inline: auto;
+
+  @media (width < 600px) {
+    width: min(var(--container-site), 100% - 40px);
+  }
+}
+
+/* Section padding: clamp(64px, 8vw, 112px) */
+@utility section-y {
+  padding-block: clamp(64px, 8vw, 112px);
+}
+
+/* Italic serif accent words — the last phrase of a headline */
+@utility accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Subtle film grain over photos and navy panels (7% overlay) */
+@utility grain {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Reveal on scroll (components/ui/reveal.tsx). Content stays visible without JS. */
+@layer components {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 1s var(--ease-brand),
+      transform 1s var(--ease-brand);
+  }
+
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js [data-reveal] {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
