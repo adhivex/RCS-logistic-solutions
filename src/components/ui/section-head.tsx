@@ -6,7 +6,15 @@ import { AccentHeading } from "./accent-heading";
 import { Label } from "./label";
 
 /** Underlined text link with an arrow ("All services", "Our story"). */
-export function TextLink({ href, children, className }: { href: string; children: string; className?: string }) {
+export function TextLink({
+  href,
+  children,
+  className,
+}: {
+  href: string;
+  children: string;
+  className?: string;
+}) {
   return (
     <Link
       href={href}
@@ -54,7 +62,11 @@ export function SectionHead({
           className="mt-[18px] text-[clamp(32px,4.2vw,56px)]"
         />
       </div>
-      {link && <TextLink href={link.href} className="max-nav:hidden">{link.label}</TextLink>}
+      {link && (
+        <TextLink href={link.href} className="max-nav:hidden">
+          {link.label}
+        </TextLink>
+      )}
     </div>
   );
 }

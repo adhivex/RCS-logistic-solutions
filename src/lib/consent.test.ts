@@ -19,7 +19,9 @@ describe("cookie consent value", () => {
   });
 
   it("asks again when the stored version is old", () => {
-    const old = encodeURIComponent(JSON.stringify({ v: CONSENT_VERSION - 1, analytics: true, marketing: true }));
+    const old = encodeURIComponent(
+      JSON.stringify({ v: CONSENT_VERSION - 1, analytics: true, marketing: true }),
+    );
     expect(parseConsent(old)).toBeNull();
   });
 

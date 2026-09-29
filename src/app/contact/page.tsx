@@ -14,7 +14,6 @@ export const metadata = pageMetadata({
   path: "/contact",
 });
 
-
 /** docs/03-pages.md → /contact: details + map left, full quote form (#quote) right. No CTA section. */
 export default function ContactPage() {
   const rows = [

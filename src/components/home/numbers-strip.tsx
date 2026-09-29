@@ -46,7 +46,11 @@ export function NumbersStrip({ stats = numbersStrip }: { stats?: Stat[] }) {
           >
             <dt className="mt-2 text-xs tracking-[0.16em] text-white/62 uppercase">{stat.label}</dt>
             <dd className="font-display text-[clamp(34px,4vw,54px)] leading-none font-bold tracking-[-0.04em]">
-              {isTodo(stat.value) ? <Todo value={stat.value} tone="dark" /> : <StatValue value={stat.value} />}
+              {isTodo(stat.value) ? (
+                <Todo value={stat.value} tone="dark" />
+              ) : (
+                <StatValue value={stat.value} />
+              )}
             </dd>
           </div>
         ))}

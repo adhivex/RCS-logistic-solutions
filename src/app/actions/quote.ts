@@ -46,7 +46,10 @@ export async function submitQuote(values: QuoteFormValues, sourcePage?: string):
     if (!isSupabaseConfigured()) {
       if (isProductionDeploy) throw new Error("Supabase is not configured on production");
       const id = `local-${randomUUID()}`;
-      console.info(`[local mode] Quote request not stored (no Supabase env) — ${id}`, { ...data, sourcePage: page });
+      console.info(`[local mode] Quote request not stored (no Supabase env) — ${id}`, {
+        ...data,
+        sourcePage: page,
+      });
       await sendQuoteEmails(data, { id, sourcePage: page });
       return { ok: true };
     }
@@ -68,7 +71,10 @@ export async function submitQuote(values: QuoteFormValues, sourcePage?: string):
     // Don't fail the submission if email fails — log it and keep email_sent = false.
     try {
       if (await sendQuoteEmails(data, { id: row.id, sourcePage: page })) {
-        const { error: updateError } = await db.from("quote_requests").update({ email_sent: true }).eq("id", row.id);
+        const { error: updateError } = await db
+          .from("quote_requests")
+          .update({ email_sent: true })
+          .eq("id", row.id);
         if (updateError) console.error(`Quote ${row.id}: email_sent update failed`, updateError);
       }
     } catch (emailError) {

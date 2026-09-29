@@ -22,7 +22,7 @@ export function AccentHeading({
   return (
     <Tag id={id} className={cn(tone === "dark" && "text-white", className)}>
       {heading.lead}{" "}
-      <em className={cn("accent pr-[0.05em]", tone === "dark" ? "text-orange-light" : "text-orange")}>
+      <em className={cn("pr-[0.05em] accent", tone === "dark" ? "text-orange-light" : "text-orange")}>
         {heading.accent}
       </em>
     </Tag>

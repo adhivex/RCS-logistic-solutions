@@ -76,7 +76,11 @@ export default function FleetPage() {
         </div>
       </div>
 
-      <CtaSection label={pages.fleet.cta.label} heading={pages.fleet.cta.heading} line={pages.fleet.cta.line} />
+      <CtaSection
+        label={pages.fleet.cta.label}
+        heading={pages.fleet.cta.heading}
+        line={pages.fleet.cta.line}
+      />
     </>
   );
 }

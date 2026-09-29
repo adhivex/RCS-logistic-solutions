@@ -83,8 +83,14 @@ export default function AboutPage() {
           <ol className="grid border-t border-line nav:grid-cols-3">
             {aboutPage.mission.map((item, index) => (
               <li key={item.title} data-reveal className="relative pt-8 pb-8 nav:pr-8 nav:pb-0">
-                <span aria-hidden="true" className="absolute -top-1 left-0 size-[7px] rounded-full bg-orange" />
-                <span aria-hidden="true" className="mb-5 block font-serif text-[44px] leading-none text-ink italic">
+                <span
+                  aria-hidden="true"
+                  className="absolute -top-1 left-0 size-[7px] rounded-full bg-orange"
+                />
+                <span
+                  aria-hidden="true"
+                  className="mb-5 block font-serif text-[44px] leading-none text-ink italic"
+                >
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mb-2.5 text-[21px] tracking-[-0.02em]">{item.title}</h3>

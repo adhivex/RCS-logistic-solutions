@@ -14,28 +14,80 @@ export const metadata: Metadata = {
 
 /** Tokens from src/app/globals.css (docs/02-design-system.md), with measured contrast. */
 const colours = [
-  { name: "orange", hex: "#EA5A24", swatch: "bg-orange", note: "Accent words ≥ 32px, icons, glows · 3.51:1 on white" },
-  { name: "orange-deep", hex: "#C74916", swatch: "bg-orange-deep", note: "Buttons, small orange text · 4.78:1 with white" },
+  {
+    name: "orange",
+    hex: "#EA5A24",
+    swatch: "bg-orange",
+    note: "Accent words ≥ 32px, icons, glows · 3.51:1 on white",
+  },
+  {
+    name: "orange-deep",
+    hex: "#C74916",
+    swatch: "bg-orange-deep",
+    note: "Buttons, small orange text · 4.78:1 with white",
+  },
   { name: "orange-dark", hex: "#AB3D10", swatch: "bg-orange-dark", note: "Button hover · 6.16:1 with white" },
-  { name: "orange-light", hex: "#F2763F", swatch: "bg-orange-light", note: "Orange text on navy · 5.28:1 on ink" },
+  {
+    name: "orange-light",
+    hex: "#F2763F",
+    swatch: "bg-orange-light",
+    note: "Orange text on navy · 5.28:1 on ink",
+  },
   { name: "orange-soft", hex: "#FDEEE6", swatch: "bg-orange-soft", note: "Icon tiles" },
   { name: "ink", hex: "#19283B", swatch: "bg-ink", note: "Headings, numbers strip, dark buttons, hero base" },
   { name: "ink-2", hex: "#172333", swatch: "bg-ink-2", note: "Deepest panels" },
   { name: "steel", hex: "#243F5C", swatch: "bg-steel", note: "End of navy gradients" },
   { name: "footer", hex: "#111D2C", swatch: "bg-footer", note: "Footer" },
   { name: "slate", hex: "#4F5B6B", swatch: "bg-slate", note: "Body text · 6.91:1 on white" },
-  { name: "muted", hex: "#667180", swatch: "bg-muted", note: "Labels, captions · 4.95:1 on white, 4.54:1 on paper" },
+  {
+    name: "muted",
+    hex: "#667180",
+    swatch: "bg-muted",
+    note: "Labels, captions · 4.95:1 on white, 4.54:1 on paper",
+  },
   { name: "paper", hex: "#F3F5F8", swatch: "bg-paper", note: "Light section background, scrolled header" },
   { name: "line", hex: "#DFE4EB", swatch: "bg-line", note: "Borders and dividers" },
-  { name: "field", hex: "#8A94A3", swatch: "bg-field", note: "Input underlines, off switch · 3.07:1 on white" },
+  {
+    name: "field",
+    hex: "#8A94A3",
+    swatch: "bg-field",
+    note: "Input underlines, off switch · 3.07:1 on white",
+  },
 ];
 
 const type = [
-  { role: "Hero H1", sample: "Moving Business", className: "font-display text-[clamp(46px,7.6vw,118px)] leading-[.92] font-bold tracking-[-0.05em] text-ink", spec: "Manrope 700 · 46 → 118px · lh .92" },
-  { role: "Section H2", sample: "Logistics built around", className: "font-display text-[clamp(32px,4.2vw,56px)] leading-[1.02] font-bold tracking-[-0.035em] text-ink", spec: "Manrope 700 · 32 → 56px" },
-  { role: "Card H3", sample: "Semi-Trailer Trucks", className: "font-display text-2xl font-bold tracking-[-0.03em] text-ink", spec: "Manrope 600–700 · 17–24px" },
-  { role: "Accent", sample: "your supply chain.", className: "font-serif text-[clamp(32px,4.2vw,56px)] leading-none text-orange italic", spec: "Instrument Serif italic · ~1.05×" },
-  { role: "Body", sample: hero.lead, className: "max-w-xl text-[17px] text-slate", spec: "Inter 400 · 15.5 → 17px · lh 1.65" },
+  {
+    role: "Hero H1",
+    sample: "Moving Business",
+    className:
+      "font-display text-[clamp(46px,7.6vw,118px)] leading-[.92] font-bold tracking-[-0.05em] text-ink",
+    spec: "Manrope 700 · 46 → 118px · lh .92",
+  },
+  {
+    role: "Section H2",
+    sample: "Logistics built around",
+    className:
+      "font-display text-[clamp(32px,4.2vw,56px)] leading-[1.02] font-bold tracking-[-0.035em] text-ink",
+    spec: "Manrope 700 · 32 → 56px",
+  },
+  {
+    role: "Card H3",
+    sample: "Semi-Trailer Trucks",
+    className: "font-display text-2xl font-bold tracking-[-0.03em] text-ink",
+    spec: "Manrope 600–700 · 17–24px",
+  },
+  {
+    role: "Accent",
+    sample: "your supply chain.",
+    className: "font-serif text-[clamp(32px,4.2vw,56px)] leading-none text-orange italic",
+    spec: "Instrument Serif italic · ~1.05×",
+  },
+  {
+    role: "Body",
+    sample: hero.lead,
+    className: "max-w-xl text-[17px] text-slate",
+    spec: "Inter 400 · 15.5 → 17px · lh 1.65",
+  },
 ];
 
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
@@ -90,7 +142,11 @@ export default function StyleguidePage() {
         </Block>
 
         <Block title="Headings with accent">
-          <SectionHead label={servicesIntro.label} heading={servicesIntro.heading} link={servicesIntro.link} />
+          <SectionHead
+            label={servicesIntro.label}
+            heading={servicesIntro.heading}
+            link={servicesIntro.link}
+          />
           <SectionHead label={fleetIntro.label} heading={fleetIntro.heading} />
           <div className="rounded-2xl bg-ink p-10">
             <Label tone="dark" centered>

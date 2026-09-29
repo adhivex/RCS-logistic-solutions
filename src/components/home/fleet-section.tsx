@@ -20,11 +20,15 @@ export function FleetSection() {
           heading={fleetIntro.heading}
           link={fleetIntro.link}
         />
-        <ul className="-mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-1.5 [scrollbar-width:none] nav:mx-0 nav:grid nav:grid-cols-2 nav:gap-5 nav:overflow-visible nav:px-0 nav:pb-0 wide:grid-cols-3 [&::-webkit-scrollbar]:hidden">
+        <ul className="-mx-5 flex snap-x snap-mandatory [scrollbar-width:none] gap-3 overflow-x-auto px-5 pb-1.5 nav:mx-0 nav:grid nav:grid-cols-2 nav:gap-5 nav:overflow-visible nav:px-0 nav:pb-0 wide:grid-cols-3 [&::-webkit-scrollbar]:hidden">
           {fleet.map((vehicle) => {
             const src = mediaSrc(vehicle.image);
             return (
-              <li key={vehicle.slug} data-reveal className="shrink-0 grow-0 basis-[78%] snap-start nav:basis-auto">
+              <li
+                key={vehicle.slug}
+                data-reveal
+                className="shrink-0 grow-0 basis-[78%] snap-start nav:basis-auto"
+              >
                 <Link
                   href={`/fleet#${vehicle.slug}`}
                   className="group flex h-full flex-col overflow-hidden rounded-[14px] bg-ink text-white"

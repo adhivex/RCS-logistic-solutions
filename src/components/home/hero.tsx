@@ -16,12 +16,7 @@ export function Hero() {
       className="grain relative isolate flex min-h-svh flex-col justify-end overflow-hidden bg-ink text-white"
     >
       <div className="absolute inset-0 -z-20">
-        <Photo
-          item={media.hero}
-          sizes="100vw"
-          preload
-          className="object-[58%_30%] nav:object-[88%_42%]"
-        />
+        <Photo item={media.hero} sizes="100vw" preload className="object-[58%_30%] nav:object-[88%_42%]" />
       </div>
       <div
         aria-hidden="true"
@@ -41,12 +36,14 @@ export function Hero() {
               {line}
             </span>
           ))}
-          <em className="accent block pr-[0.05em] text-[1.08em] tracking-[-0.02em] text-orange-light">
+          <em className="block pr-[0.05em] accent text-[1.08em] tracking-[-0.02em] text-orange-light">
             {hero.titleAccent}
           </em>
         </h1>
         <div className="mt-[34px]">
-          <p className="mb-6 max-w-[430px] text-[15.5px] text-white/76 sm:mb-[30px] sm:text-[17px]">{hero.lead}</p>
+          <p className="mb-6 max-w-[430px] text-[15.5px] text-white/76 sm:mb-[30px] sm:text-[17px]">
+            {hero.lead}
+          </p>
           <div className="flex flex-wrap gap-3">
             <QuoteButton className="max-sm:flex-1 max-sm:justify-between">{hero.primaryCta}</QuoteButton>
             <Button

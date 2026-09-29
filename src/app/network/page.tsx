@@ -79,7 +79,10 @@ export default function NetworkPage() {
           {keyRoutes.length > 0 ? (
             <ul className="grid gap-3 sm:grid-cols-2 wide:grid-cols-3">
               {keyRoutes.map((route) => (
-                <li key={route} className="rounded-2xl border border-line bg-white px-5 py-4 font-medium text-ink">
+                <li
+                  key={route}
+                  className="rounded-2xl border border-line bg-white px-5 py-4 font-medium text-ink"
+                >
                   {route}
                 </li>
               ))}

@@ -58,10 +58,7 @@ type FieldShellProps = {
 function FieldShell({ htmlFor, errorId, label, error, optional, full, children }: FieldShellProps) {
   return (
     <div className={cn("grid content-start gap-1.5", full && "sm:col-span-2")}>
-      <label
-        htmlFor={htmlFor}
-        className="text-[11px] font-semibold tracking-[0.14em] text-muted uppercase"
-      >
+      <label htmlFor={htmlFor} className="text-[11px] font-semibold tracking-[0.14em] text-muted uppercase">
         {label}
         {optional && <span className="font-normal tracking-normal normal-case"> (optional)</span>}
       </label>
@@ -155,12 +152,7 @@ export function QuoteForm({ idPrefix, defaultService, className, onSuccess }: Qu
               key={option.value}
               className="relative cursor-pointer rounded-full px-5 py-2 text-sm font-semibold text-slate transition-colors has-checked:bg-ink has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-orange"
             >
-              <input
-                type="radio"
-                value={option.value}
-                className="sr-only"
-                {...register("customerType")}
-              />
+              <input type="radio" value={option.value} className="sr-only" {...register("customerType")} />
               {option.label}
             </label>
           ))}

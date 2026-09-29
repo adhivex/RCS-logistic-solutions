@@ -40,7 +40,12 @@ export function MobileQuickBar() {
         <PhoneIcon />
         Call
       </a>
-      <a href={QUOTE_HREF} data-quote="" aria-haspopup="dialog" className={cn(item, "bg-orange-deep text-white")}>
+      <a
+        href={QUOTE_HREF}
+        data-quote=""
+        aria-haspopup="dialog"
+        className={cn(item, "bg-orange-deep text-white")}
+      >
         Get a Quote
       </a>
     </div>

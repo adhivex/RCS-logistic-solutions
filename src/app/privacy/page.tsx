@@ -55,10 +55,18 @@ export default function PrivacyPage() {
                 <table className="w-full min-w-[560px] border-collapse text-left text-[15px]">
                   <thead className="bg-paper text-[11px] tracking-[0.14em] text-muted uppercase">
                     <tr>
-                      <th scope="col" className="px-4 py-3 font-semibold">Name</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">Category</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">Purpose</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">Duration</th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        Name
+                      </th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        Category
+                      </th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        Purpose
+                      </th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        Duration
+                      </th>
                     </tr>
                   </thead>
                   <tbody>

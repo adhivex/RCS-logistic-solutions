@@ -66,7 +66,10 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
         <div className="container-site grid gap-14 nav:grid-cols-2 nav:gap-20">
           <div data-reveal>
             <Label>What&apos;s included</Label>
-            <h2 id="included-heading" className="mt-[18px] flex items-center gap-4 text-[clamp(28px,3vw,40px)]">
+            <h2
+              id="included-heading"
+              className="mt-[18px] flex items-center gap-4 text-[clamp(28px,3vw,40px)]"
+            >
               <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-orange-soft text-orange">
                 <Icon className="size-6" />
               </span>
@@ -116,8 +119,14 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
           <ol className="grid gap-y-11 sm:grid-cols-2 wide:grid-cols-4">
             {serviceSteps.map((step, index) => (
               <li key={step.title} data-reveal className="relative border-t border-line pt-[34px] pr-[30px]">
-                <span aria-hidden="true" className="absolute -top-1 left-0 size-[7px] rounded-full bg-orange" />
-                <span aria-hidden="true" className="mb-[22px] block font-serif text-[44px] leading-none text-ink italic">
+                <span
+                  aria-hidden="true"
+                  className="absolute -top-1 left-0 size-[7px] rounded-full bg-orange"
+                />
+                <span
+                  aria-hidden="true"
+                  className="mb-[22px] block font-serif text-[44px] leading-none text-ink italic"
+                >
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mb-2.5 text-[21px] tracking-[-0.02em]">

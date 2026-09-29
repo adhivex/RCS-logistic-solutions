@@ -45,7 +45,11 @@ export function Footer() {
       <div className="container-site">
         <div className="grid grid-cols-2 gap-x-5 gap-y-9 pt-[52px] pb-10 sm:grid-cols-3 sm:gap-x-8 sm:gap-y-10 desk:grid-cols-[1.5fr_1fr_1fr_1.3fr] desk:gap-12 desk:pt-[72px] desk:pb-14">
           <div className="col-span-full border-b border-white/10 pb-7 sm:grid sm:grid-cols-[auto_1fr] sm:items-center sm:gap-x-10 sm:gap-y-1 sm:pb-9 desk:col-span-1 desk:block desk:border-0 desk:pb-0">
-            <Link href="/" aria-label={`${company.name} home`} className="mb-[18px] inline-block sm:row-span-2 sm:mb-0 desk:mb-[22px]">
+            <Link
+              href="/"
+              aria-label={`${company.name} home`}
+              className="mb-[18px] inline-block sm:row-span-2 sm:mb-0 desk:mb-[22px]"
+            >
               <LogoImage on="dark" height={52} className="max-sm:h-[46px]! max-sm:w-auto!" />
             </Link>
             <p className="mb-3 font-serif text-[21px] leading-[1.3] text-white italic sm:text-2xl">
@@ -84,7 +88,10 @@ export function Footer() {
             </h2>
             <ul className="grid gap-3 [&_svg]:size-[17px] [&_svg]:shrink-0 [&_svg]:text-orange-light">
               <li>
-                <a href={company.phoneHref} className="flex items-center gap-2.5 transition-colors hover:text-white">
+                <a
+                  href={company.phoneHref}
+                  className="flex items-center gap-2.5 transition-colors hover:text-white"
+                >
                   <PhoneIcon strokeWidth={1.8} />
                   {company.phone}
                 </a>

@@ -39,6 +39,7 @@ npm test               # Vitest: quote schema, phone normalisation, consent cook
 ```
 
 ## Where things live
+
 - Copy and company facts: `src/content/*.ts` (`TODO(client)` marks anything unconfirmed)
 - Photos: `src/content/media.ts` and `src/content/fleet.ts` (kit placeholders are flagged `placeholder: true`)
 - Design tokens: `src/app/globals.css`, preview at `/styleguide`

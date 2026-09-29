@@ -12,7 +12,8 @@ export const cookieConsentCopy = {
   customise: "Customise preferences",
   save: "Save preferences",
   prefsTitle: "Cookie preferences",
-  prefsIntro: "Choose which cookies we can use. You can change this any time from “Cookie settings” in the footer.",
+  prefsIntro:
+    "Choose which cookies we can use. You can change this any time from “Cookie settings” in the footer.",
   categories: [
     {
       key: "essential",

@@ -26,7 +26,7 @@ export function CtaSection({
   return (
     <section
       aria-labelledby="cta-heading"
-      className="grain relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--color-ink)_0%,var(--color-steel)_140%)] text-center text-white/72 section-y"
+      className="grain relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--color-ink)_0%,var(--color-steel)_140%)] section-y text-center text-white/72"
     >
       <div
         aria-hidden="true"

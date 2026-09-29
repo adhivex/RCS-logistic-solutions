@@ -72,7 +72,10 @@ type Common = ButtonStyle & {
   children: ReactNode;
 };
 
-type AsLink = Common & { href: string } & Omit<ComponentProps<typeof Link>, "href" | "className" | "children">;
+type AsLink = Common & { href: string } & Omit<
+    ComponentProps<typeof Link>,
+    "href" | "className" | "children"
+  >;
 type AsButton = Common & { href?: undefined } & Omit<ComponentProps<"button">, "className" | "children">;
 
 export type ButtonProps = AsLink | AsButton;

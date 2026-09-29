@@ -20,7 +20,8 @@ export function FounderStrip() {
               <p className="m-0">“{founderStrip.quote}”</p>
             </blockquote>
             <figcaption className="text-[13px] text-muted">
-              <b className="font-semibold text-ink">{company.founder}</b> · {company.founderRole}, {company.name}
+              <b className="font-semibold text-ink">{company.founder}</b> · {company.founderRole},{" "}
+              {company.name}
             </figcaption>
           </div>
           <TextLink href={founderStrip.link.href} className="ml-20 nav:ml-0">
