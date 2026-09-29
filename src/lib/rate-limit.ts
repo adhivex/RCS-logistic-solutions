@@ -1,20 +1,19 @@
 import "server-only";
-import { getDb } from "@/lib/db";
+import type { AdminClient } from "@/lib/supabase/admin";
 
 /**
- * Postgres-backed limiter (docs/05-data-and-api.md): max 5 submissions per IP per
- * 10 minutes. In-memory limits don't hold across serverless instances, so each
- * attempt is recorded as a RateLimitHit row keyed by a salted IP hash (never the raw IP).
- * Old rows can be pruned at any time; only the last window is read.
+ * docs/05-data-and-api.md → Submission, step 2: count this IP hash's quote requests
+ * in the last 10 minutes and reject above 5. Only the salted hash is stored.
  */
 export const RATE_LIMIT = { max: 5, windowMs: 10 * 60 * 1000 } as const;
 
-/** Records this attempt and returns true when the IP is over the limit. */
-export async function hitRateLimit(ipHash: string): Promise<boolean> {
-  const db = getDb();
-  const since = new Date(Date.now() - RATE_LIMIT.windowMs);
-  const recent = await db.rateLimitHit.count({ where: { ipHash, createdAt: { gte: since } } });
-  if (recent >= RATE_LIMIT.max) return true;
-  await db.rateLimitHit.create({ data: { ipHash } });
-  return false;
+export async function isRateLimited(db: AdminClient, ipHash: string): Promise<boolean> {
+  const since = new Date(Date.now() - RATE_LIMIT.windowMs).toISOString();
+  const { count, error } = await db
+    .from("quote_requests")
+    .select("id", { count: "exact", head: true })
+    .eq("ip_hash", ipHash)
+    .gte("created_at", since);
+  if (error) throw new Error(`Rate limit check failed: ${error.message}`);
+  return (count ?? 0) >= RATE_LIMIT.max;
 }

@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/next";
-import { FloatingContact } from "@/components/layout/floating-contact";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { MobileQuickBar } from "@/components/layout/mobile-quick-bar";
+import { RevealObserver } from "@/components/layout/reveal-observer";
 import { QuoteDialog } from "@/components/quote/quote-dialog";
-import { UtmCapture } from "@/components/quote/utm-capture";
 import { JsonLd } from "@/components/seo/json-ld";
 import { company } from "@/content";
 import { canonicalOrigin, localBusinessJsonLd } from "@/lib/seo";
@@ -16,25 +15,32 @@ export const metadata: Metadata = {
   applicationName: company.name,
   openGraph: { siteName: company.name, locale: "en_IN", type: "website" },
   title: {
-    default: "RCS Logistic | B2B Truck Transport from Odisha Across India",
-    template: `%s | RCS Logistic — ${company.tagline}`,
+    default: "RCS Logistic Solutions | B2B & B2C Truck Transport from Odisha Across India",
+    template: `%s | ${company.name}`,
   },
   description:
-    "RCS Logistic delivers dependable B2B transportation solutions across Odisha and India — full truck load, part truck load, warehousing and supply chain.",
+    "RCS Logistic Solutions: dependable road transport from Odisha across India for businesses and individuals — full truck load, part truck load, warehousing and supply chain.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#19283b",
   colorScheme: "light",
+  viewportFit: "cover",
 };
+
+/** Marks JS as available before first paint, so reveal-on-scroll never hides content without JS. */
+const jsFlag = `document.documentElement.classList.add("js")`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-IN" className={fontVariables}>
+    <html lang="en-IN" className={fontVariables} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: jsFlag }} />
+      </head>
       <body className="flex min-h-dvh flex-col">
         <a
           href="#main"
-          className="sr-only z-50 rounded-button bg-brand-ink px-4 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+          className="sr-only z-70 rounded-full bg-ink px-5 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
         >
           Skip to content
         </a>
@@ -44,10 +50,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
-        <FloatingContact />
+        <MobileQuickBar />
         <QuoteDialog />
-        <UtmCapture />
-        <Analytics />
+        <RevealObserver />
       </body>
     </html>
   );

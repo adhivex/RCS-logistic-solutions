@@ -1,11 +1,12 @@
-import { Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PhoneIcon } from "@/components/ui/icons";
+import { StatusPanel } from "@/components/ui/status-panel";
 import { company, pages } from "@/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Thank you",
-  description: "Your quote request has been received by RCS Logistic.",
+  description: "Your quote request has been received by RCS Logistic Solutions.",
   path: "/thank-you",
   noIndex: true,
 });
@@ -14,30 +15,30 @@ export const metadata = pageMetadata({
 export default function ThankYouPage() {
   const copy = pages.thankYou;
   return (
-    <section className="section-y">
-      <div className="container-site max-w-2xl">
-        <span aria-hidden="true" className="mb-6 block h-[3px] w-10 bg-brand-orange" />
-        <h1 className="text-[clamp(34px,5vw,52px)] font-extrabold">{copy.title}</h1>
-        <p className="mt-4 text-lg">{copy.body}</p>
-        <h2 className="mt-10 text-xl font-semibold">{copy.nextHeading}</h2>
-        <ol className="mt-4 grid gap-3">
-          {copy.next.map((step, index) => (
-            <li key={step} className="flex gap-3">
-              <span className="font-display font-bold text-action">{index + 1}.</span>
-              {step}
-            </li>
-          ))}
-        </ol>
-        <p className="mt-10">{copy.urgent}</p>
-        <div className="mt-4 flex flex-wrap gap-3.5">
-          <Button href={company.phoneHref} icon={<Phone aria-hidden="true" />}>
-            {company.phone}
-          </Button>
-          <Button variant="outline" href="/">
-            Back to home
-          </Button>
-        </div>
+    <StatusPanel label={copy.label} heading={copy.heading}>
+      <p className="mt-6 max-w-[520px] text-[17px]">{copy.body}</p>
+      <h2 className="mt-10 font-body text-xs font-semibold tracking-[0.2em] text-white uppercase">
+        {copy.nextHeading}
+      </h2>
+      <ol className="mt-4 grid gap-3 border-t border-white/12 pt-4">
+        {copy.next.map((step, index) => (
+          <li key={step} className="flex gap-4">
+            <span aria-hidden="true" className="font-serif text-xl leading-tight text-orange-light italic">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            {step}
+          </li>
+        ))}
+      </ol>
+      <p className="mt-10 mb-4">{copy.urgent}</p>
+      <div className="flex flex-wrap gap-3">
+        <Button href={company.phoneHref} icon={<PhoneIcon />}>
+          {company.phone}
+        </Button>
+        <Button variant="light" href="/">
+          Back to home
+        </Button>
       </div>
-    </section>
+    </StatusPanel>
   );
 }

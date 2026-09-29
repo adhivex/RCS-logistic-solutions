@@ -38,7 +38,7 @@ describe("quote schema", () => {
   const now = new Date("2026-09-29T06:00:00Z");
   const schema = createQuoteSchema(now);
   const valid: QuoteFormValues = {
-    ...emptyQuoteValues("FULL_TRUCK_LOAD"),
+    ...emptyQuoteValues("full_truck_load"),
     name: "Test Buyer",
     phone: "98765 43210",
     fromCity: "Cuttack",
@@ -96,5 +96,37 @@ describe("quote schema", () => {
     expect(fieldError({ name: "x".repeat(81) }, "name")).toMatch(/under 80/);
     expect(fieldError({ details: "x".repeat(1001) }, "details")).toMatch(/under 1000/);
     expect(fieldError({ fromCity: "x".repeat(61) }, "fromCity")).toMatch(/under 60/);
+  });
+});
+
+describe("customer type", () => {
+  const schema = createQuoteSchema(new Date("2026-09-29T06:00:00Z"));
+  const base: QuoteFormValues = {
+    ...emptyQuoteValues("part_truck_load"),
+    name: "Test Person",
+    phone: "9876543210",
+    fromCity: "Cuttack",
+    toCity: "Bhubaneswar",
+  };
+
+  it("defaults to business and keeps the company", () => {
+    const result = schema.safeParse({ ...base, company: "Acme Steel" });
+    expect(result.success).toBe(true);
+    if (!result.success) return;
+    expect(result.data.customerType).toBe("business");
+    expect(result.data.company).toBe("Acme Steel");
+  });
+
+  it("drops the company for individuals", () => {
+    const result = schema.safeParse({ ...base, customerType: "individual", company: "Leftover" });
+    expect(result.success).toBe(true);
+    if (!result.success) return;
+    expect(result.data.customerType).toBe("individual");
+    expect(result.data.company).toBeUndefined();
+  });
+
+  it("rejects unknown customer types", () => {
+    const result = schema.safeParse({ ...base, customerType: "robot" as QuoteFormValues["customerType"] });
+    expect(result.success).toBe(false);
   });
 });

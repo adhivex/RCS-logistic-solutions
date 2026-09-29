@@ -57,25 +57,25 @@ export function QuoteDialog() {
         // Click on the backdrop (the dialog element itself) closes it.
         if (event.target === dialogRef.current) dialogRef.current.close();
       }}
-      className="m-auto max-h-[calc(100dvh-2rem)] w-[min(560px,calc(100%-2rem))] overflow-y-auto rounded-xl bg-white p-0 text-brand-slate shadow-dialog"
+      className="m-auto max-h-[calc(100dvh-2rem)] w-[min(560px,calc(100%-32px))] overflow-y-auto rounded-2xl bg-white p-0 text-slate shadow-dialog"
     >
-      <div className="flex items-center justify-between border-b border-brand-line px-6 py-5">
+      <div className="flex items-start justify-between gap-5 px-6 pt-[26px] sm:px-8 sm:pt-[30px]">
         <div>
-          <h2 id="quote-dialog-title" className="text-xl font-semibold">
+          <h2 id="quote-dialog-title" className="text-[32px] tracking-[-0.04em]">
             {quoteCopy.title}
           </h2>
-          <p className="mt-1 text-sm">{quoteCopy.intro}</p>
+          <p className="mt-1.5 text-sm">{quoteCopy.intro}</p>
         </div>
         <button
           type="button"
           onClick={() => dialogRef.current?.close()}
           aria-label="Close"
-          className="-mr-2 inline-flex size-11 shrink-0 items-center justify-center rounded-button text-brand-slate hover:bg-brand-mist hover:text-brand-ink"
+          className="inline-flex size-[38px] shrink-0 cursor-pointer items-center justify-center rounded-full bg-paper text-ink transition-colors hover:bg-line"
         >
-          <X className="size-6" aria-hidden="true" />
+          <X className="size-5" aria-hidden="true" />
         </button>
       </div>
-      <div className="relative px-6 pt-5 pb-6">
+      <div className="px-6 pt-5 pb-7 sm:px-8 sm:pt-6 sm:pb-8">
         {openCount > 0 && (
           <QuoteForm
             key={openCount}

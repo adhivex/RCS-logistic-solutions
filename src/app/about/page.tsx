@@ -1,83 +1,110 @@
+import { AccentHeading } from "@/components/ui/accent-heading";
+import { CtaSection } from "@/components/ui/cta-section";
 import { trustIcons } from "@/components/ui/icons";
-import { CtaBand } from "@/components/ui/cta-band";
-import { Eyebrow } from "@/components/ui/eyebrow";
+import { Label } from "@/components/ui/label";
 import { PageHero } from "@/components/ui/page-hero";
 import { Photo } from "@/components/ui/photo";
 import { aboutPage, company, media, pages, trust } from "@/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "About",
+  title: pages.about.title,
   description: pages.about.description,
   path: "/about",
 });
 
+/** docs/03-pages.md → /about: founder story, mission, milestones (when supplied), why RCS. */
 export default function AboutPage() {
   return (
     <>
       <PageHero
         path="/about"
-        title={aboutPage.title}
-        intro={aboutPage.intro}
+        {...pages.about.hero}
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "About" }]}
       />
 
-      <section aria-labelledby="story-heading" className="section-y">
-        <div className="container-site grid items-center gap-9 nav:grid-cols-[1fr_1.05fr] nav:gap-16">
-          <div className="relative aspect-[438/356] overflow-hidden rounded-card bg-[#333]">
-            <Photo item={media.founder} sizes="(min-width: 860px) 45vw, 100vw" tone="dark" />
+      <section aria-labelledby="story-heading" className="bg-white section-y">
+        <div className="container-site grid items-center gap-12 nav:grid-cols-[0.95fr_1.05fr] nav:gap-[clamp(40px,7vw,110px)]">
+          <div data-reveal className="relative mx-[18px] nav:mx-0">
+            <span
+              aria-hidden="true"
+              className="absolute inset-[-18px_18px_18px_-18px] -z-0 rounded-[14px] border border-orange"
+            />
+            <div className="relative aspect-[438/400] overflow-hidden rounded-[14px] bg-[linear-gradient(160deg,var(--color-ink),var(--color-steel))]">
+              <Photo
+                item={media.founderPortrait}
+                sizes="(min-width: 880px) 45vw, 100vw"
+                fallback={
+                  <span className="absolute inset-0 grid place-items-center font-serif text-[clamp(72px,12vw,140px)] text-white/90 italic">
+                    {company.founderInitials}
+                  </span>
+                }
+              />
+            </div>
           </div>
-          <div>
-            <Eyebrow>Our Founder</Eyebrow>
-            <h2 id="story-heading" className="text-[clamp(28px,3.4vw,40px)] font-bold">
-              The story behind <span className="text-highlight">RCS Logistic</span>
-            </h2>
+          <div data-reveal>
+            <Label>{aboutPage.storyLabel}</Label>
+            <AccentHeading
+              id="story-heading"
+              heading={aboutPage.storyHeading}
+              className="mt-6 mb-7 text-[clamp(36px,4.4vw,62px)]"
+            />
+            <blockquote className="m-0 mb-6 border-l-2 border-orange pl-6 font-serif text-[clamp(22px,2vw,27px)] leading-[1.4] text-ink">
+              <p className="m-0">“{aboutPage.quote}”</p>
+            </blockquote>
             {aboutPage.story.map((paragraph) => (
-              <p key={paragraph} className="mt-5 max-w-[560px]">
+              <p key={paragraph} className="mt-0 mb-5 max-w-[540px]">
                 {paragraph}
               </p>
             ))}
-            <span aria-hidden="true" className="mt-7 mb-5 block h-[3px] w-[30px] bg-brand-orange" />
-            <p aria-hidden="true" className="font-script text-[34px] leading-none text-brand-ink">
-              {company.founder}
-            </p>
-            <p className="mt-2 text-[13px] font-semibold tracking-[0.08em] text-brand-ink uppercase">
-              {company.founder}
-            </p>
-            <p className="text-sm">
-              {company.founderRole}, {company.shortName}
-            </p>
+            <div className="mt-9 border-t border-line pt-7">
+              <p aria-hidden="true" className="m-0 font-serif text-[34px] leading-none text-ink italic">
+                {company.founder}
+              </p>
+              <p className="mt-2.5 text-xs tracking-[0.18em] text-muted uppercase">
+                <span className="sr-only">{company.founder}, </span>
+                {company.founderRole}, {company.name}
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section aria-labelledby="mission-heading" className="bg-brand-mist section-y">
+      <section aria-labelledby="mission-heading" className="bg-paper section-y">
         <div className="container-site">
-          <Eyebrow>What drives us</Eyebrow>
-          <h2 id="mission-heading" className="mb-10 text-[clamp(28px,3.4vw,40px)] font-bold">
-            Mission, partnership and <span className="text-highlight">vision</span>
-          </h2>
-          <ul className="grid gap-6 md:grid-cols-3">
-            {aboutPage.mission.map((item) => (
-              <li key={item.title} className="rounded-card border border-brand-line bg-white p-7">
-                <h3 className="text-xl font-semibold">{item.title}</h3>
-                <p className="mt-3">{item.body}</p>
+          <div data-reveal>
+            <Label>{aboutPage.missionLabel}</Label>
+            <AccentHeading
+              id="mission-heading"
+              heading={aboutPage.missionHeading}
+              className="mt-[18px] mb-[clamp(28px,4vw,48px)] text-[clamp(32px,4.2vw,56px)]"
+            />
+          </div>
+          <ol className="grid border-t border-line nav:grid-cols-3">
+            {aboutPage.mission.map((item, index) => (
+              <li key={item.title} data-reveal className="relative pt-8 pb-8 nav:pr-8 nav:pb-0">
+                <span aria-hidden="true" className="absolute -top-1 left-0 size-[7px] rounded-full bg-orange" />
+                <span aria-hidden="true" className="mb-5 block font-serif text-[44px] leading-none text-ink italic">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mb-2.5 text-[21px] tracking-[-0.02em]">{item.title}</h3>
+                <p className="m-0 text-[15px]">{item.body}</p>
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
       </section>
 
       {aboutPage.milestones.length > 0 && (
-        <section aria-labelledby="milestones-heading" className="section-y">
+        <section aria-labelledby="milestones-heading" className="bg-white section-y">
           <div className="container-site">
-            <h2 id="milestones-heading" className="mb-8 text-3xl font-bold">
+            <h2 id="milestones-heading" className="mb-8 text-[clamp(32px,4.2vw,56px)]">
               Milestones
             </h2>
-            <ol className="grid gap-4 border-l-2 border-brand-orange pl-6">
+            <ol className="grid gap-4 border-l-2 border-orange pl-6">
               {aboutPage.milestones.map((milestone) => (
                 <li key={milestone.year}>
-                  <p className="font-display text-xl font-semibold text-brand-ink">{milestone.year}</p>
+                  <p className="font-display text-xl font-semibold text-ink">{milestone.year}</p>
                   <p>{milestone.text}</p>
                 </li>
               ))}
@@ -86,20 +113,26 @@ export default function AboutPage() {
         </section>
       )}
 
-      <section aria-labelledby="why-heading" className="section-y">
+      <section aria-labelledby="why-heading" className="bg-white section-y">
         <div className="container-site">
-          <Eyebrow>Why RCS</Eyebrow>
-          <h2 id="why-heading" className="mb-10 text-[clamp(28px,3.4vw,40px)] font-bold">
-            Why businesses choose <span className="text-highlight">RCS</span>
-          </h2>
-          <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div data-reveal>
+            <Label>{aboutPage.whyLabel}</Label>
+            <AccentHeading
+              id="why-heading"
+              heading={aboutPage.whyHeading}
+              className="mt-[18px] mb-[clamp(28px,4vw,48px)] text-[clamp(32px,4.2vw,56px)]"
+            />
+          </div>
+          <ul className="grid gap-4 sm:grid-cols-2 wide:grid-cols-4">
             {aboutPage.whyChoose.map((item, index) => {
-              const Icon = trustIcons[trust.items[index].icon];
+              const Icon = trustIcons[trust[index].icon];
               return (
-                <li key={item.title} className="border-t border-brand-line pt-6">
-                  <Icon className="size-9 text-brand-orange" aria-hidden="true" />
-                  <h3 className="mt-4 text-lg font-semibold">{item.title}</h3>
-                  <p className="mt-2 text-[15px]">{item.body}</p>
+                <li key={item.title} data-reveal className="rounded-2xl border border-line bg-white p-[26px]">
+                  <span className="mb-5 grid size-12 place-items-center rounded-xl bg-orange-soft text-orange">
+                    <Icon className="size-6" />
+                  </span>
+                  <h3 className="mb-1.5 text-xl tracking-[-0.02em]">{item.title}</h3>
+                  <p className="m-0 text-[14.5px] leading-normal">{item.body}</p>
                 </li>
               );
             })}
@@ -107,7 +140,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <CtaBand />
+      <CtaSection />
     </>
   );
 }

@@ -8,8 +8,8 @@ type QuoteConfirmationProps = {
   phoneHref: string;
 };
 
-const ink = "#16181D";
-const slate = "#4A4F58";
+const ink = "#19283B";
+const slate = "#4F5B6B";
 
 /** Short confirmation to the customer — only sent when they gave an email address. */
 export default function QuoteConfirmationEmail({
@@ -23,7 +23,7 @@ export default function QuoteConfirmationEmail({
     <Html lang="en">
       <Head />
       <Preview>We received your quote request — {route}</Preview>
-      <Body style={{ backgroundColor: "#F5F5F4", fontFamily: "Arial, sans-serif", color: ink, margin: 0 }}>
+      <Body style={{ backgroundColor: "#F3F5F8", fontFamily: "Arial, sans-serif", color: ink, margin: 0 }}>
         <Container
           style={{ backgroundColor: "#ffffff", padding: "28px", maxWidth: "560px", borderRadius: "8px" }}
         >
@@ -37,7 +37,7 @@ export default function QuoteConfirmationEmail({
           </Text>
           <Text style={{ color: slate }}>
             Need to talk sooner? Call us on{" "}
-            <Link href={phoneHref} style={{ color: "#B94A15", fontWeight: 600 }}>
+            <Link href={phoneHref} style={{ color: "#C74916", fontWeight: 600 }}>
               {phone}
             </Link>
             .

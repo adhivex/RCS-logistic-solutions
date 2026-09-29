@@ -1,10 +1,24 @@
+import { fleet } from "./fleet";
+import { services } from "./services";
+
 /**
- * Network — docs/04-content.md. Stats, cities and routes are all to come from the
- * client. Never estimate: until verified numbers arrive, the stat band shows
- * placeholders in development and is hidden in production.
+ * Network and numbers — docs/04-content.md. Never estimate: unverified figures stay
+ * `TODO(client)` (shown as placeholders in development, omitted in production).
  */
 export type Stat = { value: string; label: string };
 
+const twoDigits = (n: number) => String(n).padStart(2, "0");
+
+/** Homepage NumbersStrip (preview order). Service lines and vehicle classes are counted from content. */
+export const numbersStrip: Stat[] = [
+  // The preview shows "28+" — unverified. TODO(client): real figures (years, vehicles, loads/month)
+  { value: "TODO(client): cities served (preview shows 28+)", label: "Major cities" },
+  { value: twoDigits(services.length), label: "Service lines" },
+  { value: twoDigits(fleet.length), label: "Vehicle classes" },
+  { value: "Pan", label: "India reach" },
+];
+
+/** /network stat panel — the strongest three verified figures. */
 export const networkStats: Stat[] = [
   { value: "TODO(client): stat 1", label: "e.g. years in business" },
   { value: "TODO(client): stat 2", label: "e.g. vehicles in fleet" },

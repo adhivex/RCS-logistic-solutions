@@ -92,3 +92,29 @@ The client supplied a second kit (`RCSLS website design files.zip` → `rcs-webs
 ### D-17 — Kit photos are placeholders; the founder headshot is development-only
 - The kit's hero and fleet crops come from the concept art and are low resolution (fleet about 290×123 px). They're used as placeholders so the site looks like the approved design, and are flagged `placeholder: true` in `src/content/media.ts`.
 - `founder-headshot.jpg` is a concept-art face, not a confirmed photo of Satya. The kit's own checklist forbids AI images of real people, so it renders **only in development**, and production shows an "SS" monogram in the same ring. Confirmed by the user on 2026-09-29.
+
+### D-18 — Contrast adjustments to the v2 palette
+All kit colours were measured (the table is in `src/app/globals.css` and `/styleguide`):
+- Orange `#EA5A24` is 3.51:1 on white, so it's used only for accent words at 32px or larger, icons and glows.
+- Buttons and small orange text use `#C74916` (4.78:1).
+- On navy, `#F2763F` is used (5.28:1).
+- Two kit values fail the 3:1 rule for control boundaries (WCAG 1.4.11): the input underline (`#DFE4EB`, 1.28:1) and the off-state switch track (`#C9D1DB`, 1.54:1). Both use **`field` #8A94A3** (3.07:1). Inputs show a 2px orange underline on focus.
+
+### D-19 — Supabase, local stack on its own ports
+- Prisma, Neon and `dotenv` are removed. `@supabase/supabase-js` is added (the server-only admin client in `src/lib/supabase/admin.ts`), plus the `supabase` CLI as a dev dependency, used for migrations, the local database and type generation. `@supabase/ssr` isn't added: nothing needs it at launch (05-data-and-api.md).
+- The migration is the kit's SQL, plus `revoke all … from anon, authenticated` as a second lock alongside RLS. It was checked on the local stack: the `anon` role gets "permission denied".
+- Another project on this machine already uses the default Supabase ports, so this project uses **553xx** (API 55321, DB 55322, Studio 55323) in `supabase/config.toml`.
+- On this machine the full stack failed its health checks. `supabase start -x storage-api,imgproxy,logflare,vector,edge-runtime,realtime,mailpit,supavisor` runs everything the site uses.
+- The rate limit now follows the kit: it counts `quote_requests` rows with the same `ip_hash` in the last 10 minutes and rejects above 5. The kit-1 `RateLimitHit` table is gone. The env var is renamed `IP_HASH_SALT` → **`RATE_LIMIT_SALT`**.
+
+### D-20 — Local mode never applies on the production deployment
+- CLAUDE.md's local mode (no Supabase: validate, log and redirect to `/thank-you`) applies everywhere **except** `VERCEL_ENV=production`. There, missing credentials show the "call or WhatsApp us" error instead, so a real lead is never silently logged and lost.
+- Missing Resend in any environment just logs the email and leaves `email_sent = false`.
+- The kit-1 `REQUIRE_SERVER_ENV` flag is removed. The startup warning is one line.
+
+### D-21 — Homepage details
+- The preview's "28+ major cities" is unverified. It shows as a `TODO(client)` placeholder in development and is left out in production, leaving three figures. "04 service lines" and "03 vehicle classes" are counted from the content files.
+- The preview's `.hero-aside` block is `display: none` at every width, so it isn't built.
+- The header and drawer nav follow the preview (Home, Services, Fleet, About, Network, Contact). Industries is linked from the footer's Company column and from each service page, so it stays reachable.
+- Every inner page opens with a navy hero, and thank-you, 404 and error use a navy panel, so the transparent header works everywhere. `/styleguide` gets the solid header.
+- Phases 1–5 were rebuilt and committed together. The new tokens, fonts and content shapes replaced every kit-1 component at once, so intermediate commits wouldn't have built.

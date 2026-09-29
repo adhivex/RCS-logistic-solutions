@@ -1,47 +1,54 @@
 @import "tailwindcss";
 
 /*
- * RCS design tokens — docs/02-design-system.md (source: docs/reference/homepage-mockup.png).
- * Light-themed brand site only.
+ * RCS design tokens — docs/02-design-system.md (source of truth:
+ * docs/reference/homepage-preview.html). Light theme only.
  *
- * Contrast (WCAG 2.1, measured):
- *   brand-orange #F2611D — white text on it 3.23:1, as text on white 3.23:1.
- *     → Use for icons, bars, borders, focus rings, and LARGE headings only
- *       (≥ 24px bold / hero word / H2 highlight), where 3:1 is enough.
- *   action #B94A15 — white on it 5.18:1; as text on white 5.18:1, on mist 4.75:1.
- *     → Primary button background and all small orange text (links, "Learn more").
- *   action-hover #A44013 — white on it 6.32:1.
- *   brand-orange on ink 5.50:1 — fine for text in dark sections.
- * See docs/09-decisions.md → D-02.
+ * Contrast (WCAG 2.1, measured — docs/12-decisions.md → D-18):
+ *   slate #4F5B6B body text: 6.91:1 on white, 6.32:1 on paper.
+ *   muted #667180 small labels: 4.95:1 on white, 4.54:1 on paper.
+ *   orange #EA5A24: 3.51:1 on white, 3.21:1 on paper → large headline accents,
+ *     icons and glows only (never small text).
+ *   orange-deep #C74916: white on it 4.78:1 → buttons and small orange text.
+ *   orange-light #F2763F on ink 5.28:1 → orange text on navy.
+ *   field #8A94A3: 3.07:1 on white → input underlines and the off switch track
+ *     (the kit's line colour, 1.28:1, is too faint for a control boundary).
  */
 @theme {
-  --color-brand-orange: #f2611d;
-  --color-brand-orange-dark: #d94f10;
-  --color-highlight: #ea5b19; /* H2 highlight phrase on light surfaces: 3.49:1 white, 3.20:1 mist (large text) */
-  --color-action: #b94a15;
-  --color-action-hover: #a44013;
-  --color-brand-ink: #16181d;
-  --color-brand-slate: #4a4f58; /* body text: 8.23:1 on white, 7.55:1 on mist */
-  --color-brand-mist: #f5f5f4;
-  --color-brand-line: #e4e4e2;
-  --color-field-border: #8a8f98; /* form control borders: ≥ 3:1 on white */
+  --color-orange: #ea5a24;
+  --color-orange-deep: #c74916;
+  --color-orange-dark: #ab3d10;
+  --color-orange-light: #f2763f;
+  --color-orange-soft: #fdeee6;
+
+  --color-ink: #19283b;
+  --color-ink-2: #172333;
+  --color-steel: #243f5c;
+  --color-footer: #111d2c;
+
+  --color-slate: #4f5b6b;
+  --color-muted: #667180;
+  --color-paper: #f3f5f8;
+  --color-line: #dfe4eb;
+  --color-field: #8a94a3;
   --color-danger: #b42318; /* error text: 6.57:1 on white */
 
-  --font-display: var(--font-poppins), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-manrope), system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-body: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-script: var(--font-caveat), "Brush Script MT", cursive;
+  --font-serif: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
 
-  --radius-button: 6px;
-  --radius-card: 10px;
+  --ease-brand: cubic-bezier(0.2, 0.7, 0.2, 1);
 
-  --shadow-header: 0 4px 18px rgb(22 24 29 / 0.08);
-  --shadow-card: 0 14px 40px rgb(22 24 29 / 0.1);
-  --shadow-dialog: 0 30px 80px rgb(0 0 0 / 0.35);
+  --shadow-soft: 0 18px 40px rgb(25 40 59 / 0.08);
+  --shadow-dialog: 0 40px 100px rgb(0 0 0 / 0.4);
+  --shadow-cookie: 0 24px 60px rgb(25 40 59 / 0.22);
 
-  --container-site: 1200px;
+  --container-site: 1240px;
 
-  /* Header switches to the mobile drawer below 860px (reference preview) */
-  --breakpoint-nav: 53.75rem;
+  /* The preview's breakpoints: drawer below 880px, 2-col cards below 1080px */
+  --breakpoint-nav: 55rem; /* 880px */
+  --breakpoint-wide: 67.5rem; /* 1080px */
+  --breakpoint-desk: 64.0625rem; /* 1025px: the footer is 4 columns above 1024px */
 }
 
 @layer base {
@@ -51,37 +58,35 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5.5rem; /* sticky header */
+    scroll-padding-top: 80px;
     -webkit-text-size-adjust: 100%;
   }
 
   body {
-    @apply bg-white font-body text-brand-slate antialiased;
+    @apply bg-paper font-body text-slate antialiased;
     font-size: 1rem;
-    line-height: 1.6;
-
-    @media (width >= 64rem) {
-      font-size: 1.0625rem; /* 16 → 17px */
-    }
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
   }
 
   h1,
   h2,
   h3,
   h4 {
-    @apply font-display text-brand-ink;
-    line-height: 1.1;
+    @apply font-display font-bold text-ink;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-brand-orange);
-    outline-offset: 3px;
+    outline: 2px solid var(--color-orange);
+    outline-offset: 4px;
     border-radius: 4px;
   }
 
-  /* Native <dialog> (QuoteDialog) */
   dialog::backdrop {
-    background: rgb(16 17 20 / 0.6);
+    background: rgb(16 28 44 / 0.72);
+    backdrop-filter: blur(4px);
   }
 
   html:has(dialog[open]) {
@@ -89,8 +94,8 @@
   }
 
   ::selection {
-    background: rgb(242 97 29 / 0.22);
-    color: var(--color-brand-ink);
+    background: rgb(234 90 36 / 0.22);
+    color: var(--color-ink);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -108,19 +113,61 @@
   }
 }
 
-/* Container: max-w 1200px, 20px gutters (docs/02-design-system.md → Layout) */
+/* Container: 1240px, 24px gutters (20px under 600px) */
 @utility container-site {
-  width: 100%;
-  max-width: var(--container-site);
+  width: min(var(--container-site), 100% - 48px);
   margin-inline: auto;
-  padding-inline: 1.25rem;
+
+  @media (width < 600px) {
+    width: min(var(--container-site), 100% - 40px);
+  }
 }
 
-/* Section spacing: py-16 md:py-24 */
+/* Section padding: clamp(64px, 8vw, 112px) */
 @utility section-y {
-  padding-block: 4rem;
+  padding-block: clamp(64px, 8vw, 112px);
+}
 
-  @media (width >= 48rem) {
-    padding-block: 6rem;
+/* Italic serif accent words — the last phrase of a headline */
+@utility accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Subtle film grain over photos and navy panels (7% overlay) */
+@utility grain {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Reveal on scroll (components/ui/reveal.tsx). Content stays visible without JS. */
+@layer components {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 1s var(--ease-brand),
+      transform 1s var(--ease-brand);
+  }
+
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js [data-reveal] {
+      opacity: 1;
+      transform: none;
+    }
   }
 }

@@ -1,222 +1,137 @@
 import type { Metadata } from "next";
-import { Phone, Truck } from "lucide-react";
+import { AccentHeading } from "@/components/ui/accent-heading";
 import { Button } from "@/components/ui/button";
-import { QuoteButton } from "@/components/quote/quote-button";
-import { Eyebrow } from "@/components/ui/eyebrow";
-import { SectionHeading } from "@/components/ui/section-heading";
+import { PhoneIcon } from "@/components/ui/icons";
+import { Label } from "@/components/ui/label";
+import { SectionHead, TextLink } from "@/components/ui/section-head";
 import { Todo } from "@/components/ui/todo";
-import { fleet, fleetIntro, hero, networkIntro, trust } from "@/content";
+import { ctaSection, fleetIntro, footerCopy, hero, servicesIntro } from "@/content";
 
 export const metadata: Metadata = {
   title: "Styleguide",
   robots: { index: false, follow: false },
 };
 
+/** Tokens from src/app/globals.css (docs/02-design-system.md), with measured contrast. */
 const colours = [
-  {
-    name: "brand-orange",
-    hex: "#F2611D",
-    use: "Icons, bars, borders, focus, large headings only",
-    swatch: "bg-brand-orange",
-    note: "3.23:1 with white — not for small text or button fills",
-  },
-  {
-    name: "brand-orange-dark",
-    hex: "#D94F10",
-    use: "Decorative hover on dark",
-    swatch: "bg-brand-orange-dark",
-    note: "4.14:1 with white",
-  },
-  {
-    name: "action",
-    hex: "#B94A15",
-    use: "Button fill, small orange text",
-    swatch: "bg-action",
-    note: "5.18:1 with white · 4.75:1 on mist",
-  },
-  {
-    name: "action-hover",
-    hex: "#A44013",
-    use: "Button hover",
-    swatch: "bg-action-hover",
-    note: "6.32:1 with white",
-  },
-  {
-    name: "brand-ink",
-    hex: "#16181D",
-    use: "Headings, dark bands, footer",
-    swatch: "bg-brand-ink",
-    note: "Orange on ink 5.50:1",
-  },
-  {
-    name: "brand-slate",
-    hex: "#4A4F58",
-    use: "Body text",
-    swatch: "bg-brand-slate",
-    note: "8.23:1 on white · 7.55:1 on mist",
-  },
-  { name: "brand-mist", hex: "#F5F5F4", use: "Light section background", swatch: "bg-brand-mist", note: "" },
-  {
-    name: "brand-line",
-    hex: "#E4E4E2",
-    use: "Dividers, card borders",
-    swatch: "bg-brand-line",
-    note: "Decorative only",
-  },
-  {
-    name: "field-border",
-    hex: "#8A8F98",
-    use: "Form control borders",
-    swatch: "bg-field-border",
-    note: "3.25:1 on white",
-  },
-  { name: "danger", hex: "#B42318", use: "Error text", swatch: "bg-danger", note: "6.57:1 on white" },
+  { name: "orange", hex: "#EA5A24", swatch: "bg-orange", note: "Accent words ≥ 32px, icons, glows · 3.51:1 on white" },
+  { name: "orange-deep", hex: "#C74916", swatch: "bg-orange-deep", note: "Buttons, small orange text · 4.78:1 with white" },
+  { name: "orange-dark", hex: "#AB3D10", swatch: "bg-orange-dark", note: "Button hover · 6.16:1 with white" },
+  { name: "orange-light", hex: "#F2763F", swatch: "bg-orange-light", note: "Orange text on navy · 5.28:1 on ink" },
+  { name: "orange-soft", hex: "#FDEEE6", swatch: "bg-orange-soft", note: "Icon tiles" },
+  { name: "ink", hex: "#19283B", swatch: "bg-ink", note: "Headings, numbers strip, dark buttons, hero base" },
+  { name: "ink-2", hex: "#172333", swatch: "bg-ink-2", note: "Deepest panels" },
+  { name: "steel", hex: "#243F5C", swatch: "bg-steel", note: "End of navy gradients" },
+  { name: "footer", hex: "#111D2C", swatch: "bg-footer", note: "Footer" },
+  { name: "slate", hex: "#4F5B6B", swatch: "bg-slate", note: "Body text · 6.91:1 on white" },
+  { name: "muted", hex: "#667180", swatch: "bg-muted", note: "Labels, captions · 4.95:1 on white, 4.54:1 on paper" },
+  { name: "paper", hex: "#F3F5F8", swatch: "bg-paper", note: "Light section background, scrolled header" },
+  { name: "line", hex: "#DFE4EB", swatch: "bg-line", note: "Borders and dividers" },
+  { name: "field", hex: "#8A94A3", swatch: "bg-field", note: "Input underlines, off switch · 3.07:1 on white" },
+];
+
+const type = [
+  { role: "Hero H1", sample: "Moving Business", className: "font-display text-[clamp(46px,7.6vw,118px)] leading-[.92] font-bold tracking-[-0.05em] text-ink", spec: "Manrope 700 · 46 → 118px · lh .92" },
+  { role: "Section H2", sample: "Logistics built around", className: "font-display text-[clamp(32px,4.2vw,56px)] leading-[1.02] font-bold tracking-[-0.035em] text-ink", spec: "Manrope 700 · 32 → 56px" },
+  { role: "Card H3", sample: "Semi-Trailer Trucks", className: "font-display text-2xl font-bold tracking-[-0.03em] text-ink", spec: "Manrope 600–700 · 17–24px" },
+  { role: "Accent", sample: "your supply chain.", className: "font-serif text-[clamp(32px,4.2vw,56px)] leading-none text-orange italic", spec: "Instrument Serif italic · ~1.05×" },
+  { role: "Body", sample: hero.lead, className: "max-w-xl text-[17px] text-slate", spec: "Inter 400 · 15.5 → 17px · lh 1.65" },
 ];
 
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="border-t border-brand-line py-12">
-      <h2 className="mb-8 text-2xl font-bold">{title}</h2>
+    <section className="border-t border-line py-14">
+      <h2 className="mb-8 text-2xl">{title}</h2>
       {children}
     </section>
   );
 }
 
+/** Internal reference page (noindex): tokens, type and components. */
 export default function StyleguidePage() {
   return (
-    <div className="container-site py-12">
-      <h1 className="text-4xl font-extrabold">Styleguide</h1>
-      <p className="mt-3 max-w-2xl">
-        Phase 1 tokens from docs/02-design-system.md. Not indexed. Orange is split into the bright brand
-        orange for large and decorative use, and a darker accessible shade for buttons and small text.
-      </p>
-
-      <Block title="Colours">
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {colours.map((colour) => (
-            <li key={colour.name} className="overflow-hidden rounded-card border border-brand-line">
-              <div className={`h-20 ${colour.swatch}`} />
-              <div className="p-4 text-sm">
-                <p className="font-semibold text-brand-ink">
-                  {colour.name} <span className="font-normal text-brand-slate">{colour.hex}</span>
-                </p>
-                <p>{colour.use}</p>
-                {colour.note && <p className="mt-1 text-xs">{colour.note}</p>}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </Block>
-
-      <Block title="Type scale">
-        <div className="grid gap-8">
-          <div>
-            <p className="mb-2 text-xs tracking-[0.18em] uppercase">
-              Hero H1 · Poppins 800 · 52 → 96px · lh .95
-            </p>
-            <p className="font-display text-[52px] leading-[0.95] font-extrabold tracking-[-0.02em] text-brand-ink md:text-[96px]">
-              {hero.titleLines.join(" ")} <span className="text-highlight">{hero.titleHighlight}</span>
-            </p>
-          </div>
-          <div>
-            <p className="mb-2 text-xs tracking-[0.18em] uppercase">
-              Section H2 · Poppins 700 · 28 → 44px · lh 1.1
-            </p>
-            <p className="font-display text-[28px] leading-[1.1] font-bold text-brand-ink md:text-[44px]">
-              {fleetIntro.heading.lead} <span className="text-highlight">{fleetIntro.heading.highlight}</span>
-            </p>
-          </div>
-          <div>
-            <p className="mb-2 text-xs tracking-[0.18em] uppercase">Card / item H3 · Poppins 600 · 18–20px</p>
-            <p className="font-display text-lg font-semibold text-brand-ink md:text-xl">
-              Semi-Trailer Trucks
-            </p>
-          </div>
-          <div>
-            <p className="mb-2 text-xs tracking-[0.18em] uppercase">Body · Inter 400 · 16 → 17px · lh 1.6</p>
-            <p className="max-w-2xl">{hero.lead}</p>
-          </div>
-          <div>
-            <p className="mb-2 text-xs tracking-[0.18em] uppercase">Script · Caveat 600 · 30–34px</p>
-            <p className="font-script text-[32px] text-brand-ink">{trust.script}</p>
-          </div>
-        </div>
-      </Block>
-
-      <Block title="Buttons">
-        <div className="flex flex-wrap items-center gap-4">
-          <Button arrow>Get a Quote</Button>
-          <Button variant="outline" arrow>
-            Our Story
-          </Button>
-          <Button variant="primary" icon={<Phone aria-hidden="true" />} href="tel:+919938874147">
-            Call us
-          </Button>
-          <Button size="sm">Small</Button>
-          <Button disabled>Disabled</Button>
-        </div>
-        <div className="mt-6 flex flex-wrap items-center gap-4 rounded-card bg-brand-ink p-8">
-          <Button arrow>Get a Quote</Button>
-          <Button variant="ghost" icon={<Truck aria-hidden="true" />} href="/fleet">
-            Our Fleet
-          </Button>
-        </div>
-      </Block>
-
-      <Block title="Eyebrow">
-        <div className="grid gap-6 md:grid-cols-3">
-          <div className="p-6">
-            <Eyebrow>Our Fleet</Eyebrow>
-          </div>
-          <div className="rounded-card bg-brand-ink p-6">
-            <Eyebrow tone="dark">Our Network</Eyebrow>
-          </div>
-          <div className="rounded-card bg-brand-ink p-6">
-            <Eyebrow tone="dark" barAfter>
-              {hero.eyebrow}
-            </Eyebrow>
-            <p className="text-xs text-white/70">Hero variant: bar after text</p>
-          </div>
-        </div>
-      </Block>
-      <Block title="Section heading">
-        <SectionHeading
-          eyebrow={fleetIntro.eyebrow}
-          heading={fleetIntro.heading}
-          description={fleetIntro.description}
-          link={fleetIntro.link}
-        />
-        <div className="rounded-card bg-brand-ink p-8">
-          <SectionHeading
-            eyebrow={networkIntro.eyebrow}
-            heading={networkIntro.heading}
-            tone="dark"
-            className="mb-0"
-          />
-        </div>
-      </Block>
-
-      <Block title="Quote triggers">
-        <p className="mb-4 max-w-2xl">
-          Each opens the same dialog; the second pre-selects Part Truck Load. Without JavaScript they link to
-          /contact#quote.
+    <div className="bg-white pt-28 pb-20">
+      <div className="container-site">
+        <Label>Internal</Label>
+        <h1 className="mt-4 text-[clamp(40px,5vw,64px)]">Styleguide</h1>
+        <p className="mt-3 max-w-2xl">
+          Tokens and components from <code>docs/02-design-system.md</code>. Source of truth:{" "}
+          <code>docs/reference/homepage-preview.html</code>.
         </p>
-        <div className="flex flex-wrap gap-4">
-          <QuoteButton />
-          <QuoteButton service="PART_TRUCK_LOAD" variant="outline">
-            Quote for Part Truck Load
-          </QuoteButton>
-        </div>
-      </Block>
 
-      <Block title="Client placeholders">
-        <p className="mb-4 max-w-2xl">
-          Unconfirmed values show like this in development and are omitted in production.
-        </p>
-        <p>
-          Capacity: <Todo value={fleet[0].capacity} />
-        </p>
-      </Block>
+        <Block title="Colours">
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {colours.map((colour) => (
+              <li key={colour.name} className="flex gap-4 rounded-2xl border border-line p-4">
+                <span className={`size-14 shrink-0 rounded-xl border border-line ${colour.swatch}`} />
+                <span>
+                  <span className="block font-semibold text-ink">
+                    {colour.name} <span className="font-normal text-muted">{colour.hex}</span>
+                  </span>
+                  <span className="text-sm">{colour.note}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Block>
+
+        <Block title="Type">
+          <ul className="grid gap-8">
+            {type.map((item) => (
+              <li key={item.role} className="grid gap-2 md:grid-cols-[180px_1fr] md:gap-8">
+                <span className="text-sm text-muted">
+                  <b className="block text-ink">{item.role}</b>
+                  {item.spec}
+                </span>
+                <span className={item.className}>{item.sample}</span>
+              </li>
+            ))}
+          </ul>
+        </Block>
+
+        <Block title="Headings with accent">
+          <SectionHead label={servicesIntro.label} heading={servicesIntro.heading} link={servicesIntro.link} />
+          <SectionHead label={fleetIntro.label} heading={fleetIntro.heading} />
+          <div className="rounded-2xl bg-ink p-10">
+            <Label tone="dark" centered>
+              {ctaSection.label}
+            </Label>
+            <AccentHeading
+              heading={ctaSection.heading}
+              tone="dark"
+              className="mt-6 text-center text-[clamp(36px,5vw,72px)] tracking-[-0.05em]"
+            />
+          </div>
+        </Block>
+
+        <Block title="Buttons">
+          <div className="flex flex-wrap items-center gap-3">
+            <Button>Get a Quote</Button>
+            <Button variant="dark">Close</Button>
+            <Button size="sm">Get a Quote</Button>
+            <TextLink href="/services">All services</TextLink>
+          </div>
+          <div className="mt-6 flex flex-wrap items-center gap-3 rounded-2xl bg-ink p-8">
+            <Button>Get a Quote</Button>
+            <Button variant="light" href="/fleet">
+              Explore the Fleet
+            </Button>
+            <Button variant="light" href="tel:+919938874147" icon={<PhoneIcon />}>
+              Call the Team
+            </Button>
+          </div>
+        </Block>
+
+        <Block title="Labels, taglines and placeholders">
+          <div className="grid gap-6">
+            <Label>What We Do</Label>
+            <p className="font-serif text-2xl text-ink italic">{footerCopy.tagline}</p>
+            <p>
+              Unconfirmed content in development: <Todo value="TODO(client): cities served" />
+            </p>
+          </div>
+        </Block>
+      </div>
     </div>
   );
 }

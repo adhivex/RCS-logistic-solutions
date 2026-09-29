@@ -1,39 +1,48 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { serviceIcons } from "@/components/ui/icons";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { services, servicesIntro } from "@/content";
+import { SectionHead } from "@/components/ui/section-head";
+import { serviceCardLines, services, servicesIntro } from "@/content";
 
 /**
- * docs/02-design-system.md → ServiceItem: icon, title, one-liner, "Learn more".
- * A row with vertical dividers on desktop; 2 columns on tablet, 1 on phones.
+ * docs/02-design-system.md → ServiceCard: white card, orange-soft icon tile, title,
+ * one line, arrow circle; hover lifts 4px with an orange border. Mobile: compact rows.
  */
 export function ServicesSection() {
   return (
-    <section aria-labelledby="services-heading" className="bg-brand-mist section-y">
+    <section aria-labelledby="services-heading" className="bg-paper section-y">
       <div className="container-site">
-        <SectionHeading
+        <SectionHead
           id="services-heading"
-          eyebrow={servicesIntro.eyebrow}
+          label={servicesIntro.label}
           heading={servicesIntro.heading}
-          description={servicesIntro.description}
           link={servicesIntro.link}
         />
-        <ul className="grid border-t border-brand-line sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid gap-2.5 nav:grid-cols-2 nav:gap-4 wide:grid-cols-4">
           {services.map((service) => {
             const Icon = serviceIcons[service.icon];
             return (
-              <li
-                key={service.slug}
-                className="border-b border-brand-line sm:border-b-0 lg:mr-[26px] lg:border-r lg:last:mr-0 lg:last:border-r-0 sm:[&:nth-child(odd)]:mr-[26px] sm:[&:nth-child(odd)]:border-r"
-              >
-                <Link href={`/services/${service.slug}`} className="group block py-8 pr-[26px]">
-                  <Icon className="mb-[18px] size-[34px] text-brand-orange" aria-hidden="true" />
-                  <h3 className="mb-2 text-[19px] font-semibold transition-colors group-hover:text-action">
-                    {service.name}
-                  </h3>
-                  <p className="mb-4 text-[14.5px]">{service.oneLiner}</p>
-                  <span className="text-sm font-semibold text-action group-hover:underline group-hover:underline-offset-4">
-                    Learn more<span className="sr-only"> about {service.name}</span>
+              <li key={service.slug} data-reveal>
+                <Link
+                  href={`/services/${service.slug}`}
+                  className="group flex h-full items-center gap-4 rounded-[14px] border border-line bg-white px-[18px] py-4 transition-[border-color,transform,box-shadow] duration-400 ease-brand hover:-translate-y-1 hover:border-orange hover:shadow-soft nav:flex-col nav:items-start nav:gap-[18px] nav:rounded-2xl nav:p-[26px]"
+                >
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-orange-soft text-orange nav:size-12">
+                    <Icon className="size-6" />
+                  </span>
+                  <span className="flex-1">
+                    <span className="mb-0.5 block font-display text-[17px] font-bold tracking-[-0.02em] text-ink nav:mb-1.5 nav:text-xl">
+                      {service.shortName}
+                    </span>
+                    <span className="block text-[13.5px] leading-normal nav:text-[14.5px]">
+                      {serviceCardLines[service.slug] ?? service.oneLiner}
+                    </span>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="grid size-8 shrink-0 place-items-center rounded-full bg-paper text-ink transition-all duration-350 ease-brand group-hover:-rotate-45 group-hover:bg-orange-deep group-hover:text-white nav:mt-auto nav:size-9"
+                  >
+                    <ArrowUpRight className="size-[15px]" strokeWidth={2.2} />
                   </span>
                 </Link>
               </li>

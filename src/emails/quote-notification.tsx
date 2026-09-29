@@ -9,8 +9,8 @@ type QuoteNotificationProps = {
   reference: string;
 };
 
-const ink = "#16181D";
-const slate = "#4A4F58";
+const ink = "#19283B";
+const slate = "#4F5B6B";
 
 /** Internal email to RCS (QUOTE_NOTIFY_TO): every field in a simple table plus a tel: link. */
 export default function QuoteNotificationEmail({ title, rows, phone, reference }: QuoteNotificationProps) {
@@ -18,7 +18,7 @@ export default function QuoteNotificationEmail({ title, rows, phone, reference }
     <Html lang="en">
       <Head />
       <Preview>{title}</Preview>
-      <Body style={{ backgroundColor: "#F5F5F4", fontFamily: "Arial, sans-serif", color: ink, margin: 0 }}>
+      <Body style={{ backgroundColor: "#F3F5F8", fontFamily: "Arial, sans-serif", color: ink, margin: 0 }}>
         <Container
           style={{ backgroundColor: "#ffffff", padding: "28px", maxWidth: "600px", borderRadius: "8px" }}
         >
@@ -30,7 +30,7 @@ export default function QuoteNotificationEmail({ title, rows, phone, reference }
             <table cellPadding={6} style={{ borderCollapse: "collapse", width: "100%" }}>
               <tbody>
                 {rows.map((row) => (
-                  <tr key={row.label} style={{ borderTop: "1px solid #E4E4E2" }}>
+                  <tr key={row.label} style={{ borderTop: "1px solid #DFE4EB" }}>
                     <td style={{ color: slate, whiteSpace: "nowrap", verticalAlign: "top", width: "38%" }}>
                       {row.label}
                     </td>
@@ -44,7 +44,7 @@ export default function QuoteNotificationEmail({ title, rows, phone, reference }
             <Link
               href={`tel:${phone}`}
               style={{
-                backgroundColor: "#B94A15",
+                backgroundColor: "#C74916",
                 color: "#ffffff",
                 padding: "10px 18px",
                 borderRadius: "6px",

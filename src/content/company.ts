@@ -4,9 +4,11 @@
  */
 export const company = {
   name: "RCS Logistic Solutions",
-  shortName: "RCS Logistic",
+  /** Only where space is very tight (docs/02-design-system.md → Logo). */
+  shortName: "RCS",
   tagline: "Right Cargo, Right Stop",
   founder: "Satya Sankar Swain",
+  founderInitials: "SS",
   founderRole: "Founder", // TODO(client): "Founder" or "CEO & Founder" (old site said "CEO - Founder")
   phone: "+91 99388 74147", // confirmed 2026-09-29
   phoneHref: "tel:+919938874147",
@@ -39,3 +41,6 @@ export function formatAddress(): string {
   const { street, city, region, postalCode } = company.address;
   return `${street}, ${city}, ${region} ${postalCode}`;
 }
+
+/** Short locality, e.g. for the footer ("Cuttack, Odisha"). */
+export const locality = `${company.address.city}, ${company.address.region}`;

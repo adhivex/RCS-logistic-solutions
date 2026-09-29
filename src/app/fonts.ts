@@ -1,10 +1,9 @@
-import { Caveat, Inter, Poppins } from "next/font/google";
+import { Inter, Instrument_Serif, Manrope } from "next/font/google";
 
-/** Display — headings. Weights used: 400 (hero corner), 500, 600, 700, 800. */
-export const poppins = Poppins({
+/** Display — headings, numbers, drawer links. Variable font (500–800 used). */
+export const manrope = Manrope({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-poppins",
+  variable: "--font-manrope",
   display: "swap",
 });
 
@@ -15,12 +14,13 @@ export const inter = Inter({
   display: "swap",
 });
 
-/** Script accents only: the founder signature and "Bigger Routes, Brighter Tomorrows". */
-export const caveat = Caveat({
+/** Italic accent words, quotes and taglines. */
+export const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
-  weight: ["600"],
-  variable: "--font-caveat",
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument-serif",
   display: "swap",
 });
 
-export const fontVariables = `${poppins.variable} ${inter.variable} ${caveat.variable}`;
+export const fontVariables = `${manrope.variable} ${inter.variable} ${instrumentSerif.variable}`;

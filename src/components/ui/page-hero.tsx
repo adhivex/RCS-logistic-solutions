@@ -1,47 +1,37 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Eyebrow } from "@/components/ui/eyebrow";
-import { Photo } from "@/components/ui/photo";
 import { JsonLd } from "@/components/seo/json-ld";
+import type { PageHeroCopy } from "@/content/pages";
 import { breadcrumbJsonLd } from "@/lib/seo";
-import { media, type MediaItem } from "@/content";
+import { AccentHeading } from "./accent-heading";
+import { Label } from "./label";
 
 export type Crumb = { label: string; href?: string };
 
-type PageHeroProps = {
-  title: string;
-  eyebrow?: string;
-  intro?: string;
-  image?: MediaItem;
+type PageHeroProps = PageHeroCopy & {
   breadcrumbs: Crumb[];
   /** This page's path, for the BreadcrumbList JSON-LD. */
   path: string;
   children?: ReactNode;
 };
 
-/** Short inner-page hero (~40vh): image, dark gradient, breadcrumb, H1. */
-export function PageHero({
-  title,
-  eyebrow,
-  intro,
-  image = media.aboutHero,
-  breadcrumbs,
-  path,
-  children,
-}: PageHeroProps) {
+/**
+ * docs/03-pages.md: inner pages open with a short navy hero (45vh) — label and an
+ * H1 with a serif accent — so the transparent header works on every page.
+ */
+export function PageHero({ label, heading, intro, breadcrumbs, path, children }: PageHeroProps) {
   return (
     <section
       aria-labelledby="page-heading"
-      className="relative flex min-h-[40vh] items-end overflow-hidden bg-[#1c1a19] text-white"
+      className="grain relative isolate flex min-h-[45vh] items-end overflow-hidden bg-[linear-gradient(160deg,var(--color-ink)_0%,#1e3450_100%)] text-white/72"
     >
       <JsonLd data={breadcrumbJsonLd(breadcrumbs, path)} />
-      <Photo item={image} sizes="100vw" preload tone="dark" />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(0deg,rgb(14_14_16/0.9)_0%,rgb(14_14_16/0.55)_60%,rgb(14_14_16/0.3)_100%)] nav:bg-[linear-gradient(90deg,rgb(14_14_16/0.85)_0%,rgb(14_14_16/0.55)_50%,rgb(14_14_16/0.15)_100%)]"
+        className="pointer-events-none absolute -top-[260px] -right-[240px] -z-10 size-[700px] bg-[radial-gradient(circle,rgb(234_90_36/0.2),rgb(234_90_36/0)_65%)]"
       />
-      <div className="relative container-site pt-24 pb-12 nav:pb-14">
-        <nav aria-label="Breadcrumb" className="mb-6 text-sm text-white/80">
+      <div className="container-site pt-[132px] pb-12 nav:pt-[150px] nav:pb-16">
+        <nav aria-label="Breadcrumb" className="mb-7 text-[13px] text-white/70">
           <ol className="flex flex-wrap items-center gap-2">
             {breadcrumbs.map((crumb, index) => (
               <li key={crumb.label} className="flex items-center gap-2">
@@ -51,7 +41,7 @@ export function PageHero({
                     {crumb.label}
                   </Link>
                 ) : (
-                  <span aria-current="page" className="font-medium text-white">
+                  <span aria-current="page" className="text-white">
                     {crumb.label}
                   </span>
                 )}
@@ -59,15 +49,16 @@ export function PageHero({
             ))}
           </ol>
         </nav>
-        {eyebrow && <Eyebrow tone="dark">{eyebrow}</Eyebrow>}
-        <h1
+        <Label tone="dark">{label}</Label>
+        <AccentHeading
+          as="h1"
           id="page-heading"
-          className="max-w-3xl text-[clamp(36px,5vw,60px)] leading-[1.05] font-extrabold text-white"
-        >
-          {title}
-        </h1>
-        {intro && <p className="mt-4 max-w-2xl text-lg text-white/90">{intro}</p>}
-        {children && <div className="mt-8 flex flex-wrap gap-3.5">{children}</div>}
+          heading={heading}
+          tone="dark"
+          className="mt-5 max-w-4xl text-[clamp(40px,6vw,84px)] leading-[0.98] tracking-[-0.045em]"
+        />
+        {intro && <p className="mt-6 max-w-[560px] text-[17px]">{intro}</p>}
+        {children && <div className="mt-8 flex flex-wrap gap-3">{children}</div>}
       </div>
     </section>
   );

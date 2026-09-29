@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, ChevronDown, CircleCheck } from "lucide-react";
+import { ArrowUpRight, Plus } from "lucide-react";
 import { QuoteButton } from "@/components/quote/quote-button";
+import { JsonLd } from "@/components/seo/json-ld";
+import { AccentHeading } from "@/components/ui/accent-heading";
+import { CtaSection } from "@/components/ui/cta-section";
 import { serviceIcons } from "@/components/ui/icons";
-import { CtaBand } from "@/components/ui/cta-band";
-import { Eyebrow } from "@/components/ui/eyebrow";
+import { Label } from "@/components/ui/label";
 import { PageHero } from "@/components/ui/page-hero";
 import { Todo } from "@/components/ui/todo";
 import { getService, industries, isTodo, serviceSteps, services } from "@/content";
-import { JsonLd } from "@/components/seo/json-ld";
 import { faqJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 
 export const dynamicParams = false;
@@ -24,17 +25,14 @@ export async function generateMetadata({ params }: PageProps<"/services/[slug]">
   if (!service) return {};
   return pageMetadata({
     title: service.name,
-    description:
-      `${service.oneLiner} ${service.name} from RCS Logistic, a B2B truck transport company in Cuttack, Odisha.`.slice(
-        0,
-        160,
-      ),
+    description: service.metaDescription,
     path: `/services/${service.slug}`,
   });
 }
 
 const isDev = process.env.NODE_ENV !== "production";
 
+/** docs/03-pages.md → /services/[slug]: included, who it's for, how it works, FAQ, related. */
 export default async function ServiceDetailPage({ params }: PageProps<"/services/[slug]">) {
   const { slug } = await params;
   const service = getService(slug);
@@ -44,6 +42,7 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
   const related = services.filter((item) => item.slug !== service.slug);
   const faqs = service.faqs.filter((faq) => isDev || !isTodo(faq.answer));
   const whoFor = industries.filter((industry) => service.whoFor.includes(industry.name));
+  const words = service.name.split(" ");
 
   return (
     <>
@@ -51,7 +50,8 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
       <JsonLd data={faqJsonLd(service.faqs)} />
       <PageHero
         path={`/services/${service.slug}`}
-        title={service.name}
+        label="Service"
+        heading={{ lead: words.slice(0, -1).join(" "), accent: words.at(-1) ?? "" }}
         intro={service.oneLiner}
         breadcrumbs={[
           { label: "Home", href: "/" },
@@ -62,37 +62,37 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
         <QuoteButton service={service.type} />
       </PageHero>
 
-      <section aria-labelledby="included-heading" className="section-y">
-        <div className="container-site grid gap-12 nav:grid-cols-2 nav:gap-16">
-          <div>
-            <Eyebrow>What&apos;s included</Eyebrow>
-            <h2
-              id="included-heading"
-              className="flex items-center gap-3 text-[clamp(26px,3vw,36px)] font-bold"
-            >
-              <Icon className="size-9 shrink-0 text-brand-orange" aria-hidden="true" />
+      <section aria-labelledby="included-heading" className="bg-white section-y">
+        <div className="container-site grid gap-14 nav:grid-cols-2 nav:gap-20">
+          <div data-reveal>
+            <Label>What&apos;s included</Label>
+            <h2 id="included-heading" className="mt-[18px] flex items-center gap-4 text-[clamp(28px,3vw,40px)]">
+              <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-orange-soft text-orange">
+                <Icon className="size-6" />
+              </span>
               {service.name}
             </h2>
-            <ul className="mt-7 grid gap-3.5">
+            <ul className="mt-8 border-t border-line">
               {service.included.map((item) => (
-                <li key={item} className="flex gap-3">
-                  <CircleCheck className="mt-0.5 size-5 shrink-0 text-brand-orange" aria-hidden="true" />
+                <li key={item} className="flex gap-3.5 border-b border-line py-4 text-ink">
+                  <span aria-hidden="true" className="mt-[11px] h-px w-4 shrink-0 bg-orange" />
                   {item}
                 </li>
               ))}
             </ul>
           </div>
-          <div>
-            <Eyebrow>Who it&apos;s for</Eyebrow>
-            <h2 className="text-[clamp(26px,3vw,36px)] font-bold">
-              Built for <span className="text-highlight">these industries</span>
-            </h2>
-            <ul className="mt-7 flex flex-wrap gap-3">
+          <div data-reveal>
+            <Label>Who it&apos;s for</Label>
+            <AccentHeading
+              heading={{ lead: "Built for", accent: "these industries." }}
+              className="mt-[18px] text-[clamp(28px,3vw,40px)]"
+            />
+            <ul className="mt-8 flex flex-wrap gap-2.5">
               {whoFor.map((industry) => (
                 <li key={industry.slug}>
                   <Link
                     href={`/industries#${industry.slug}`}
-                    className="inline-flex min-h-11 items-center rounded-full border border-brand-line px-4 py-2 text-[15px] font-medium text-brand-ink transition-colors hover:border-brand-orange hover:text-action"
+                    className="inline-flex min-h-11 items-center rounded-full border border-line bg-paper px-4 py-2 text-[15px] font-medium text-ink transition-colors hover:border-orange hover:text-orange-deep"
                   >
                     {industry.name}
                   </Link>
@@ -103,23 +103,28 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
         </div>
       </section>
 
-      <section aria-labelledby="steps-heading" className="bg-brand-mist section-y">
+      <section aria-labelledby="steps-heading" className="bg-paper section-y">
         <div className="container-site">
-          <Eyebrow>How it works</Eyebrow>
-          <h2 id="steps-heading" className="mb-10 text-[clamp(26px,3vw,36px)] font-bold">
-            Four steps from <span className="text-highlight">request to delivery</span>
-          </h2>
-          <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div data-reveal>
+            <Label>How it works</Label>
+            <AccentHeading
+              id="steps-heading"
+              heading={{ lead: "Four steps from", accent: "request to delivery." }}
+              className="mt-[18px] mb-[clamp(36px,5vw,64px)] text-[clamp(32px,4.2vw,56px)]"
+            />
+          </div>
+          <ol className="grid gap-y-11 sm:grid-cols-2 wide:grid-cols-4">
             {serviceSteps.map((step, index) => (
-              <li key={step.title} className="rounded-card border border-brand-line bg-white p-6">
-                <span aria-hidden="true" className="font-display text-3xl font-bold text-action">
+              <li key={step.title} data-reveal className="relative border-t border-line pt-[34px] pr-[30px]">
+                <span aria-hidden="true" className="absolute -top-1 left-0 size-[7px] rounded-full bg-orange" />
+                <span aria-hidden="true" className="mb-[22px] block font-serif text-[44px] leading-none text-ink italic">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-3 text-lg font-semibold">
+                <h3 className="mb-2.5 text-[21px] tracking-[-0.02em]">
                   <span className="sr-only">Step {index + 1}: </span>
                   {step.title}
                 </h3>
-                <p className="mt-2 text-[15px]">{step.body}</p>
+                <p className="m-0 text-[15px]">{step.body}</p>
               </li>
             ))}
           </ol>
@@ -127,23 +132,29 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
       </section>
 
       {faqs.length > 0 && (
-        <section aria-labelledby="faq-heading" className="section-y">
-          <div className="container-site max-w-3xl">
-            <Eyebrow>FAQ</Eyebrow>
-            <h2 id="faq-heading" className="mb-8 text-[clamp(26px,3vw,36px)] font-bold">
-              Common <span className="text-highlight">questions</span>
-            </h2>
-            <div className="border-t border-brand-line">
+        <section aria-labelledby="faq-heading" className="bg-white section-y">
+          <div className="container-site grid gap-10 nav:grid-cols-[0.8fr_1.2fr] nav:gap-20">
+            <div data-reveal>
+              <Label>FAQ</Label>
+              <AccentHeading
+                id="faq-heading"
+                heading={{ lead: "Common", accent: "questions." }}
+                className="mt-[18px] text-[clamp(32px,4.2vw,56px)]"
+              />
+            </div>
+            <div className="border-t border-line">
               {faqs.map((faq) => (
-                <details key={faq.question} className="group border-b border-brand-line">
-                  <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 font-display text-lg font-semibold text-brand-ink [&::-webkit-details-marker]:hidden">
+                <details key={faq.question} className="group border-b border-line">
+                  <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-5 font-display text-lg font-semibold tracking-[-0.02em] text-ink [&::-webkit-details-marker]:hidden">
                     {faq.question}
-                    <ChevronDown
-                      className="size-5 shrink-0 text-action transition-transform group-open:rotate-180"
+                    <span
                       aria-hidden="true"
-                    />
+                      className="grid size-9 shrink-0 place-items-center rounded-full border border-line transition-transform duration-350 ease-brand group-open:rotate-45"
+                    >
+                      <Plus className="size-4" />
+                    </span>
                   </summary>
-                  <p className="pb-5">
+                  <p className="mt-0 pb-5">
                     <Todo value={faq.answer} />
                   </p>
                 </details>
@@ -153,21 +164,24 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
         </section>
       )}
 
-      <section aria-labelledby="related-heading" className="border-t border-brand-line py-16">
+      <section aria-labelledby="related-heading" className="border-t border-line bg-paper py-16">
         <div className="container-site">
-          <h2 id="related-heading" className="mb-6 text-2xl font-bold">
+          <h2 id="related-heading" className="mb-6 text-2xl tracking-[-0.02em]">
             Related services
           </h2>
-          <ul className="grid gap-4 md:grid-cols-3">
+          <ul className="grid gap-4 nav:grid-cols-3">
             {related.map((item) => (
               <li key={item.slug}>
                 <Link
                   href={`/services/${item.slug}`}
-                  className="group block h-full rounded-card border border-brand-line p-6 transition-colors hover:border-brand-orange"
+                  className="group flex h-full flex-col rounded-2xl border border-line bg-white p-6 transition-colors hover:border-orange"
                 >
-                  <span className="flex items-center justify-between gap-3 font-display text-lg font-semibold text-brand-ink group-hover:text-action">
+                  <span className="flex items-center justify-between gap-3 font-display text-lg font-bold tracking-[-0.02em] text-ink">
                     {item.name}
-                    <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
+                    <ArrowUpRight
+                      className="size-4 shrink-0 transition-transform group-hover:-rotate-45"
+                      aria-hidden="true"
+                    />
                   </span>
                   <span className="mt-2 block text-[15px]">{item.oneLiner}</span>
                 </Link>
@@ -177,7 +191,7 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
         </div>
       </section>
 
-      <CtaBand service={service.type} />
+      <CtaSection service={service.type} />
     </>
   );
 }

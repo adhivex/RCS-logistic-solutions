@@ -1,11 +1,11 @@
+import { CtaSection } from "@/components/ui/cta-section";
 import { industryIcons } from "@/components/ui/icons";
-import { CtaBand } from "@/components/ui/cta-band";
 import { PageHero } from "@/components/ui/page-hero";
 import { industries, pages } from "@/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Industries",
+  title: pages.industries.title,
   description: pages.industries.description,
   path: "/industries",
 });
@@ -16,29 +16,31 @@ export default function IndustriesPage() {
     <>
       <PageHero
         path="/industries"
-        title={pages.industries.title}
-        intro={pages.industries.intro}
+        {...pages.industries.hero}
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Industries" }]}
       />
-      <section aria-label="Industries" className="section-y">
-        <ul className="container-site grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <section aria-label="Industries" className="bg-paper section-y">
+        <ul className="container-site grid gap-4 sm:grid-cols-2 wide:grid-cols-3">
           {industries.map((industry) => {
             const Icon = industryIcons[industry.icon];
             return (
               <li
                 key={industry.slug}
                 id={industry.slug}
-                className="scroll-mt-28 rounded-card border border-brand-line p-7"
+                data-reveal
+                className="scroll-mt-28 rounded-2xl border border-line bg-white p-[26px]"
               >
-                <Icon className="size-10 text-brand-orange" aria-hidden="true" />
-                <h2 className="mt-5 text-xl font-semibold">{industry.name}</h2>
-                <p className="mt-2">{industry.description}</p>
+                <span className="grid size-12 place-items-center rounded-xl bg-orange-soft text-orange">
+                  <Icon className="size-6" strokeWidth={1.7} aria-hidden="true" />
+                </span>
+                <h2 className="mt-5 text-xl tracking-[-0.02em]">{industry.name}</h2>
+                <p className="mt-2 mb-0 text-[15px]">{industry.description}</p>
               </li>
             );
           })}
         </ul>
       </section>
-      <CtaBand />
+      <CtaSection />
     </>
   );
 }

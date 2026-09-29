@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SERVICE_TYPES } from "@/content/quote";
+import { CUSTOMER_TYPES, SERVICE_TYPES } from "@/content/quote";
 
 /*
  * One shared schema for the quote form (client, via zodResolver) and the server
@@ -34,63 +34,71 @@ const optionalText = (max: number, message: string) =>
     .transform((value) => value || undefined);
 
 export function createQuoteSchema(now?: Date) {
-  return z.object({
-    name: z
-      .string()
-      .trim()
-      .min(1, { error: "Enter your name" })
-      .min(2, { error: "Enter at least 2 characters" })
-      .max(80, { error: "Keep your name under 80 characters" }),
-    company: optionalText(120, "Keep the company name under 120 characters"),
-    phone: z
-      .string()
-      .trim()
-      .min(1, { error: "Enter your mobile number" })
-      .refine(isIndianMobile, { error: "Enter a 10-digit mobile number" })
-      .transform(normalizeIndianMobile),
-    email: z
-      .string()
-      .trim()
-      .refine((value) => value === "" || z.email().safeParse(value).success, {
-        error: "Enter a valid email address, like name@company.com",
+  return (
+    z
+      .object({
+        customerType: z.enum(CUSTOMER_TYPES, { error: "Choose business or individual" }),
+        name: z
+          .string()
+          .trim()
+          .min(1, { error: "Enter your name" })
+          .min(2, { error: "Enter at least 2 characters" })
+          .max(80, { error: "Keep your name under 80 characters" }),
+        company: optionalText(120, "Keep the company name under 120 characters"),
+        phone: z
+          .string()
+          .trim()
+          .min(1, { error: "Enter your mobile number" })
+          .refine(isIndianMobile, { error: "Enter a 10-digit mobile number" })
+          .transform(normalizeIndianMobile),
+        email: z
+          .string()
+          .trim()
+          .refine((value) => value === "" || z.email().safeParse(value).success, {
+            error: "Enter a valid email address, like name@company.com",
+          })
+          .transform((value) => value || undefined),
+        service: z.enum(SERVICE_TYPES, { error: "Choose a service" }),
+        fromCity: z
+          .string()
+          .trim()
+          .min(1, { error: "Enter the pickup city" })
+          .min(2, { error: "Enter at least 2 characters" })
+          .max(60, { error: "Keep this under 60 characters" }),
+        toCity: z
+          .string()
+          .trim()
+          .min(1, { error: "Enter the delivery city" })
+          .min(2, { error: "Enter at least 2 characters" })
+          .max(60, { error: "Keep this under 60 characters" }),
+        cargoType: optionalText(80, "Keep this under 80 characters"),
+        weightTons: z
+          .string()
+          .trim()
+          .refine((value) => value === "" || !Number.isNaN(Number(value)), {
+            error: "Enter a number, like 8 or 12.5",
+          })
+          .refine((value) => value === "" || (Number(value) >= 0.1 && Number(value) <= 100), {
+            error: "Enter a weight between 0.1 and 100 tonnes",
+          })
+          .transform((value) => (value === "" ? undefined : Math.round(Number(value) * 100) / 100)),
+        pickupDate: z
+          .string()
+          .trim()
+          .refine((value) => value === "" || /^\d{4}-\d{2}-\d{2}$/.test(value), {
+            error: "Enter a valid date",
+          })
+          .refine((value) => value === "" || value >= todayInIndia(now), {
+            error: "Choose today or a later date",
+          })
+          .transform((value) => value || undefined),
+        details: optionalText(1000, "Keep this under 1000 characters"),
+        /** Honeypot — must stay empty. Checked separately so bots get a silent "success". */
+        website: z.string().optional(),
       })
-      .transform((value) => value || undefined),
-    service: z.enum(SERVICE_TYPES, { error: "Choose a service" }),
-    fromCity: z
-      .string()
-      .trim()
-      .min(1, { error: "Enter the pickup city" })
-      .min(2, { error: "Enter at least 2 characters" })
-      .max(60, { error: "Keep this under 60 characters" }),
-    toCity: z
-      .string()
-      .trim()
-      .min(1, { error: "Enter the delivery city" })
-      .min(2, { error: "Enter at least 2 characters" })
-      .max(60, { error: "Keep this under 60 characters" }),
-    cargoType: optionalText(80, "Keep this under 80 characters"),
-    weightTons: z
-      .string()
-      .trim()
-      .refine((value) => value === "" || !Number.isNaN(Number(value)), {
-        error: "Enter a number, like 8 or 12.5",
-      })
-      .refine((value) => value === "" || (Number(value) >= 0.1 && Number(value) <= 100), {
-        error: "Enter a weight between 0.1 and 100 tonnes",
-      })
-      .transform((value) => (value === "" ? undefined : Math.round(Number(value) * 100) / 100)),
-    pickupDate: z
-      .string()
-      .trim()
-      .refine((value) => value === "" || /^\d{4}-\d{2}-\d{2}$/.test(value), { error: "Enter a valid date" })
-      .refine((value) => value === "" || value >= todayInIndia(now), {
-        error: "Choose today or a later date",
-      })
-      .transform((value) => value || undefined),
-    details: optionalText(1000, "Keep this under 1000 characters"),
-    /** Honeypot — must stay empty. Checked separately so bots get a silent "success". */
-    website: z.string().optional(),
-  });
+      // Individuals have no company field; drop anything left over from the business view.
+      .transform((data) => (data.customerType === "individual" ? { ...data, company: undefined } : data))
+  );
 }
 
 export const quoteSchema = createQuoteSchema();
@@ -102,6 +110,7 @@ export type QuoteData = z.output<typeof quoteSchema>;
 export type QuoteField = keyof QuoteFormValues;
 
 export const emptyQuoteValues = (service?: QuoteFormValues["service"]): QuoteFormValues => ({
+  customerType: "business",
   name: "",
   company: "",
   phone: "",

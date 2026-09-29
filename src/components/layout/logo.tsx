@@ -1,32 +1,49 @@
 import Image from "next/image";
-import { company } from "@/content";
+import { company } from "@/content/company";
 import { cn } from "@/lib/utils";
 
 /*
- * TODO(client): replace with the new "RCS Logistic — Right Cargo, Right Stop" logo as SVG.
- * Until then the current official logo (public/brand/rcs-logo.png, 1079×357) is used,
- * unaltered. Its alt text matches the words in the image.
+ * Official "RCS Logistic Solutions" logo (docs/reference/brand/), 846×263.
+ * `on-dark` = white wordmark (hero, navy, footer); `on-light` = dark wordmark.
+ * TODO(client): a true vector logo before launch.
  */
-const LOGO = { src: "/brand/rcs-logo.png", width: 1079, height: 357 } as const;
+const LOGO = { width: 846, height: 263 } as const;
 
-export function Logo({
-  height = 44,
+export const logoSrc = {
+  dark: "/brand/logo-on-dark.png",
+  light: "/brand/logo-on-light.png",
+} as const;
+
+export function logoWidth(height: number) {
+  return Math.round((LOGO.width / LOGO.height) * height);
+}
+
+export function LogoImage({
+  on,
+  height,
+  decorative = false,
   eager = false,
   className,
 }: {
-  height?: number;
+  /** Background the logo sits on. */
+  on: "dark" | "light";
+  height: number;
+  /** The second of a cross-faded pair is hidden from assistive tech. */
+  decorative?: boolean;
   eager?: boolean;
   className?: string;
 }) {
-  const width = Math.round((LOGO.width / LOGO.height) * height);
+  const width = logoWidth(height);
   return (
     <Image
-      src={LOGO.src}
-      alt={company.name}
+      src={logoSrc[on]}
+      alt={decorative ? "" : company.name}
+      aria-hidden={decorative || undefined}
       width={width}
       height={height}
       loading={eager ? "eager" : "lazy"}
-      className={cn("h-auto max-w-none", className)}
+      sizes={`${width}px`}
+      className={cn("max-w-none", className)}
       style={{ width, height }}
     />
   );

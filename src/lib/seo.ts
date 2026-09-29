@@ -12,9 +12,9 @@ export function absoluteUrl(path: string): string {
 }
 
 type PageMetaInput = {
-  /** Page name; the layout template appends "| RCS Logistic — Right Cargo, Right Stop". */
+  /** Page name; the layout template appends "| RCS Logistic Solutions". */
   title: string;
-  /** 140–160 characters, written for Odisha / eastern-India B2B search (06-seo-launch.md). */
+  /** 140–160 characters, written for Odisha / eastern-India B2B and B2C search (06-seo-launch.md). */
   description: string;
   path: string;
   noIndex?: boolean;
@@ -26,7 +26,7 @@ export function pageMetadata({ title, description, path, noIndex = false }: Page
     description,
     alternates: { canonical: path },
     openGraph: {
-      title: `${title} | ${company.shortName} — ${company.tagline}`,
+      title: `${title} | ${company.name}`,
       description,
       url: path,
       siteName: company.name,
@@ -47,10 +47,10 @@ export function localBusinessJsonLd(): JsonLd {
     "@type": "LocalBusiness",
     "@id": `${canonicalOrigin}/#business`,
     name: company.name,
-    alternateName: company.shortName,
+    alternateName: `${company.shortName} Logistic`,
     slogan: company.tagline,
     url: canonicalOrigin,
-    logo: absoluteUrl("/brand/rcs-logo.png"),
+    logo: absoluteUrl("/brand/logo-on-light.png"),
     image: absoluteUrl("/opengraph-image"),
     telephone: company.phone.replace(/\s/g, ""),
     email: company.email,

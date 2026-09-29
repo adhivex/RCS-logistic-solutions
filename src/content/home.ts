@@ -1,73 +1,68 @@
 /**
- * Homepage copy — docs/04-content.md → Home. A heading's `highlight` is the last
- * phrase, rendered in orange (docs/02-design-system.md → headline pattern).
+ * Homepage copy — docs/04-content.md → Home, matching
+ * docs/reference/homepage-preview.html. A heading's `accent` is its last phrase,
+ * set in italic serif orange.
  */
-export type Heading = { lead: string; highlight: string };
+export type Heading = { lead: string; accent: string };
 
 export const hero = {
-  eyebrow: "B2B Logistics Partner",
+  label: "B2B & B2C Logistics · Est. in Odisha",
   titleLines: ["Moving", "Business"],
-  titleHighlight: "Forward",
-  tag: "Reliable. Efficient. Pan India.",
-  lead: "RCS Logistic delivers dependable B2B transportation solutions across Odisha and India, keeping your business moving—every day, every mile.",
-  corner: {
-    lines: ["From", "Odisha", "to a stronger", "India"] as string[],
-    emphasis: ["Odisha", "India"] as string[],
+  titleAccent: "Forward",
+  lead: "From Odisha to a stronger India. Dependable road transport for businesses and individuals, keeping your cargo moving every day, every mile.",
+  aside: {
+    heading: "From Odisha to a stronger India.",
+    body: "Right Cargo, Right Stop. Reliable. Efficient. Pan India.",
   },
   primaryCta: "Get a Quote",
-  secondaryCta: { label: "Our Fleet", href: "/fleet" },
+  secondaryCta: { label: "Explore the Fleet", href: "/fleet" },
 } as const;
 
 export type TrustIcon = "reach" | "secure" | "partner" | "growth";
 
-export const trust = {
-  items: [
-    { icon: "reach", label: "Pan India Reach" },
-    { icon: "secure", label: "Safe & Secure" },
-    { icon: "partner", label: "Reliable Partner" },
-    { icon: "growth", label: "Sustainable Growth" },
-  ] satisfies { icon: TrustIcon; label: string }[],
-  script: "Bigger Routes, Brighter Tomorrows",
+export const trust: { icon: TrustIcon; label: string }[] = [
+  { icon: "reach", label: "Pan India Reach" },
+  { icon: "secure", label: "Safe & Secure" },
+  { icon: "partner", label: "Reliable Partner" },
+  { icon: "growth", label: "Sustainable Growth" },
+];
+
+export const servicesIntro = {
+  label: "What We Do",
+  heading: { lead: "Logistics built around", accent: "your supply chain." } satisfies Heading,
+  link: { label: "All services", href: "/services" },
 };
 
-export const founderIntro = {
-  eyebrow: "Our Founder",
-  heading: { lead: "Driven by Purpose, Built for a", highlight: "Bigger Tomorrow" } satisfies Heading,
-  body: "RCS Logistic was founded by Satya Sankar Swain with a clear vision to build a dependable and modern logistics network from Odisha to businesses across India. With a strong focus on reliability, operational excellence and long-term partnerships, we are committed to keeping India's supply chain moving.",
-  photoOverlay: ["People", "Drive", "Progress"],
-  cta: { label: "Our Story", href: "/about" },
+/** Short card lines for the homepage (the detail pages use the longer one-liners). */
+export const serviceCardLines: Record<string, string> = {
+  "full-truck-load": "A dedicated vehicle, point to point, no transfers.",
+  "part-truck-load": "Share space and pay only for what you use.",
+  warehousing: "Secure storage, ready to dispatch on demand.",
+  "supply-chain": "Planning across vendors, plants and distributors.",
 };
 
 export const fleetIntro = {
-  eyebrow: "Our Fleet",
-  heading: { lead: "The Right Vehicle for", highlight: "Every Business Need" } satisfies Heading,
+  label: "Our Fleet",
+  heading: { lead: "The right vehicle for", accent: "every load." } satisfies Heading,
   description:
     "A diversified fleet to handle a wide range of cargo requirements, from heavy industrial goods to time-sensitive deliveries.",
-  link: { label: "View All Vehicles", href: "/fleet" },
+  link: { label: "View fleet", href: "/fleet" },
 };
 
-// Draft section headings — not in 04-content.md. TODO(client): review
-export const servicesIntro = {
-  eyebrow: "Our Services",
-  heading: { lead: "Logistics Built Around", highlight: "Your Business" } satisfies Heading,
-  description: "Four ways to move and hold your goods — choose one, or combine them.",
-  link: { label: "All Services", href: "/services" },
+export const founderStrip = {
+  quote: "Building a dependable logistics network from Odisha for businesses across India.",
+  link: { label: "Our story", href: "/about" },
 };
 
-export const industriesIntro = {
-  eyebrow: "Industries",
-  heading: { lead: "Moving Goods for", highlight: "Core Industries" } satisfies Heading,
-  link: { label: "See All Industries", href: "/industries" },
+export const ctaSection = {
+  label: "Start a Shipment",
+  heading: { lead: "Ready to move your", accent: "business forward?" } satisfies Heading,
+  line: "Tell us what you're moving and where. We'll come back with a clear quote.",
+  primary: "Get a Quote",
+  call: "Call the Team",
 };
 
-export const networkIntro = {
-  eyebrow: "Our Network",
-  heading: { lead: "From Odisha", highlight: "to Every Major Market" } satisfies Heading,
-  cta: { label: "Explore Network", href: "/network" },
-};
-
-export const ctaBand = {
-  heading: "Need a dependable logistics partner?",
-  line: "Tell us what you're moving and where. We'll come back with a quote.",
-  button: "Get a Quote",
+export const footerCopy = {
+  tagline: "Bigger routes, brighter tomorrows.",
+  about: "Dependable B2B & B2C road transport from Odisha across India.",
 };

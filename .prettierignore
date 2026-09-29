@@ -1,6 +1,5 @@
 .next
 node_modules
-src/lib/generated
-prisma/migrations
+supabase/.temp
 docs/reference
 package-lock.json

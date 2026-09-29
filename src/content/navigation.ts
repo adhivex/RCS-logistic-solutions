@@ -1,27 +1,23 @@
 export type NavItem = { label: string; href: string };
 
-/** Header navigation, in mockup order. */
+/** Header navigation, in the preview's order. */
 export const mainNav: NavItem[] = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Our Fleet", href: "/fleet" },
   { label: "Services", href: "/services" },
-  { label: "Industries", href: "/industries" },
+  { label: "Fleet", href: "/fleet" },
+  { label: "About", href: "/about" },
   { label: "Network", href: "/network" },
   { label: "Contact", href: "/contact" },
 ];
 
+/** Footer "Company" column (preview), plus Industries so the page stays reachable. */
 export const footerCompanyLinks: NavItem[] = [
   { label: "About", href: "/about" },
-  { label: "Our Fleet", href: "/fleet" },
+  { label: "Fleet", href: "/fleet" },
   { label: "Industries", href: "/industries" },
   { label: "Network", href: "/network" },
   { label: "Contact", href: "/contact" },
-  { label: "Privacy", href: "/privacy" },
 ];
-
-export const footerDescription =
-  "B2B road transport and logistics from Odisha, keeping businesses across India moving.";
 
 /** Website credit shown in the footer's bottom bar. */
 export const siteCredit = {

@@ -1,62 +1,50 @@
 import Image from "next/image";
-import { ImageIcon } from "lucide-react";
-import type { MediaItem } from "@/content";
+import type { ReactNode } from "react";
+import { mediaSrc, type MediaItem } from "@/content/media";
 import { cn } from "@/lib/utils";
 
 const isDev = process.env.NODE_ENV !== "production";
 
 type PhotoProps = {
   item: MediaItem;
-  /** Required with `fill`; describes rendered width for srcset selection. */
+  /** Rendered width, for srcset selection. */
   sizes: string;
   className?: string;
   /** Hero / LCP image only (Next 16: `preload` replaces `priority`). */
   preload?: boolean;
-  /** Placeholder style until the real photo arrives. */
-  tone?: "light" | "dark";
+  /** Rendered when the image must not appear (no src, or dev-only in production). */
+  fallback?: ReactNode;
 };
 
 /**
- * Fills its (relatively positioned) parent. Renders the photo when `item.src` is set,
- * otherwise a neutral placeholder; in development the placeholder shows the photo brief.
+ * Fills its (relatively positioned) parent. Kit placeholder photos carry a small
+ * "Placeholder photo" tag in development so they aren't mistaken for final images.
  */
-export function Photo({ item, sizes, className, preload = false, tone = "light" }: PhotoProps) {
-  if (item.src) {
-    return (
+export function Photo({ item, sizes, className, preload = false, fallback = null }: PhotoProps) {
+  const src = mediaSrc(item);
+  if (!src) return <>{fallback}</>;
+  return (
+    <>
       <Image
-        src={item.src}
+        src={src}
         alt={item.alt}
         fill
         sizes={sizes}
         preload={preload}
         className={cn("object-cover", className)}
       />
-    );
-  }
+      {isDev && item.placeholder && <PlaceholderTag brief={item.brief} />}
+    </>
+  );
+}
 
-  const dark = tone === "dark";
+function PlaceholderTag({ brief }: { brief: string }) {
   return (
-    <div
-      aria-hidden="true"
-      className={cn(
-        "absolute inset-0 flex",
-        dark
-          ? "items-start bg-[#26272b] bg-[linear-gradient(135deg,#2c2d31_0%,#1c1d20_55%,#2a1a12_100%)]"
-          : "items-end bg-brand-mist bg-[repeating-linear-gradient(135deg,transparent_0_22px,rgb(22_24_29/0.04)_22px_23px)]",
-        className,
-      )}
+    <span
+      title={brief}
+      className="absolute right-2 bottom-2 z-10 rounded-full border border-dashed border-white/70 bg-ink/70 px-2 py-0.5 font-body text-[10px] font-medium tracking-normal text-white normal-case"
     >
-      {isDev && (
-        <span
-          className={cn(
-            "m-3 inline-flex max-w-[calc(100%-1.5rem)] items-center gap-1.5 rounded-sm px-2 py-1 text-[11px] leading-tight",
-            dark ? "bg-black/40 text-white/80" : "bg-white/90 text-brand-slate",
-          )}
-        >
-          <ImageIcon className="size-3.5 shrink-0" />
-          {item.brief}
-        </span>
-      )}
-    </div>
+      Placeholder photo
+    </span>
   );
 }

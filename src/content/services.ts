@@ -9,8 +9,10 @@ export type Faq = { question: string; answer: string };
 
 export type Service = {
   slug: string;
-  type: Exclude<ServiceTypeValue, "NOT_SURE">;
+  type: Exclude<ServiceTypeValue, "not_sure">;
   name: string;
+  /** Footer and homepage card title. */
+  shortName: string;
   oneLiner: string;
   /** Meta description, 140–160 chars (docs/06-seo-launch.md). */
   metaDescription: string;
@@ -39,8 +41,9 @@ export const services: Service[] = [
     slug: "full-truck-load",
     metaDescription:
       "Full truck load transport from Cuttack, Odisha: a dedicated vehicle for your cargo, point to point, with no transfers. Serving businesses across India.",
-    type: "FULL_TRUCK_LOAD",
+    type: "full_truck_load",
     name: "Full Truck Load",
+    shortName: "Full Truck Load",
     oneLiner: "A dedicated vehicle for your cargo, point to point, with no transfers along the way.",
     icon: "truck",
     // TODO(client): review "included" and FAQs
@@ -67,9 +70,10 @@ export const services: Service[] = [
   {
     slug: "part-truck-load",
     metaDescription:
-      "Part truck load (PTL) transport from Odisha: share space on scheduled routes and pay only for the capacity you use. B2B service across India.",
-    type: "PART_TRUCK_LOAD",
+      "Part truck load (PTL) transport from Odisha: share space on scheduled routes and pay only for the capacity you use. For businesses and individuals across India.",
+    type: "part_truck_load",
     name: "Part Truck Load",
+    shortName: "Part Truck Load",
     oneLiner: "Share space on scheduled routes and pay only for the capacity you use.",
     icon: "boxes",
     // TODO(client): review "included" and FAQs
@@ -97,8 +101,9 @@ export const services: Service[] = [
     slug: "warehousing",
     metaDescription:
       "Warehousing and storage in Cuttack, Odisha from RCS Logistic: secure storage with inventory handling, ready to dispatch when your orders come in.",
-    type: "WAREHOUSING",
+    type: "warehousing",
     name: "Warehousing & Storage",
+    shortName: "Warehousing",
     oneLiner: "Secure storage with inventory handling, ready to dispatch when your orders come in.",
     icon: "warehouse",
     // TODO(client): review "included" and FAQs; confirm warehouse location(s)
@@ -124,9 +129,10 @@ export const services: Service[] = [
   {
     slug: "supply-chain",
     metaDescription:
-      "Supply chain solutions from RCS Logistic in Cuttack, Odisha: route planning and coordination across vendors, plants and distributors in India.",
-    type: "SUPPLY_CHAIN",
+      "Supply chain solutions from RCS Logistic Solutions in Cuttack, Odisha: route planning and coordination across vendors, plants and distributors in India.",
+    type: "supply_chain",
     name: "Supply Chain Solutions",
+    shortName: "Supply Chain",
     oneLiner: "Route planning and coordination across vendors, plants and distributors.",
     icon: "network",
     // TODO(client): review "included" and FAQs
@@ -155,3 +161,10 @@ export const services: Service[] = [
 export function getService(slug: string): Service | undefined {
   return services.find((service) => service.slug === slug);
 }
+
+/**
+ * B2C (docs/01-brief.md): individuals can request quotes too. Which services they
+ * can book isn't confirmed yet — shown as a placeholder on /services in development.
+ */
+export const individualServicesNote =
+  "TODO(client): which services individual customers can book (e.g. household or vehicle shifting, parcels, small loads)";

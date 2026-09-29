@@ -23,13 +23,13 @@ export function IndiaMap({ cities = citiesServed }: { cities?: City[] }) {
         </title>
         <path
           d={indiaPath}
-          className="fill-brand-mist stroke-[#b9bbbf]"
+          className="fill-paper stroke-[#b9c2ce]"
           strokeWidth={0.8}
           strokeLinejoin="round"
         />
         <path
           d={odishaPath}
-          className="fill-brand-orange/85 stroke-action"
+          className="fill-orange/85 stroke-orange-deep"
           strokeWidth={0.8}
           strokeLinejoin="round"
         />
@@ -37,18 +37,18 @@ export function IndiaMap({ cities = citiesServed }: { cities?: City[] }) {
           const { x, y } = projectPoint(city.lon, city.lat);
           return (
             <g key={city.name}>
-              <circle cx={x} cy={y} r={4} className="fill-brand-ink stroke-white" strokeWidth={1.5} />
-              <text x={x + 7} y={y + 4} className="fill-brand-ink font-body text-[11px] font-medium">
+              <circle cx={x} cy={y} r={4} className="fill-ink stroke-white" strokeWidth={1.5} />
+              <text x={x + 7} y={y + 4} className="fill-ink font-body text-[11px] font-medium">
                 {city.name}
               </text>
             </g>
           );
         })}
-        <circle cx={base.x} cy={base.y} r={12} className="fill-action/20" />
-        <circle cx={base.x} cy={base.y} r={6} className="fill-action stroke-white" strokeWidth={2} />
+        <circle cx={base.x} cy={base.y} r={12} className="fill-ink/20" />
+        <circle cx={base.x} cy={base.y} r={6} className="fill-ink stroke-white" strokeWidth={2} />
       </svg>
-      <figcaption className="mt-3 flex items-center gap-2 text-sm">
-        <span aria-hidden="true" className="inline-block size-3 rounded-full bg-action ring-2 ring-white" />
+      <figcaption className="mt-3 flex items-center gap-2 text-sm text-muted">
+        <span aria-hidden="true" className="inline-block size-3 rounded-full bg-ink ring-2 ring-white" />
         Home base: {homeBase.name}, {homeBase.state}
       </figcaption>
     </figure>

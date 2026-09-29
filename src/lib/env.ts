@@ -1,11 +1,14 @@
 import "server-only";
 import { z } from "zod";
 
-const required = (name: string, hint?: string) =>
-  z
-    .string({ error: `${name} is not set${hint ? ` — ${hint}` : ""}` })
-    .trim()
-    .min(1, { error: `${name} is empty${hint ? ` — ${hint}` : ""}` });
+/*
+ * Server configuration for the quote flow. CLAUDE.md → "Local mode": with no
+ * credentials the site still runs — quotes are validated and logged instead of
+ * stored, and emails are logged instead of sent. On the Vercel *production*
+ * deployment local mode is never used: a missing database is an error the visitor
+ * sees ("call or WhatsApp us"), so no lead is silently dropped.
+ */
+export const isProductionDeploy = process.env.VERCEL_ENV === "production";
 
 const emailList = z
   .string()
@@ -17,36 +20,24 @@ const emailList = z
   )
   .pipe(z.array(z.email({ error: "QUOTE_NOTIFY_TO must be email addresses, comma-separated" })).min(1));
 
-const serverEnvSchema = z.object({
-  DATABASE_URL: required("DATABASE_URL", "pooled Neon connection string").pipe(
-    z.url({ error: "DATABASE_URL must be a connection URL" }),
-  ),
-  RESEND_API_KEY: required("RESEND_API_KEY"),
-  QUOTE_FROM_EMAIL: required("QUOTE_FROM_EMAIL", "a sender on a Resend-verified domain"),
-  QUOTE_NOTIFY_TO: required("QUOTE_NOTIFY_TO").pipe(emailList),
-  IP_HASH_SALT: required("IP_HASH_SALT", "e.g. `openssl rand -hex 32`").pipe(
-    z.string().min(16, { error: "IP_HASH_SALT must be at least 16 characters" }),
-  ),
-});
+export type ResendConfig = { apiKey: string; from: string; notifyTo: string[] };
 
-export type ServerEnv = z.infer<typeof serverEnvSchema>;
-
-let cached: ServerEnv | undefined;
-
-export class EnvError extends Error {
-  constructor(issues: string[]) {
-    super(
-      `Missing or invalid server environment variables:\n  - ${issues.join("\n  - ")}\nSee .env.example.`,
-    );
-    this.name = "EnvError";
-  }
+/** Resend settings, or null when RESEND_API_KEY is unset (emails are then logged). */
+export function getResendConfig(): ResendConfig | null {
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  if (!apiKey) return null;
+  const from = process.env.QUOTE_FROM_EMAIL?.trim();
+  if (!from) throw new Error("QUOTE_FROM_EMAIL is not set — a sender on a Resend-verified domain");
+  const notifyTo = emailList.parse(process.env.QUOTE_NOTIFY_TO ?? "");
+  return { apiKey, from, notifyTo };
 }
 
-/** Validated server environment. Throws EnvError listing every problem at once. */
-export function getServerEnv(): ServerEnv {
-  if (cached) return cached;
-  const parsed = serverEnvSchema.safeParse(process.env);
-  if (!parsed.success) throw new EnvError(parsed.error.issues.map((issue) => issue.message));
-  cached = parsed.data;
-  return cached;
+const DEV_SALT = "local-development-salt-not-secret";
+
+/** Salt for IP hashing. Required on production; a fixed dev salt elsewhere. */
+export function getRateLimitSalt(): string {
+  const salt = process.env.RATE_LIMIT_SALT?.trim();
+  if (salt && salt.length >= 16) return salt;
+  if (isProductionDeploy) throw new Error("RATE_LIMIT_SALT must be set (16+ characters) in production");
+  return DEV_SALT;
 }
