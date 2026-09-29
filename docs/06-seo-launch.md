@@ -1,8 +1,8 @@
 # 06 — SEO, Redirects, Performance & Launch
 
 ## Metadata
-- Use the Metadata API in each `page.tsx`. Title pattern: `{Page} | RCS Logistic — Right Cargo, Right Stop`. Home title: `RCS Logistic | B2B Truck Transport from Odisha Across India`.
-- Unique description per page (140–160 chars), written for Odisha/eastern-India B2B search terms: "transport company in Odisha", "truck transport Cuttack", "full truck load Odisha", "logistics company Bhubaneswar".
+- Use the Metadata API in each `page.tsx`. Title pattern: `{Page} | RCS Logistic Solutions`. Home title: `RCS Logistic Solutions | B2B & B2C Truck Transport from Odisha Across India`.
+- Unique description per page (140–160 chars), written for Odisha/eastern-India B2B and B2C search terms: "transport company in Odisha", "truck transport Cuttack", "full truck load Odisha", "logistics company Bhubaneswar".
 - OG image: 1200×630, generated with `opengraph-image.tsx` (orange/ink brand, page title).
 - `metadataBase` = `https://www.rcsls.in`, canonical on every page.
 
@@ -28,7 +28,8 @@ In Phase 0, list every URL on the current rcsls.in (crawl links from the homepag
 ## Launch checklist
 - [ ] All `TODO(client)` resolved (search the repo — must return zero)
 - [ ] Real photos in place (founder, fleet, hero); no AI images of real people
-- [ ] Quote form tested end to end on production: DB row + both emails
+- [ ] Quote form tested end to end on production: row in Supabase + both emails
+- [ ] Supabase: RLS on for all tables, service role key only in Vercel server env, Point-in-Time/daily backups checked, project region Mumbai (ap-south-1)
 - [ ] Resend domain verified (SPF/DKIM on rcsls.in)
 - [ ] Redirects tested for every old URL
 - [ ] Lighthouse mobile ≥ 90 / 100 / 100 / 100 on Home, a service page, Contact
@@ -36,3 +37,4 @@ In Phase 0, list every URL on the current rcsls.in (crawl links from the homepag
 - [ ] Google Business Profile links to the new site
 - [ ] DNS switched to Vercel; `rcsls.in` redirects to `www.rcsls.in`
 - [ ] 404 page and `/thank-you` noindex checked
+- [ ] Cookie consent: no analytics/marketing requests before opt-in (check the Network tab), footer Cookie settings works, privacy page lists all cookies

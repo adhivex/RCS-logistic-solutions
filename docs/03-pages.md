@@ -1,19 +1,21 @@
 # 03 — Pages
 
-Every page: Header → content → CtaBand (except /contact) → Footer. Copy comes from `04-content.md`.
+Every page: Header → content → CtaSection (except /contact) → Footer. Inner pages use a short page hero (navy, 45vh, label + H2 with serif accent) so the transparent header still works. Copy comes from `04-content.md`.
 
-## / (Home) — match the mockup exactly
-1. **Hero** — full-bleed truck image, dark left gradient. Eyebrow "B2B Logistics Partner", H1 "Moving / Business / Forward" (Forward orange), tag line, lead paragraph, buttons Get a Quote + Our Fleet. Top-right (desktop only): "From **Odisha** / to a stronger **India**". Mobile: text anchored bottom, bottom-up gradient.
-2. **TrustStrip**
-3. **Founder** — photo left (overlay "People drive progress"), copy right, signature, name, role, Our Story → /about.
-4. **Fleet** — SectionHeading + 3 FleetCards → /fleet. Mobile: horizontal snap carousel.
-5. **Services** — SectionHeading + 4 ServiceItems → /services/*.
-6. **Industries** (compact) — row of 6 industry chips with icons → /industries.
-7. **Network** — StatBand with heading, 3 stats, Explore Network → /network.
-8. **CtaBand**
+## / (Home) — match `docs/reference/homepage-preview.html` exactly
+Keep the homepage short. Only these sections, in this order:
+1. **Hero** + TrustBar
+2. **Services** — 4 ServiceCards → /services/[slug]
+3. **Fleet** — 3 FleetCards → /fleet
+4. **NumbersStrip**
+5. **FounderStrip** (small) → /about
+6. **CtaSection**
+Then Footer, MobileQuickBar, CookieBanner.
+
+Everything else (founder story, how it works, network detail, industries) lives on inner pages.
 
 ## /about
-- Page hero (short, 40vh, image + H1 "About RCS Logistic")
+- Page hero (short, 40vh, image + H1 "About RCS Logistic Solutions")
 - Founder story (longer version, photo, signature)
 - Mission / vision / values (3 columns, from content)
 - Milestones timeline — only if client provides dated milestones (`TODO(client)`), otherwise omit the section

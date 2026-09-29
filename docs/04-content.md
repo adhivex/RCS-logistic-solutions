@@ -6,7 +6,7 @@ Put these in `src/content/`. Anything marked `TODO(client)` must be shown as a c
 ```ts
 export const company = {
   name: "RCS Logistic Solutions",
-  shortName: "RCS Logistic",
+  shortName: "RCS",
   tagline: "Right Cargo, Right Stop",
   founder: "Satya Sankar Swain",
   founderRole: "Founder",               // TODO(client): "Founder" or "CEO & Founder" (old site said "CEO - Founder")
@@ -21,19 +21,40 @@ export const company = {
 ```
 
 ## Home
-- Eyebrow: B2B Logistics Partner
-- H1: Moving Business Forward
-- Tag: Reliable. Efficient. Pan India.
-- Lead: RCS Logistic delivers dependable B2B transportation solutions across Odisha and India, keeping your business moving—every day, every mile.
-- Corner: From Odisha to a stronger India
-- Trust: Pan India Reach · Safe & Secure · Reliable Partner · Sustainable Growth
-- Script tagline: Bigger Routes, Brighter Tomorrows
+### Hero
+- Label: B2B & B2C Logistics · Est. in Odisha
+- H1: Moving / Business / *Forward*
+- Lead: From Odisha to a stronger India. Dependable road transport for businesses and individuals, keeping your cargo moving every day, every mile.
+- Buttons: Get a Quote · Explore the Fleet
+- Trust bar: Pan India Reach · Safe & Secure · Reliable Partner · Sustainable Growth
 
-### Founder
-- H2: Driven by Purpose, Built for a Bigger Tomorrow
-- Body: RCS Logistic was founded by Satya Sankar Swain with a clear vision to build a dependable and modern logistics network from Odisha to businesses across India. With a strong focus on reliability, operational excellence and long-term partnerships, we are committed to keeping India's supply chain moving.
-- Photo: TODO(client) — real photo of Satya, landscape, 1600px+
+### Services section
+- Label: What We Do — H2: Logistics built around *your supply chain.*
 
+### Fleet section
+- Label: Our Fleet — H2: The right vehicle for *every load.*
+- Cards: Semi-Trailer Trucks (Long haul) · Box Trucks (Regional) · Light Commercial (Last mile)
+
+### Numbers strip
+28+ Major cities · 04 Service lines · 03 Vehicle classes · Pan India reach — TODO(client): replace with real figures (years in business, vehicles, loads/month)
+
+### Founder strip
+- Quote: "Building a dependable logistics network from Odisha for businesses across India."
+- Satya Sankar Swain · Founder, RCS Logistic Solutions — link: Our story
+
+### CTA section
+- Label: Start a Shipment — H2: Ready to move your *business forward?*
+- Line: Tell us what you're moving and where. We'll come back with a clear quote.
+- Buttons: Get a Quote · Call the Team
+
+### Footer
+- Tagline: *Bigger routes, brighter tomorrows.*
+- About: Dependable B2B & B2C road transport from Odisha across India.
+
+## About page — founder story (long version)
+RCS Logistic Solutions was founded by Satya Sankar Swain with a clear vision to build a dependable and modern logistics network from Odisha to businesses across India. With a strong focus on reliability, operational excellence and long-term partnerships, we are committed to keeping India's supply chain moving.
+
+## Data files
 ### Fleet (`src/content/fleet.ts`)
 | Name | One-liner | Capacity |
 |---|---|---|
@@ -58,10 +79,6 @@ Steel & Metals · Mining & Minerals · Cement & Construction · FMCG & Retail Di
 - H2: From Odisha to Every Major Market
 - Stats: TODO(client). The mockup's "1 State / 28+ Cities / 1 Network" is weak — ask for: years in business, vehicles in fleet, cities served, loads delivered per month. Use the strongest three.
 - Cities served: TODO(client) list
-
-### CTA band
-- H2: Need a dependable logistics partner?
-- Line: Tell us what you're moving and where. We'll come back with a quote.
 
 ## About — mission (adapt after client review)
 - Deliver every load safely and on time, with clear updates at every step.

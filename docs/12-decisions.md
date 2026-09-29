@@ -78,3 +78,17 @@ The paths are simplified to about 10 KB (`src/components/network/india-map-data.
 - **Accessibility 100 and SEO 100** on Home, `/services/warehousing` and `/contact`.
 - Best Practices 96: the only failure is the Vercel Analytics script 404, which only exists on Vercel.
 - **Performance 73–79**, with LCP about 3.8–4.2 s. On this dev machine even a blank page paints slowly (see v1 notes), so **Performance must be re-measured on the Vercel preview or production** with PageSpeed Insights.
+
+## 2026-09-29 — Kit v2
+
+The client supplied a second kit (`RCSLS website design files.zip` → `rcs-website-kit`). It has a new approved preview (navy and orange, Manrope + Instrument Serif), Supabase instead of Prisma/Neon, B2B **and** B2C customers, cookie consent, and a Phase 8 handover. The user approved adopting it in full, running all phases back to back.
+
+### D-16 — Rebuild to kit v2 in place
+- The same `redesign` branch is used. The kit-1 build stays in git history.
+- Kit-1 references are in `docs/archive/kit-1/`.
+- This log moved from `09-decisions.md` to `12-decisions.md`, because the kit numbers `09-cookie-consent`, `10-lighthouse` and `11-handover`.
+- Reusable kit-1 code stays: the Zod schema and phone normalisation, the React Email templates, UTM parsing, SEO/JSON-LD helpers, the India map, the `TODO(client)` convention, and the content files.
+
+### D-17 — Kit photos are placeholders; the founder headshot is development-only
+- The kit's hero and fleet crops come from the concept art and are low resolution (fleet about 290×123 px). They're used as placeholders so the site looks like the approved design, and are flagged `placeholder: true` in `src/content/media.ts`.
+- `founder-headshot.jpg` is a concept-art face, not a confirmed photo of Satya. The kit's own checklist forbids AI images of real people, so it renders **only in development**, and production shows an "SS" monogram in the same ring. Confirmed by the user on 2026-09-29.

@@ -126,3 +126,8 @@ This repo already contains the v1 build, which is live on `rcsls` / www.rcsls.in
 9. Please send real fleet photos, vehicle types and capacities, cities served and routes, and verified numbers (years in business, vehicles, cities, loads per month).
 10. Which industries do you actually serve?
 11. Should the Terms page stay?
+
+## 10. Re-check for kit v2 (2026-09-29)
+The second kit (`docs/reference/homepage-preview.html`, v2) didn't change anything above. The redirect map in §6 still applies unchanged.
+- The kit's `docs/reference/images/` are crops of the concept art. The truck and fleet crops are used as **placeholders** until real RCS photos arrive. `founder-headshot.jpg` is concept art, not a confirmed photo of Satya, so it appears only in development (decision D-17).
+- The kit's `docs/reference/brand/logo-on-light.png` / `logo-on-dark.png` are the official "RCS Logistic Solutions" logo (the same artwork as v1's `rcs-logo.png`), cut out for light and dark backgrounds. They replace `public/brand/rcs-logo.png`.
