@@ -100,7 +100,7 @@ export const services: Service[] = [
   {
     slug: "warehousing",
     metaDescription:
-      "Warehousing and storage in Cuttack, Odisha from RCS Logistic: secure storage with inventory handling, ready to dispatch when your orders come in.",
+      "Warehousing and storage in Cuttack, Odisha from RCS Logistic Solutions: secure storage with inventory handling, ready to dispatch when your orders come in.",
     type: "warehousing",
     name: "Warehousing & Storage",
     shortName: "Warehousing",

@@ -1,4 +1,5 @@
 import { Clock, MessageCircle } from "lucide-react";
+import { MapEmbed } from "@/components/contact/map-embed";
 import { QuoteForm } from "@/components/quote/quote-form";
 import { AccentHeading } from "@/components/ui/accent-heading";
 import { MailIcon, PhoneIcon, PinIcon } from "@/components/ui/icons";
@@ -13,7 +14,6 @@ export const metadata = pageMetadata({
   path: "/contact",
 });
 
-const mapQuery = encodeURIComponent(`${company.name}, ${formatAddress()}`);
 
 /** docs/03-pages.md → /contact: details + map left, full quote form (#quote) right. No CTA section. */
 export default function ContactPage() {
@@ -76,13 +76,12 @@ export default function ContactPage() {
                 </div>
               ))}
             </dl>
-            <div className="mt-8 aspect-[4/3] overflow-hidden rounded-2xl border border-line bg-white">
-              <iframe
+            <div className="mt-8">
+              <MapEmbed
+                query={`${company.name}, ${formatAddress()}`}
                 title={`Map showing ${company.name}, ${formatAddress()}`}
-                src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="size-full border-0"
+                address={formatAddress()}
+                copy={pages.contact.map}
               />
             </div>
           </div>

@@ -19,13 +19,14 @@ export function StatusPanel({
   return (
     <section
       aria-labelledby="status-heading"
-      className="grain relative isolate flex min-h-[80svh] items-center overflow-hidden bg-[linear-gradient(180deg,var(--color-ink)_0%,var(--color-steel)_140%)] text-white/72"
+      // Top-aligned so the text doesn't move when web fonts swap in (CLS).
+      className="grain relative isolate flex min-h-[80svh] items-start overflow-hidden bg-[linear-gradient(180deg,var(--color-ink)_0%,var(--color-steel)_140%)] text-white/72"
     >
       <div
         aria-hidden="true"
         className="absolute inset-x-[-10%] bottom-[-60%] -z-10 h-[120%] bg-[radial-gradient(ellipse_at_50%_100%,rgb(234_90_36/0.3),rgb(234_90_36/0)_60%)]"
       />
-      <div className="container-site pt-[132px] pb-20 nav:pt-[150px]">
+      <div className="container-site pt-[152px] pb-20 nav:pt-[clamp(170px,22vh,240px)]">
         <div className="max-w-[720px]">
           <Label tone="dark">{label}</Label>
           <AccentHeading

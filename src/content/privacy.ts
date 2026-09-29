@@ -80,6 +80,13 @@ export const cookiePolicy = {
       purpose: "Anonymous page-view statistics. Sets no cookies; loads only with analytics consent.",
       duration: "—",
     },
+    {
+      name: "Google Maps",
+      category: "Third party",
+      purpose:
+        "The map on the contact page loads only when you click “Show map”; Google may then set its own cookies.",
+      duration: "Set by Google",
+    },
   ] satisfies CookieRow[],
   // No marketing tags are installed yet. TODO(client): list vendors (Google Ads, Meta Pixel, LinkedIn) if added.
   marketingNote: "We don't use any marketing or advertising cookies at the moment.",

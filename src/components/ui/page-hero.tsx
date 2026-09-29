@@ -23,7 +23,8 @@ export function PageHero({ label, heading, intro, breadcrumbs, path, children }:
   return (
     <section
       aria-labelledby="page-heading"
-      className="grain relative isolate flex min-h-[45vh] items-end overflow-hidden bg-[linear-gradient(160deg,var(--color-ink)_0%,#1e3450_100%)] text-white/72"
+      // Top-aligned: bottom alignment made the text jump when web fonts swapped in (CLS).
+      className="grain relative isolate flex min-h-[45vh] items-start overflow-hidden bg-[linear-gradient(160deg,var(--color-ink)_0%,#1e3450_100%)] text-white/72"
     >
       <JsonLd data={breadcrumbJsonLd(breadcrumbs, path)} />
       <div

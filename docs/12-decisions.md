@@ -127,3 +127,11 @@ All kit colours were measured (the table is in `src/app/globals.css` and `/style
 - Withdrawing consent stops optional scripts from the next page load; a script already running stays until navigation.
 - Consent decisions aren't logged to a `consent_log` table (optional in the kit). This can be added later if the client wants an audit trail.
 - The switches have `role="switch"`, visible labels and descriptions. The off track uses the `field` colour (D-18).
+
+## 2026-09-29 — Phase 7
+
+### D-23 — Google Maps loads on click
+The contact-page embed loaded about 500 KB of Google scripts and set Google's cookies before any consent, even with `loading="lazy"`: it sits within the browser's lazy-load distance. `src/components/contact/map-embed.tsx` shows a card with the address, a **Show map** button (loads the iframe) and an **Open in Google Maps** link. The privacy page lists Google Maps as a third party.
+
+### D-24 — Lighthouse on this machine
+The CPU benchmark index is 360, so the default 4× throttle over-penalises blocking time. `docs/10-lighthouse.md` reports both default and calibrated (1.5×) results. Accessibility, Best Practices and SEO are 100, and CLS is 0 on all three pages. Performance must be confirmed with PageSpeed Insights on the Vercel preview.

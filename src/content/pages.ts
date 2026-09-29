@@ -79,6 +79,11 @@ export const pages = {
       "Contact RCS Logistic Solutions in Choudwar, Cuttack, Odisha: call or WhatsApp +91 99388 74147, email info@rcsls.in, or request a transport quote online.",
     detailsLabel: "Talk to us",
     detailsHeading: { lead: "Call, WhatsApp or", accent: "email us." } satisfies Heading,
+    map: {
+      show: "Show map",
+      open: "Open in Google Maps",
+      note: "The map is loaded from Google Maps, which may set its own cookies.",
+    },
   },
   thankYou: {
     title: "Quote request received",
