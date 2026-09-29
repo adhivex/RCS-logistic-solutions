@@ -63,6 +63,13 @@ npm run dev          # http://localhost:3000
 
 On the production deployment, missing Supabase variables make the quote form show "call or WhatsApp us" instead of silently dropping the lead (D-20).
 
+Existing names also work, so nothing needs renaming (D-25):
+
+- the v1 names `RESEND_FROM_EMAIL`, `QUOTE_NOTIFICATION_EMAIL` and `IP_HASH_SALT`;
+- `SUPABASE_URL` and `SUPABASE_SECRET_KEY`, which the Vercel ↔ Supabase integration creates.
+
+Connecting Supabase to the **`rcsls`** project (Vercel → rcsls → Storage/Integrations) therefore supplies the database settings, and the existing Resend variables cover email.
+
 ## Deploying on Vercel
 
 1. **Create the Supabase project** in region **Mumbai (ap-south-1)**. Then, from this folder:

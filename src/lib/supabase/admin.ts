@@ -1,5 +1,6 @@
 import "server-only";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { readEnv } from "@/lib/env-names";
 import type { Database } from "./database.types";
 
 /*
@@ -11,15 +12,15 @@ export type AdminClient = SupabaseClient<Database>;
 
 let cached: AdminClient | undefined;
 
-/** True when both Supabase variables are set; otherwise the quote flow runs in local mode. */
+/** True when the Supabase URL and service key are set; otherwise the quote flow runs in local mode. */
 export function isSupabaseConfigured(): boolean {
-  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+  return Boolean(readEnv("supabaseUrl") && readEnv("supabaseServiceKey"));
 }
 
 export function getSupabaseAdmin(): AdminClient {
   if (cached) return cached;
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const url = readEnv("supabaseUrl");
+  const key = readEnv("supabaseServiceKey");
   if (!url || !key) {
     throw new Error(
       "Supabase is not configured: set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.",

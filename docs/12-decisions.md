@@ -164,3 +164,21 @@ The contact-page embed loaded about 500 KB of Google scripts and set Google's co
 ### D-24 — Lighthouse on this machine
 
 The CPU benchmark index is 360, so the default 4× throttle over-penalises blocking time. `docs/10-lighthouse.md` reports both default and calibrated (1.5×) results. Accessibility, Best Practices and SEO are 100, and CLS is 0 on all three pages. Performance must be confirmed with PageSpeed Insights on the Vercel preview.
+
+## 2026-09-30 — Deployment
+
+### D-25 — Accept existing environment variable names
+
+Production on Vercel still carries the v1 variable names. The user asked for them to keep working, so `src/lib/env-names.ts` resolves each setting from a list of names, canonical first:
+
+| Setting                     | Also accepted              |
+| --------------------------- | -------------------------- |
+| `QUOTE_FROM_EMAIL`          | `RESEND_FROM_EMAIL`        |
+| `QUOTE_NOTIFY_TO`           | `QUOTE_NOTIFICATION_EMAIL` |
+| `RATE_LIMIT_SALT`           | `IP_HASH_SALT`             |
+| `NEXT_PUBLIC_SUPABASE_URL`  | `SUPABASE_URL`             |
+| `SUPABASE_SERVICE_ROLE_KEY` | `SUPABASE_SECRET_KEY`      |
+
+The last two are the names the Vercel ↔ Supabase integration creates, so connecting Supabase needs no manual renaming.
+
+The v1-only variables (`DATABASE_URL`, `DIRECT_URL`, Turnstile keys, `REQUIRE_SERVER_ENV`, `NEXT_PUBLIC_WHATSAPP_NUMBER`) are unused by the new site and can be removed after launch.
